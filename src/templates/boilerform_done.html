@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Thanks for completing the form. A summary email will be in your inbox</h2>
+
+{{form_data.0.customer_first_name}}
+
+<br>
+<br>
+
+{% for form in form_data %}
+
+    {{form}}
+    <br>
+
+{% endfor %}
+
+{% for i in idx %}
+....{{i.company_name}}
+{% endfor %}
+
+..{{ids.company_name}}
+
+.{{ids.0.company_name}}
+
+......{{ids}}
+
+{{ids.0.email}}
+
+{% endblock %}
