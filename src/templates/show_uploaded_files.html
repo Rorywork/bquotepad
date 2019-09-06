@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Uploaded Images</h4>
+
+{% for frecord in frecords %}
+
+    <hr>
+    <img src="{{frecord.document.url}}"  height="50" style="border:1px solid grey" >
+    <p>Image Description: {{frecord.description}}</p>
+    <p>Image Url: {{frecord.document}}</p>
+    <p>Uploaded on: {{frecord.uploaded_at}}</p>
+    <p>PDF unique ID: <b>frecords.{{forloop.revcounter0}}.document.url</b></p>
+
+    {% empty %}
+    <p>You have no images saved on the website.</p>
+
+{% endfor %}
+ 
+{% endblock %}
