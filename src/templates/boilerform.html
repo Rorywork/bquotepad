@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+    <form action="" method="post" class="boiler-form">
+    {% csrf_token %}
+    <!--This section requires an if block for every step in the process-->
+    {% if wizard.steps.step1 == 1 %}
+        <h3>CUSTOMER DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 2 %}
+        <h3>PROPERTY DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 3 %}
+        <h3>CURRENT INSTALLATION DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 4 %}
+        <h3>ITEMS TO BE REMOVED</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 5 %}
+        <h3>NEW EQUIPMENT DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 6 %}
+        <h3>COMMISSIONING DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 7 %}
+        <h3>NEW INSTALLATION DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 8 %}
+        <h3>RADIATOR DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 9 %}
+        <h3>WORKLOAD DETAILS</h3>
+    {% endif %}
+    
+    <h5>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h5>
+    
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+          {{ form }}
+        {% endfor %}
+    {% else %}
+        {% for field in wizard.form %} 
+            {% if field.field.widget.input_type == "text" or field.field.widget.input_type == "email" %}           
+                <div class="txtb">
+                        {{ field }}
+                        <span data-placeholder="{{ field.label }}"></span>
+                </div>
+            {% else %}
+                <div class="txtb">
+                    <div class="sel-label">{{ field.label }}</div> 
+                    {{ field }}
+                    <!-- <span data-placeholder=" "></span> -->
+                </div>
+            {% endif %}
+            <span class="message">{{ field.errors }}</span>
+            
+        {% endfor %}
+    {% endif %}
+  
+  <div class="boilerformbtns">
+  {% if wizard.steps.prev %}
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="boilerbtn">First step</button>
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="boilerbtn">Previous step</button>
+  {% endif %}
+  {% if wizard.steps.step1 != 9 %}
+    <input type="submit" value="Next Step" class="boilerbtn"/>
+  {% else %}
+    <input type="submit" value="Final Step" class="boilerbtn"/>
+  {% endif %}
+</div>
+</form>
+
+{% endif %} 
+<script type="text/javascript">
+    $(".txtb input").on("focus",function(){
+      $(this).addClass("focus");
+    });
+
+    $(".txtb input").on("blur",function(){
+      if($(this).val() == "")
+      $(this).removeClass("focus");
+    });
+</script>
+
+{% endblock %}
