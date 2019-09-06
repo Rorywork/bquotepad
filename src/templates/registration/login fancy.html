@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Site Login{% endblock title %}
+
+<!--{% block sidenav %} -->
+<!--    <li><a href="/">Home</a></li>-->
+<!--{% endblock sidenav %}-->
+
+{% block content %}
+
+<!-- <div class="container"> -->
+
+<h4>Please Login</h4>
+<p>You must be logged in to complete a quote</p>
+
+{% if form.errors %}
+    <p>The username or password that you entered is not correct</p>
+{% endif %}
+
+    <form method="POST"  class="login-form">
+        {% csrf_token %}
+        <h3>Login</h3>
+
+        <div class="txtb">
+            <input type="text">
+            <span data-placeholder="Username"></span>
+        </div>
+  
+        <div class="txtb">
+            <input type="password">
+            <span data-placeholder="Password"></span>
+        </div>
+
+        <input type="submit" class="logbtn" value="Login">
+<!--           
+        <p>
+            <label>Username</label>
+            <input type="text" name="username">
+        </p>
+        <p>
+            <label>Password</label>
+            <input type="password" name="password">
+        </p>
+        <button type="submit">Login</button> -->
+    </form>
+
+<!-- </div> -->
+
+<script type="text/javascript">
+    $(".txtb input").on("focus",function(){
+      $(this).addClass("focus");
+    });
+
+    $(".txtb input").on("blur",function(){
+      if($(this).val() == "")
+      $(this).removeClass("focus");
+    });
+
+</script>
+
+<br>
+
+<a href="/passwordreset">Password Reset</a>
+
+{% endblock content %}
