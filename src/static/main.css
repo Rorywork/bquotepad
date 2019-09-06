@@ -1,0 +1,286 @@
+@charset "utf-8";
+#header {
+    border-style: none;
+    width: 800px;
+    height: auto;
+}
+
+#wrapper {
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    width: 800px;
+}
+
+body {
+    /*background-color: red; */
+    font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.9em;
+    text-align: justify;
+    color: #474747;
+}
+
+#footer {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FFFFFF;
+    border-top: thin solid #BBBBBB;
+    clear: both;
+    color: #969696;
+}
+ 
+#nav li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1em;
+    list-style-type: none;
+    border-bottom: thin solid #5F5F5F;
+    color: #4C4C4C;
+    left: 0px;
+    list-style-position: inside;
+    margin-left: -10px;
+}
+
+#nav li a {
+    text-decoration: none;
+}
+
+#leftsidebar {
+    width: 180px;
+    height: 350px;
+    float: left;
+}
+
+#main {
+    float: left;
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-right: 10px;
+}
+
+#logo {
+    padding: 10px;
+}
+
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+.errorlist li {
+    border: 1px solid red;
+    color: red;
+    background: rgba(255, 0, 0, 0.15);
+    list-style-position: inside;
+    display: block;
+    font-size: 1.2em;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+input,textarea {
+    width: 100%;
+    padding: 5px!important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(169, 169, 169)
+}
+
+input {
+    height: 30px;
+}
+
+.success {
+    background-color: rgba(0, 128, 0, 0.15);
+    padding: 10px;
+    text-align: center;
+    color: green;
+    border: 1px solid green;
+    border-radius: 3px;
+}
+
+label {
+  vertical-align: top;
+}
+
+select {
+  vertical-align: top;
+}
+
+
+/* added by GL 15-07-2019 for login fancy form */
+
+/* Borrowed from DarkCode  https://darkcode1.blogspot.com/2019/0... */
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  body{
+    min-height: 100vh;
+    /* background-image: linear-gradient(120deg,#3498db,#8e44ad); */
+  }
+  
+  .login-form{
+    width: 360px;
+    background: #f1f1f1;
+    height: 580px;
+    padding: 80px 40px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+  
+  .login-form h3{
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .txtb{
+    border-bottom: 2px solid #adadad;
+    position: relative;
+    margin: 30px 0;
+  }
+  
+  .txtb input{
+    font-size: 15px;
+    color: #333;
+    border: none;
+    width: 100%;
+    outline: none;
+    background: none;
+    padding: 0 5px;
+    height: 40px;
+  }
+  
+  .txtb span::before{
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    z-index: -1;
+    transition: .5s;
+  }
+  
+  .txtb span::after{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(120deg,#3498db,#8e44ad);
+    transition: .5s;
+  }
+  
+  .focus + span::before{
+    top: -5px;
+  }
+  .focus + span::after{
+    width: 100%;
+  }
+  
+  .logbtn{
+    display: block;
+    width: 100%;
+    height: 50px;
+    border: none;
+    background: linear-gradient(120deg,#3498db,#8e44ad,#3498db);
+    background-size: 200%;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+  }
+  
+  .logbtn:hover{
+    background-position: right;
+  }
+  
+  .bottom-text{
+    margin-top: 60px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  /* End of Css for login fancy form */
+
+  /* Added by GL 16-07-2019 - to use the fancy form logic on the boilerform */
+  .boiler-form{
+    width: 360px;
+    background: #f1f1f1;
+    /* height: 720px; */
+    padding: 20px 10px;
+    border-radius: 10px;
+    /* position: absolute; */
+    left: 50%;
+    top: 50%;
+    transform: translate(25%,0%);
+  }
+  
+  .boiler-form h3{
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 20px
+  }
+
+  .boiler-form h4{
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 15px
+  }
+
+  .boiler-form h5{
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 15px
+  }
+
+  .sel-label{
+    font-size: 15px;
+    color: #adadad;
+    border: none;
+    width: 100%;
+    outline: none;
+    background: none;
+    padding: 0 5px;
+    height: 40px;
+  }
+
+  .boilerbtn{
+    display: inline;
+    width: 32%;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(120deg,#6e6e6e,#0f0f0f,#6e6e6e);
+    background-size: 200%;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+  }
+  
+  .boilerbtn:hover{
+    background-position: right;
+  }
+
+  .boilerformbtns{
+    align-content: center;
+  }
