@@ -55,12 +55,6 @@ body {
     float: left;
 }
 
-#main {
-    float: left;
-    margin-left: 20px;
-    margin-right: 10px;
-    padding-right: 10px;
-}
 
 #logo {
     padding: 10px;
@@ -88,7 +82,6 @@ input,textarea {
     width: 100%;
     padding: 5px!important;
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 3px;
     border-style: solid;
@@ -127,7 +120,8 @@ select {
     padding: 0;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
   }
   
   body{
@@ -144,7 +138,8 @@ select {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
   }
   
   .login-form h3{
@@ -175,8 +170,10 @@ select {
     top: 50%;
     left: 5px;
     color: #adadad;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
     z-index: -1;
+    -webkit-transition: .5s;
     transition: .5s;
   }
   
@@ -186,6 +183,7 @@ select {
     width: 0%;
     height: 2px;
     background: linear-gradient(120deg,#3498db,#8e44ad);
+    -webkit-transition: .5s;
     transition: .5s;
   }
   
@@ -206,6 +204,7 @@ select {
     color: #fff;
     outline: none;
     cursor: pointer;
+    -webkit-transition: .5s;
     transition: .5s;
   }
   
@@ -231,7 +230,8 @@ select {
     /* position: absolute; */
     left: 50%;
     top: 50%;
-    transform: translate(25%,0%);
+    -webkit-transform: translate(25%,0%);
+            transform: translate(25%,0%);
   }
   
   .boiler-form h3{
@@ -274,6 +274,7 @@ select {
     color: #fff;
     outline: none;
     cursor: pointer;
+    -webkit-transition: .5s;
     transition: .5s;
   }
   
@@ -282,5 +283,19 @@ select {
   }
 
   .boilerformbtns{
-    align-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
   }
+
+
+
+
+
+#main {
+    background-color: grey;
+}
+
+/* Home */
+h1{
+  text-align: center;
+}
