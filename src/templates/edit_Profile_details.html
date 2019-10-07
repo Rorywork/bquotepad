@@ -13,5 +13,49 @@
            <!--<button class="btn btn-secondary">Cancel</button>-->
            
        </form>
-       <br>
+
+       <div class="container">
+
+            <h2>Edit Your Information</h2>
+    
+            <form method="POST">
+            {% csrf_token %}    
+    
+            <div class="form-group">
+                <label for="editFirstName">First Name</label>
+                <input name="first_name" type="text" class="form-control" id="editFirstName" placeholder="First Name" required>
+            </div>
+    
+            <div class="form-group">
+                    <label for="editLastName">Last Name</label>
+                    <input name="last_name" type="text" class="form-control" id="editLastName" placeholder="Last Name" required>
+            </div>
+
+            <div class="form-group">
+                    <label for="editCompanyName">Company Name</label>
+                    <input name="company_name" type="text" class="form-control" id="editCompanyName" placeholder="Company Name" required>
+            </div>
+
+            <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input name="email" type="email" class="form-control" id="editEmail" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                    <label for="editPhone">Phone Number</label>
+                    <input name="telephone" type="tel" class="form-control" id="editPhone" placeholder="Phone Number" required>
+            </div>
+
+
+            <div class="form-group">
+                    <label for="editQuoteNumber">Current Quote Number:</label>
+                    <input name="cur_quote_no" type="number" class="form-control" id="editQuoteNumber" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" value="Login">Submit</button>
+    
+            </form>
+    
+    </div>
+
     {% endblock content %} 
