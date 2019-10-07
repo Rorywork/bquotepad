@@ -46,7 +46,7 @@
             <div class='header'>
                 <p class='title'>Quotation # {{idx.0.cur_quote_no}} </p>
             </div>
-            <img src="..{{frecords.0.document.url}}">
+            <img src="..{{frecords.0.document.url}}" width="400">
             <div>
                 <div class='details'>
                     
@@ -57,11 +57,19 @@
                     Address: {{form_data.1.installation_address}} {{form_data.1.street_address}}, {{form_data.1.city}}, {{form_data.1.county}}, {{form_data.1.postcode}}<br/>
                     Property Type: {{form_data.1.property_type}}
                     <hr class='hrItem' />
-                    <b>Current Boiler details</b>
+                    <b>Current Boiler details</b><br>
                     Fuel Type: {{form_data.2.current_fuel_type}}<br>
                     Boiler Type: {{form_data.2.current_fuel_type}}
                     <hr class='hrItem' />
-                    <b>New Boiler details</b><br>
+                    <b>Items to be removed</b><br>
+                    {% for removal_item in form_data.3.removals%}
+                        {{removal_item}} &NonBreakingSpace;
+                    {% endfor %}
+
+                    radiatorRequirements: {{form_data.7.radiator_requirements}}
+
+                    <hr class='hrItem' />
+                    <b>New Boiler details</b>
                     <table>
                         <tr>
                             <td>New Fuel Type: {{form_data.4.new_fuel_type}}</td><td>New Boiler Type: {{form_data.4.new_boiler_type}}</td>
@@ -71,10 +79,11 @@
                         </tr>
                     </table>
                     <hr class='hrItem' />
-                    Estimate completed by: {{idx.0.first_name}} {{idx.0.last_name}} from {{idx.0.company_name}}<br>
+                    Quotation completed by: {{idx.0.first_name}} {{idx.0.last_name}} from {{idx.0.company_name}} on  {% now "jS F Y H:i" %}<br>
                 </div>
             </div>
             <img class='logo' src="../static/Quotepad.PNG" alt="" />
+            <img src="..{{frecords.1.document.url}}" alt="">
             <br>
         </body>
 </html>

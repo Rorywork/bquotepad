@@ -24,7 +24,7 @@ from quotepad.views import home, register, change_password
 from quotepad.forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
 from quotepad.views import FormWizardView, model_form_upload
 
-from quotepad.views import edit_Profile_details, show_uploaded_files, quote_success
+from quotepad.views import edit_Profile_details, show_uploaded_files, quote_success, testpdflayout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -49,6 +49,7 @@ urlpatterns = [
     path('changepassword/', change_password, name = 'change_password'),
     path('home/', home, name = 'home'),
     path('boilerform/', FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]), name = 'home'),
+    path('testpdflayout/<str:testmode>', testpdflayout, name = 'test_pdf_layout'),
     #url(r'^', include('boilerform.urls'))
     path('fileupload/', model_form_upload, name = 'file_upload'),
     path('showuploadedfiles/', show_uploaded_files, name = 'show_uploaded_files'),

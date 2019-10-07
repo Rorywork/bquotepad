@@ -234,7 +234,47 @@ def edit_Profile_details(request):
     else:
         form = ProfileForm(instance=profile)
         
-    return render(request,"edit_Profile_details.html",{'form': form}) 
+    return render(request,"edit_Profile_details.html",{'form': form})
+
+def testpdflayout(request, testmode):
+
+    # Initial check to see if user specific PDF template file exists
+    # If it does then use that template, if not use the generic template
+    usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(request.user.username))
+    print(usr_pdf_template_file)
+    if os.path.isfile(usr_pdf_template_file):
+        sourceHtml = "pdf/user_{}/quote_for_pdf.html".format(request.user.username)      # Under templates folder
+    else:
+        sourceHtml = "pdf/quote_for_pdf.html"      # Under templates folder
+
+    test_form_data = [{'customer_first_name': 'Alan', 'customer_last_name': 'Green', 'customer_home_phone': '01202 123456', 'customer_mobile_phone': '07768 150701', 'customer_email': 'gordonlindsay@virginmedia.com', 'owner_or_tenant': 'Owner'},
+    {'installation_address': '12', 'street_address': 'Stourvale Avenue', 'city': 'Bournemouth', 'county': 'Dorset', 'postcode': 'BH6 3PT', 'property_type': 'Detached'},
+    {'current_fuel_type': 'Gas', 'current_boiler_type': 'Floor Standing - Conventional', 'current_boiler_location': 'Kitchen', 'current_flue_system': 'Vertical - Open Flue', 'current_flue_location': 'Ground Floor', 'current_controls': 'Wired - Programmer'},
+    {'removals': ['Hot Water Cylinder', 'Feed and Expansion Tank']},
+    {'new_fuel_type': 'Gas', 'new_boiler_type': 'Floor Standing - Conventional', 'new_boiler_location': 'Kitchen', 'new_flue_system': 'Vertical - Open Flue', 'new_flue_location': 'Ground Floor', 'new_flue_diameter': '100mm', 'plume_management_kit': 'Required', 'condensate_termination': 'Drain', 'new_controls': 'Wired - Programmer', 'cws_flow_rate': '4', 'new_flue_metres': '1'},
+    {'system_treatment': 'Chemical Flush & Inhibitor', 'gas_supply': 'Use esxisting supply', 'gas_supply_length': '9-15m', 'asbestos_containing_materials_identified': 'No Asbestos Identified', 'electrical_work_required': 'Connect to existing wiring'},
+    {'boiler_manufacturer': 'Worcester Bosch', 'boiler_model': '7733600074 Worcester Bosch Greenstar 12Ri', 'manufacturer_guarentee': '5 Years', 'flue_components': 'Horizontal Flue Kit', 'programmer_thermostat': 'Drayton Twin Channel Programmer', 'central_heating_system_filter': 'Worcester Bosch 22mm System Filter', 'scale_reducer': '15mm in line scale reducer'},
+    {'radiator_requirements': 'Thermostatic Radiator Valves Only', 'thermostatic_radiator_valves_size': '22', 'thermostatic_radiator_valves_type': 'Stainless Steel', 'thermostatic_radiator_valves_quantity': '5'},
+    {'estimated_duration': '1 Day', 'description_of_works': 'Full installation of new boiler and removal of existing one.'}]
+
+    idx = Profile.objects.filter(user = request.user)
+
+    frecords = Document.objects.filter(user=request.user.username).order_by('uploaded_at')
+
+    # Determine whether to output to screen as PDF or HTML
+    if testmode == "PDFOutput":
+        pdf = render_to_pdf(sourceHtml, {
+            'form_data': test_form_data,
+            'idx': idx,
+            'frecords': frecords})
+        return HttpResponse(pdf, content_type='application/pdf')
+    else:   # HTMLOutput
+        return render(request, sourceHtml, {
+            'form_data': test_form_data,
+            'idx': idx,
+            'frecords': frecords},
+            )
+
 
 
 
