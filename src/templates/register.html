@@ -4,17 +4,49 @@
 
 
 {% block content %}
+
 <div class="container">
 
-<h1>User Registration</h1>
+        <h2>User Registration</h2>
 
-<p>Enter your username and password to register.</p>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ user_profile_form.as_p }}
-        <button type="submit">Signup</button>
-    </form>
-    
-</div>    
+        <form method="POST">
+        {% csrf_token %}    
+
+        <div class="form-group">
+            <label for="registerUsername">Username</label>
+            <input name="username" type="text" class="form-control" id="registerUsername" placeholder="Username" required>
+        </div>
+
+        <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input name="email" type="email" class="form-control" id="registerEmail" placeholder="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input name="password" type="password" class="form-control" id="registerPassword" placeholder="Password" required>
+        </div>
+
+        <div class="form-group">
+                <label for="registerCompanyName">Company Name</label>
+                <input name="company_name" type="text" class="form-control" id="registerCompanyName" placeholder="Company Name" required>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" value="Login">Submit</button>
+
+        </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock content %}
