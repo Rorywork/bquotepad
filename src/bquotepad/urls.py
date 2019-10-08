@@ -48,7 +48,7 @@ urlpatterns = [
     path('loginredirect/', home, name = 'home'),
     path('changepassword/', change_password, name = 'change_password'),
     path('home/', home, name = 'home'),
-    path('boilerform/', FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]), name = 'home'),
+    path('boilerform/', FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]), name = 'boilerform'),
     path('testpdflayout/<str:testmode>', testpdflayout, name = 'test_pdf_layout'),
     #url(r'^', include('boilerform.urls'))
     path('fileupload/', model_form_upload, name = 'file_upload'),

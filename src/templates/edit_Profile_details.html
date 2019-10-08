@@ -1,19 +1,8 @@
 {% extends "base.html" %}
 
     {% block content %}    
-       <h4>Edit Your Details</h4>
-       
-       <form method="POST">
-           
-           {% csrf_token %}
-           
-           {{ form.as_p }}
-           
-           <button class="btn btn-primary" type="submit">Save</button>
-           <!--<button class="btn btn-secondary">Cancel</button>-->
-           
-       </form>
 
+       
        <div class="container">
 
             <h2>Edit Your Information</h2>
@@ -23,38 +12,44 @@
     
             <div class="form-group">
                 <label for="editFirstName">First Name</label>
-                <input name="first_name" type="text" class="form-control" id="editFirstName" placeholder="First Name" required>
+                <input name="first_name" type="text" class="form-control" id="editFirstName" placeholder="First Name" required value = "{{form.first_name.value}}">
             </div>
     
             <div class="form-group">
                     <label for="editLastName">Last Name</label>
-                    <input name="last_name" type="text" class="form-control" id="editLastName" placeholder="Last Name" required>
+                    <input name="last_name" type="text" class="form-control" id="editLastName" placeholder="Last Name" required value = "{{form.last_name.value}}">
             </div>
 
             <div class="form-group">
                     <label for="editCompanyName">Company Name</label>
-                    <input name="company_name" type="text" class="form-control" id="editCompanyName" placeholder="Company Name" required>
+                    <input name="company_name" type="text" class="form-control" id="editCompanyName" placeholder="Company Name" required value = "{{form.company_name.value}}">
             </div>
 
             <div class="form-group">
                     <label for="editEmail">Email</label>
-                    <input name="email" type="email" class="form-control" id="editEmail" placeholder="Email" required>
+                    <input name="email" type="email" class="form-control" id="editEmail" placeholder="Email" required value = "{{form.email.value}}">
             </div>
 
             <div class="form-group">
                     <label for="editPhone">Phone Number</label>
-                    <input name="telephone" type="tel" class="form-control" id="editPhone" placeholder="Phone Number" required>
+                    <input name="telephone" type="tel" class="form-control" id="editPhone" placeholder="Phone Number" required value = "{{form.telephone.value}}">
             </div>
 
 
             <div class="form-group">
                     <label for="editQuoteNumber">Current Quote Number:</label>
-                    <input name="cur_quote_no" type="number" class="form-control" id="editQuoteNumber" required>
+                    <input name="cur_quote_no" type="number" class="form-control" id="editQuoteNumber" required value = "{{form.cur_quote_no.value}}">
             </div>
 
             <button type="submit" class="btn btn-primary" value="Login">Submit</button>
+
+            <button type="reset" class="btn btn-secondary">Undo</button>
+
+            <a class="btn btn-secondary" href="{% url 'home'%}">Cancel</a>
+
     
             </form>
+
     
     </div>
 
