@@ -57,6 +57,7 @@
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             {% if user.is_authenticated %}
+                <p>Welcome {{ user.username }}</p>
                 <a class="nav-item nav-link" href="/logout">Logout</a>
                 <a class="nav-item nav-link" href="/changepassword">Change Password</a>
                 <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
