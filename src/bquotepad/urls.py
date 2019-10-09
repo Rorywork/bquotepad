@@ -20,7 +20,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from quotepad.views import home, register, change_password
+from quotepad.views import home, register, change_password, dashboard
 from quotepad.forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
 from quotepad.views import FormWizardView, model_form_upload
 
@@ -55,6 +55,7 @@ urlpatterns = [
     path('loginredirect/', home, name = 'home'),
     path('changepassword/', change_password, name = 'change_password'),
     path('home/', home, name = 'home'),
+    path('dashboard/', dashboard, name = 'dashboard'),
     path('boilerform/', FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]), name = 'boilerform'),
     path('testpdflayout/<str:testmode>', testpdflayout, name = 'test_pdf_layout'),
     #url(r'^', include('boilerform.urls'))

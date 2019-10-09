@@ -163,6 +163,9 @@ def quote_success(request):
 def home(request):
     return render(request, 'home.html')
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
