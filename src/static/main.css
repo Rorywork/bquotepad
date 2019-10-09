@@ -1,5 +1,4 @@
 
-
 #main {
     background-color: rgb(255, 255, 255);
 }
@@ -85,7 +84,17 @@ h1{
 
 /* forms */
 
+.quote-form-container{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: rgb(246, 245, 242);
+  border: 1px solid lightblue;
+}
 
 
+.boiler-form{
+  margin-top: 30px;
+  margin-bottom: 30px;
 
+}
 
