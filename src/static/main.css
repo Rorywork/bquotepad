@@ -98,3 +98,20 @@ h1{
 
 }
 
+.dashboard-container{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.card-img-top{
+  height: 100px;
+  width: 100px;
+}
+
+.card-deck{
+  margin-bottom: 30px;
+}
+
+#dashboard-heading{
+  margin-top: 50px;
+}
