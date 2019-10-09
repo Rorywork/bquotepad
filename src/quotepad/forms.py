@@ -2,7 +2,7 @@ from django import forms
 # Added by GL 19/07/19 - File upload capability
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from quotepad.models import Document, Profile
+from quotepad.models import Document, Profile, ProductPrice
 
 OWNER_OR_TENANT_DROPDOWN = (
 	('Owner','Owner'),
@@ -427,3 +427,16 @@ class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ('company_name',)
+
+class ProductPriceForm(forms.ModelForm):
+	
+	class Meta:
+		model = ProductPrice
+		fields = ['brand', 'model_name', 'product_code','price','product_image']
+
+
+	def __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user')
+		super(ProductPriceForm, self).__init__(*args, **kwargs)
+		self.fields['product_image'].queryset=Document.objects.filter(user = self.user)
+
