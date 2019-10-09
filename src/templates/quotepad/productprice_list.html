@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+    {% block content %}    
+       <h4>List of Product details for user {{products_by_user.0.user}}</h4>
+       <a href="{% url 'productpricecreate' %}"
+       class="btn btn-secondary btn-sm"
+       role="button">Add</a>
+       <ul>
+            {% for prod in products_by_user %}
+                <li>
+                    {{ prod.brand }}
+                    {{ prod.model_name }}
+                    {{ prod.product_code }}
+                    £{{ prod.price }}
+                    {% if prod.product_image == null %}
+                        <i>No image</i>
+                    {% else %}
+                        <b><i>Image exists</i></b>
+                    {% endif %}    
+                    <a href="{% url 'productpriceupdate' prod.pk  %}"
+                        class="btn btn-primary btn-sm"
+                        role="button">Edit</a>
+                        <a href="{% url 'productpricedelete' prod.pk  %}"
+                        class="btn btn-secondary btn-sm"
+                        role="button">Del</a>    
+                </li>
+                {% empty %}
+                <p>You have no products on the website.</p>
+
+            {% endfor %}
+        </ul>   
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+       <br>
+    {% endblock content %} 
