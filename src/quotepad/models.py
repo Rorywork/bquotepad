@@ -24,8 +24,20 @@ class Profile(models.Model):
     company_name    =   models.CharField(max_length=60)
     email           =   models.CharField(max_length=60)
     telephone       =   models.CharField(max_length=20)
+    quote_prefix	=	models.CharField(max_length=3, default="XXX")
     cur_quote_no    =   models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.user.username
-     
+
+class ProductPrice(models.Model):
+	user            =   models.ForeignKey(User, on_delete=models.CASCADE)
+	brand           =   models.CharField(max_length=100)
+	model_name      =   models.CharField(max_length=100)
+	product_code    =   models.CharField(max_length=40)
+	price           =   models.DecimalField(max_digits=10, decimal_places=2, default=0)
+	product_image   =   models.ForeignKey(Document, null=True, blank=True, on_delete=models.SET_NULL,)
+
+
+	def __str__(self):
+		return "%s / %s - £%s" % (self.model_name, self.product_code, self.price)     
