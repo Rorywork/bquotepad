@@ -24,6 +24,8 @@ from quotepad.views import home, register, change_password
 from quotepad.forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
 from quotepad.views import FormWizardView, model_form_upload
 
+from quotepad.views import ProductPriceList, ProductPriceCreate, ProductPriceUpdate, ProductPriceDelete
+
 from quotepad.views import edit_Profile_details, show_uploaded_files, quote_success, testpdflayout
 
 urlpatterns = [
@@ -43,6 +45,11 @@ urlpatterns = [
 
     #path('accounts/', include('accounts.urls')),
     path('boilerinfo/', include('django.contrib.auth.urls')),
+
+    path('productpricelist/', ProductPriceList.as_view(), name = 'productpricelist'),
+    path('productpricecreate/', ProductPriceCreate, name = 'productpricecreate'),
+	path('productpriceupdate/<int:product_id>/', ProductPriceUpdate, name = 'productpriceupdate'),
+	path('productpricedelete/<int:pk>/', ProductPriceDelete.as_view(), name = 'productpricedelete'),
 
     # Below loginredirect/ is in settings.py
     path('loginredirect/', home, name = 'home'),
