@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+    {% block content %}    
+       <h4>{{ form_instructions }}</h4>
+       
+       <form method="POST">
+           
+           {% csrf_token %}
+           
+           {{ form.as_p }}
+           
+           
+           <button class="btn btn-primary" type="submit">Save</button>
+           <!--<button class="btn btn-secondary">Cancel</button>-->
+           <a href="{% url 'productpricelist' %}" class="btn btn-secondary">Cancel</a>
+           
+       </form>
+       <br>
+    {% endblock content %} 
