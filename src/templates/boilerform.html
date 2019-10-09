@@ -4,6 +4,16 @@
 
 {% if user.is_authenticated %}
 
+<div class = "container quote-form-container">
+
+<div class = "row">
+
+    <div class="col-sm-4">
+    
+    </div>
+
+    <div class="col-sm-4">
+        <div class="quotepad-form">
     <form action="" method="post" class="boiler-form">
     {% csrf_token %}
     <!--This section requires an if block for every step in the process-->
@@ -46,12 +56,12 @@
     {% else %}
         {% for field in wizard.form %} 
             {% if field.field.widget.input_type == "text" or field.field.widget.input_type == "email" %}           
-                <div class="txtb">
+                <div class="form-group">
+                        <label>{{ field.label }}</label><br>
                         {{ field }}
-                        <span data-placeholder="{{ field.label }}"></span>
                 </div>
             {% else %}
-                <div class="txtb">
+                <div class="form-group">
                     <div class="sel-label">{{ field.label }}</div> 
                     {{ field }}
                     <!-- <span data-placeholder=" "></span> -->
@@ -62,7 +72,7 @@
         {% endfor %}
     {% endif %}
   
-  <div class="boilerformbtns">
+
   {% if wizard.steps.prev %}
       <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="boilerbtn">First step</button>
       <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="boilerbtn">Previous step</button>
@@ -72,19 +82,18 @@
   {% else %}
     <input type="submit" value="Final Step" class="boilerbtn"/>
   {% endif %}
-</div>
+
 </form>
+</div>
+</div>
+
+<div class="col-sm-4">
+    
+</div>
+
+</div>
+</div>
 
 {% endif %} 
-<script type="text/javascript">
-    $(".txtb input").on("focus",function(){
-      $(this).addClass("focus");
-    });
-
-    $(".txtb input").on("blur",function(){
-      if($(this).val() == "")
-      $(this).removeClass("focus");
-    });
-</script>
 
 {% endblock %}
