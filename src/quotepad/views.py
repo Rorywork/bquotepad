@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.views.generic import ListView, DeleteView, FormView
 
 # Form wizard imports
 from .forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
@@ -40,8 +41,8 @@ from django.core.mail import send_mail
 # or ( should not be both )
 from django.core.mail import EmailMessage
 
-from .models import Profile
-from .forms import ProfileForm, UserProfileForm
+from .models import Profile, ProductPrice
+from .forms import ProfileForm, UserProfileForm, ProductPriceForm
 
 class FormWizardView(SessionWizardView):
     template_name = "boilerform.html"
@@ -235,6 +236,55 @@ def edit_Profile_details(request):
         form = ProfileForm(instance=profile)
         
     return render(request,"edit_Profile_details.html",{'form': form})
+
+# Views to perform CRUD operations on the ProductPrice model
+
+class ProductPriceList(ListView):
+	context_object_name = 'products_by_user'
+
+	def get_queryset(self):
+		return ProductPrice.objects.filter(user=self.request.user).order_by('brand','model_name')
+
+
+def ProductPriceCreate(request):
+	if request.method == "POST":
+		form = ProductPriceForm(request.POST,  user = request.user)
+		if form.is_valid():
+			product = form.save(commit=False)
+			product.user = request.user
+			product.save()
+			messages.success(request, 'The product details were successfully updated.')
+			return redirect('/productpricelist/')
+	else:
+		form = ProductPriceForm(user = request.user)
+	context = {
+		'form': form,
+		'form_instructions': 'Add New Product'
+	}
+	return render(request,'quotepad/productprice_form.html',context)
+
+
+def ProductPriceUpdate(request, product_id):
+	product = ProductPrice.objects.get(pk = product_id)
+	if request.method == "POST":
+		form = ProductPriceForm(request.POST, instance=product, user = request.user)
+		if form.is_valid():
+			product = form.save()
+			messages.success(request, 'The product details were successfully updated.')
+			return redirect('/productpricelist/')
+	else:
+		form = ProductPriceForm(instance=product, user = request.user)
+	context = {
+		'form': form,
+		'product': product,
+		'form_instructions': 'Edit Product Details'
+	}
+	return render(request,'quotepad/productprice_form.html',context)
+
+class ProductPriceDelete(DeleteView):
+	model = ProductPrice
+	success_url='/productpricelist/'
+
 
 def testpdflayout(request, testmode):
 
