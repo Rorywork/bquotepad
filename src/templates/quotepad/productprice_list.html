@@ -1,34 +1,93 @@
 {% extends "base.html" %}
 
-    {% block content %}    
-       <h4>List of Product details for user {{products_by_user.0.user}}</h4>
-       <a href="{% url 'productpricecreate' %}"
-       class="btn btn-secondary btn-sm"
-       role="button">Add</a>
-       <ul>
-            {% for prod in products_by_user %}
-                <li>
-                    {{ prod.brand }}
-                    {{ prod.model_name }}
-                    {{ prod.product_code }}
-                    £{{ prod.price }}
-                    {% if prod.product_image == null %}
-                        <i>No image</i>
-                    {% else %}
-                        <b><i>Image exists</i></b>
-                    {% endif %}    
-                    <a href="{% url 'productpriceupdate' prod.pk  %}"
-                        class="btn btn-primary btn-sm"
-                        role="button">Edit</a>
-                        <a href="{% url 'productpricedelete' prod.pk  %}"
-                        class="btn btn-secondary btn-sm"
-                        role="button">Del</a>    
-                </li>
-                {% empty %}
-                <p>You have no products on the website.</p>
+{% block content %}
 
-            {% endfor %}
-        </ul>   
-        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
-       <br>
-    {% endblock content %} 
+
+
+<div class="container product-details-container">
+
+    <div class="row">
+
+
+        <div class="col-12">
+            <h1>List of Products</h1>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <a href="{% url 'productpricecreate' %}" class="btn btn-secondary" role="button">Add</a>
+        </div>
+
+    </div>
+
+
+    <div class="row price-list-headings">
+
+        <div class="col-4">
+            <h4>Product</h4>
+        </div>
+
+        <div class="col-2">
+            <h4>Price</h4>
+
+        </div>
+
+        <div class="col-2">
+
+            <h4>Image</h4>
+
+        </div>
+
+        <div class="col-4">
+
+            <h4>Action</h4>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+        {% for prod in products_by_user %}
+        <div class="col-4">
+            {{ prod.brand }}
+            {{ prod.model_name }}
+
+        </div>
+
+        <div class="col-2">
+            £{{ prod.price }}
+        </div>
+
+        <div class="col-2">
+            {% if prod.product_image == null %}
+            <i class="fas fa-image text-primary"></i>
+            {% else %}
+
+            {% endif %}
+        </div>
+
+        <div class="col-4">
+            <a href="{% url 'productpriceupdate' prod.pk  %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+            <a href="{% url 'productpricedelete' prod.pk  %}" class="btn btn-secondary btn-sm" role="button">Del</a>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        {% empty %}
+        <p>You have no products on the website.</p>
+
+        {% endfor %}
+
+        <a href="{% url 'home' %}" class="btn btn-secondary btn-cancel">Cancel</a>
+    </div>
+</div>
+{% endblock content %}

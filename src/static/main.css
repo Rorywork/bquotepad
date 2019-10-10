@@ -1,4 +1,9 @@
 
+body{
+  font-size: 16px;
+}
+
+
 #main {
     background-color: rgb(255, 255, 255);
 }
@@ -115,3 +120,29 @@ h1{
 #dashboard-heading{
   margin-top: 50px;
 }
+
+.product-details-container{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.fa-image{
+  font-size: 30px;
+
+}
+
+.fa-times{
+  font-size: 30px;
+}
+
+
+.price-list-headings{
+  margin-top: 30px;
+}
+
+
+
+h1{
+  font-size: 2rem;
+}
+
