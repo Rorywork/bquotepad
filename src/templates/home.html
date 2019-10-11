@@ -1,86 +1,121 @@
 {% extends "base.html" %}
+{% load staticfiles%}
 
 {% block content %}
 
+<h1 id="dashboard-heading">Dashboard</h1>
+<div class = "container dashboard-container">
 
-
-
-
-<section class="main-image-section-home">
-    <div class="img-overlay">
-        <h1>Boiler Quotepad</h1>
-        <p>Generate instant quotations for your customers from your tablet or mobile, delivered as PDF's to their email.</p>
-        <button class="btn btn-primary">Sign Up Now!</button>
-    </div>
-</section>
-
-<section class="container-fluid home-info-section">
-
-    <div class="row home-info">
-        
-        <div class="col-sm-12 col-md-4 home-info-col">
-            <i class="fas fa-edit home-info-icons"></i>
-            <h2 class="text-primary home-info-titles">Fill in the details</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, itaque provident facere voluptatibus pariatur commodi soluta similique ad sint placeat vel dolore, libero perspiciatis. Eum deserunt illo itaque amet dolorum!</p>
-        </div>
-
-        <div class="col-sm-12 col-md-4 home-info-col">
-                <i class="fas fa-tablet home-info-icons"></i>
-                <h2 class="text-primary home-info-titles">Fill in the details</h2>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, itaque provident facere voluptatibus pariatur commodi soluta similique ad sint placeat vel dolore, libero perspiciatis. Eum deserunt illo itaque amet dolorum!</p>
-        </div>
-
-        <div class="col-sm-12 col-md-4 home-info-col">
-                    <i class="fas fa-envelope-square home-info-icons"></i>
-                    <h2 class="text-primary home-info-titles">Fill in the details</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, itaque provident facere voluptatibus pariatur commodi soluta similique ad sint placeat vel dolore, libero perspiciatis. Eum deserunt illo itaque amet dolorum!</p>
-        </div>
-
-
-    </div>
-
-</section>
-
-<section class="container-fluid process-section">
-
-    <div class="row">
-        <div class="col-sm-12 col-md-6 process-list-col">
-            <img class="img-fluid" src="https://www.ncbar.org/media/933988/864pop_web.jpg" alt="Paperless">
-        </div>
-
-        <div class="col-sm-12 col-md-6 process-image-col">
-                <ul class="process-list">
-                    <li class="process-list-item-heading text-primary">6 Easy Steps!</li>
-                    <li class="process-list-item text-secondary">1.Register with our site</li>
-                    <li class="process-list-item text-secondary">2. Edit your profile</li>
-                    <li class="process-list-item text-secondary">3.Upload your branding</li>
-                    <li class="process-list-item text-secondary">4. Customise your quotation template</li>
-                    <li class="process-list-item text-secondary">5. Complete surveys to generate quotes</li>
-                    <li class="process-list-item text-secondary">6. Quotation automaticall emailed to your customer.</li>
-                </ul>
-        </div>
-
-    </div>
-
-    <div class="row quote-row">
-            <div class="col-sm-12">
-                    <blockquote class="blockquote text-center">
-                            <p class="mb-0 text-primary">Quotepad had completely changed the way we work!</p>
-                            <footer class="blockquote-footer">Steve Jones from <cite title="Source Title">Boiler Review</cite></footer>
-                    </blockquote>
-
+    <div class="card-deck">
+            <div class="card">
+              <img src= "{% static 'icons/001-man.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Edit Your Profile</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium delectus deserunt fuga nostrum aliquam. Eius iste quaerat doloremque culpa, aliquam laudantium. Libero id cumque blanditiis incidunt animi ea sit.</p>
+                <a class="stretched-link" href="">Go Somewhere</a>
             </div>
-
-            <div class="col-sm-12 btn-col">
-                    <img class="img-fluid trustpilot-logo" src="https://www.abbeylocks.co.uk/wp-content/uploads/2019/01/trustpilot-logo-1.png" alt="Trustpilot Logo">
+            {% if request.session.Profile_updated %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
             </div>
-            <div class="col-sm-12 btn-col">
-                <button class="btn btn-primary">Sign Up!</button>
+            {% endif %}
             </div>
-
+            <div class="card">
+              <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Upload Company Brand And Images</h5>
+                <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nesciunt cum, maxime aliquam similique debitis deleniti beatae eligendi, eius quibusdam optio quisquam recusandae blanditiis incidunt sint veritatis nulla sequi. Non!</p>
+                <a class="stretched-link" href="">Go Somewhere</a>
+            </div>
+            {% if request.session.Image_loaded %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
+            </div>
+            <div class="card">
+              <img src="{% static 'icons/003-boiler.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Add Your Products</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, incidunt! Minima ipsam, eos, similique accusamus suscipit veritatis ipsa voluptates voluptatibus quo deleniti animi cum. Doloremque blanditiis ipsum laudantium fugit recusandae!</p>
+                <a class="stretched-link" href="">Go Somewhere</a>  
+            </div>
+            {% if request.session.ProductPrice_record %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
+            </div>
     </div>
 
-</section>
+
+    <div class="card-deck">
+            <div class="card">
+              <img src="{% static 'icons/004-theme.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Design Your Quote Template</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus inventore nulla nam aut voluptatibus, voluptatem quidem facilis nesciunt aliquam sint adipisci dolor quisquam provident placeat amet et obcaecati tempora.</p>
+                <a class="stretched-link" href="">Go Somewhere</a>  
+            </div>
+            {% if request.session.Profile_updated %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
+            </div>
+            <div class="card">
+              <img src="{% static 'icons/005-survey.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Purchase Quotepad</h5>
+                <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium, mollitia rem! Neque, earum dolore ullam itaque exercitationem eum porro consectetur voluptate. Voluptates deleniti animi corrupti esse qui asperiores molestiae repudiandae!</p>
+                <a class="stretched-link" href="">Go Somewhere</a>  
+            </div>
+            {% if request.session.Profile_updated %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
+            </div>
+            <div class="card">
+              <img src="{% static 'icons/006-card.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Complete A Survey</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius incidunt voluptatum tempore fugiat pariatur nesciunt amet quas illum cumque optio. Ea nostrum explicabo suscipit error dignissimos accusantium fugiat rem voluptatibus.</p>
+                <a class="stretched-link" href="">Go Somewhere</a>    
+            </div>
+            {% if request.session.Profile_updated %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
+              </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
+            </div>
+    </div>
+
+</div>
 
 
 
@@ -88,17 +123,30 @@
 
 
 
-<!-- <h1>QuotePad Process</h1>
-<ul>
-<li>1. Register with site</li>
-<li>2. Edit your Profile</li>
-<li>3. Upload Image Files</li>
-<li>4. Create Quote Template</li>
-<li>5. Create Quote</li>
-<li>6. Email to Customer</li>
-
- </ul> -->
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
