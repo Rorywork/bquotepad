@@ -15,9 +15,15 @@
                 <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium delectus deserunt fuga nostrum aliquam. Eius iste quaerat doloremque culpa, aliquam laudantium. Libero id cumque blanditiis incidunt animi ea sit.</p>
                 <a class="stretched-link" href="">Go Somewhere</a>
             </div>
-              <div class="card-footer">
-                <small class="text-muted">Free</small>
+            {% if request.session.Profile_updated %}
+              <div class="card-footer bg-success">
+                <small class="status-text">Complete</small>
               </div>
+            {% else %}
+            <div class="card-footer bg-danger">
+              <small class="status-text">Incomplete</small>
+            </div>
+            {% endif %}
             </div>
             <div class="card">
               <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="...">
