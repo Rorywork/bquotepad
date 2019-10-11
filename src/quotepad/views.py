@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse, Http404
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic import ListView, DeleteView, FormView
+from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, FormView
 
 # Form wizard imports
 from .forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
@@ -30,215 +30,404 @@ from quotepad.forms import DocumentForm
 
 # imports associated with xhtml2pdf
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.generic import View
 from quotepad.utils import render_to_pdf, convertHtmlToPdf, convertHtmlToPdf2
 import datetime
 from pathlib import Path, PureWindowsPath
-import os.path
+import os, os.path, errno
 
 # imports associated with sending email
-from django.core.mail import send_mail
+#from django.core.mail import send_mail
 # or ( should not be both )
 from django.core.mail import EmailMessage
 
 from .models import Profile, ProductPrice
-from .forms import ProfileForm, UserProfileForm, ProductPriceForm
+from .forms import ProfileForm, UserProfileForm, ProductPriceForm,EditQuoteTemplateForm
+
+# import associated with signals (used for setting session variables)
+from django.dispatch import receiver
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import User, Group
+
+# imports for managing .csv file upload
+import csv, io
+# for copying the template pdf file to the user folder
+import shutil
+
+@receiver(user_logged_in)
+def sig_user_logged_in(sender, user, request, **kwargs):
+
+	if Profile.objects.filter(user = request.user, first_name=''):
+		request.session['Profile_updated'] = False
+	else:
+		request.session['Profile_updated'] = True
+
+	if Document.objects.filter(user = request.user).count() > 0 :
+		request.session['Image_loaded'] = True
+	else:
+		request.session['Image_loaded'] = False
+
+	if ProductPrice.objects.filter(user = request.user).count() > 0 :
+		request.session['ProductPrice_record'] = True
+	else:
+		request.session['ProductPrice_record'] = False
+
+	if user.groups.filter(name = "Subscribed").exists():
+		request.session['User_subscribed'] = True
+	else:
+		request.session['User_subscribed'] = False
+
+	if user.groups.filter(name = "created_quote_template").exists():
+		request.session['created_quote_template'] = True
+	else:
+		request.session['created_quote_template'] = False
+
+	if user.groups.filter(name = "created_quote").exists():
+		request.session['created_quote'] = True
+	else:
+		request.session['created_quote'] = False				
+
+	return 
 
 class FormWizardView(SessionWizardView):
-    template_name = "boilerform.html"
-    form_list = [FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]
-    
-    # Below is code that outputs the forminfo to HTML
-    # def done(self, form_list, **kwargs):    
-    #     id = Installer.objects.get(company_name='Abode Boilers Ltd.')
-    #     idx = Installer.objects.filter(company_name='Abode Boilers Ltd.')
-    #     print(id.email)
-    #     print(idx)
-    #     print(id)
-    #     return render(self.request, 'pdf/boilerform_pdf.html', {
-    #         'form_data': [form.cleaned_data for form in form_list],
-    #         'idx': idx},
-    #     )
+	template_name = "boilerform.html"
 
-    # Below code renders the form output to a PDF format on screen
-    # def done(self, form_list, **kwargs):
-    #     pdf = render_to_pdf('pdf/boilerform_pdf.html', {'form_data': [form.cleaned_data for form in form_list]})
-    #     return HttpResponse(pdf, content_type='application/pdf')
+	# Below method is to pass the logged in user to the
+	# appropriate form to filter the drop down product listing
+	def get_form_kwargs(self, step):
+		if step == '8':
+			#return {'user': self.request.user}
+			seventh_step_data = self.storage.get_step_data('6')
+			manuf = seventh_step_data.get('6-boiler_manufacturer','')
+			print(manuf)
+			#initial['manufacturer'] = manuf
+			#print(initial)
+			return {'user': self.request.user, 'manufacturer': manuf}
+		elif step == '6':
+			return {'user': self.request.user}	
+		else:
+			return {}
 
-    # Below code renders the form output to a PDF format and downloads it (downloads folder)
-    # def done(self, form_list, **kwargs):
-    #     pdf = render_to_pdf('pdf/boilerform_pdf.html', {'form_data': [form.cleaned_data for form in form_list]})
-    #     if pdf:
-    #         response = HttpResponse(pdf, content_type='application/pdf')
-    #         #dest_folder = "C:\Users\gordo\Dev\gordonenv\src\pdfs"
-    #         filename = "Invoice_%s.pdf" %("123456")
-    #         content = "inline; filename=%s" %(filename)
-    #         #download = self.request.GET.get("download")
-    #         #if download:
-    #         content = "attachment; filename=%s" %(filename)
-    #         response['Content-Disposition'] = content
-    #         return response
-    #     return HttpResponse("Not found")
+	#def get_form_initial(self,step):
+		#initial = {}
+		#print(step)
 
-    # Below code renders the form to an email  in plain text format- sends to Mailtrap.io
-    # def done(self, form_list, **kwargs):
-    #     fd = [form.cleaned_data for form in form_list]
-    #     print(fd)
-    #     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
-    #     send_mail('Hello from QuotePad',
-    #     msg,
-    #     'gordon@quotepad.com',
-    #     ['email2@example.com'],
-    #     fail_silently=False)
-    #     return render(self.request, 'home.html')
+		# If at ninth Step (index 8) get the boiler_manufacturer
+		# in step seven ( Index 6)
+		#if step == '8':
+		#    seventh_step_data = self.storage.get_step_data('6')
+		#    manuf = seventh_step_data.get('6-boiler_manufacturer','')
+		#    print(manuf)
+		#    initial['manufacturer'] = manuf
+		#    print(initial)
+		#return initial
+		#return {'user': self.request.user, 'manufacturer': 'Worcester Bosch'}
+			
 
-    # Below code renders the pdf file and sends it as an email
-    # def done(self, form_list, **kwargs):
-    #     fd = [form.cleaned_data for form in form_list]
-    #     print(fd)
-    #     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
-    #     send_mail('Hello from QuotePad',
-    #     msg,
-    #     'gordon@quotepad.com',
-    #     ['email2@example.com'],
-    #     fail_silently=False)
-    #     return render(self.request, 'home.html')
+	form_list = [FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]
+	
+	# Below is code that outputs the forminfo to HTML
+	# def done(self, form_list, **kwargs):    
+	#     id = Installer.objects.get(company_name='Abode Boilers Ltd.')
+	#     idx = Installer.objects.filter(company_name='Abode Boilers Ltd.')
+	#     print(id.email)
+	#     print(idx)
+	#     print(id)
+	#     return render(self.request, 'pdf/boilerform_pdf.html', {
+	#         'form_data': [form.cleaned_data for form in form_list],
+	#         'idx': idx},
+	#     )
 
-    # Below code sends an email with an attached pdf file
-    # def done(self, form_list, **kwargs):
-    #     fd = [form.cleaned_data for form in form_list]
-    #     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
-    #     email = EmailMessage(
-    #     'Hello from Quotepad', msg, 'gordon@quotepad.com', ['email@to.com'])
-    #     email.attach_file('pdfs/Invoice_123456.pdf')
-    #     email.send()
-    #     return render(self.request, 'home.html')
+	# Below code renders the form output to a PDF format on screen
+	# def done(self, form_list, **kwargs):
+	#     pdf = render_to_pdf('pdf/boilerform_pdf.html', {'form_data': [form.cleaned_data for form in form_list]})
+	#     return HttpResponse(pdf, content_type='application/pdf')
 
-    # Below code does the whole damn thang!
-    def done(self, form_list, **kwargs):
-        # Initial check to see if user specific PDF template file exists
-        # If it does then use that template, if not use the generic template
-        usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(self.request.user.username))
-        print(usr_pdf_template_file)
-        if os.path.isfile(usr_pdf_template_file):
-            print("Using the user specific PDF template file - {}".format(usr_pdf_template_file))
-            sourceHtml = "pdf/user_{}/quote_for_pdf.html".format(self.request.user.username)      # Under templates folder
-        else:
-            print("{} The user specific PDF template file does not exist".format(usr_pdf_template_file))
-            print("Using the generic PDF template file.")
-            sourceHtml = "pdf/quote_for_pdf.html"      # Under templates folder
+	# Below code renders the form output to a PDF format and downloads it (downloads folder)
+	# def done(self, form_list, **kwargs):
+	#     pdf = render_to_pdf('pdf/boilerform_pdf.html', {'form_data': [form.cleaned_data for form in form_list]})
+	#     if pdf:
+	#         response = HttpResponse(pdf, content_type='application/pdf')
+	#         #dest_folder = "C:\Users\gordo\Dev\gordonenv\src\pdfs"
+	#         filename = "Invoice_%s.pdf" %("123456")
+	#         content = "inline; filename=%s" %(filename)
+	#         #download = self.request.GET.get("download")
+	#         #if download:
+	#         content = "attachment; filename=%s" %(filename)
+	#         response['Content-Disposition'] = content
+	#         return response
+	#     return HttpResponse("Not found")
 
-        # Get the data for the Installer from Installer table to populate email(id) and pdf(idx)
-        id = Profile.objects.get(user = self.request.user)
-        idx = Profile.objects.filter(user = self.request.user)
+	# Below code renders the form to an email  in plain text format- sends to Mailtrap.io
+	# def done(self, form_list, **kwargs):
+	#     fd = [form.cleaned_data for form in form_list]
+	#     print(fd)
+	#     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
+	#     send_mail('Hello from QuotePad',
+	#     msg,
+	#     'gordon@quotepad.com',
+	#     ['email2@example.com'],
+	#     fail_silently=False)
+	#     return render(self.request, 'home.html')
 
-        # Get the records of the images file for the current user
-        frecords = Document.objects.filter(user=self.request.user.username).order_by('uploaded_at')
-        outputFilename = "pdf_quote_archive/user_{}/Quote_{}{}.pdf".format(self.request.user.username,id.company_name.replace(" ","_"),f"{id.cur_quote_no:05}") # pad with leading zeros (5 positions)
+	# Below code renders the pdf file and sends it as an email
+	# def done(self, form_list, **kwargs):
+	#     fd = [form.cleaned_data for form in form_list]
+	#     print(fd)
+	#     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
+	#     send_mail('Hello from QuotePad',
+	#     msg,
+	#     'gordon@quotepad.com',
+	#     ['email2@example.com'],
+	#     fail_silently=False)
+	#     return render(self.request, 'home.html')
 
-        # Generate the PDF and write to disk
-        convertHtmlToPdf2(sourceHtml, outputFilename, {
-            'form_data': [form.cleaned_data for form in form_list],
-            'idx':idx,
-            'frecords': frecords})
+	# Below code sends an email with an attached pdf file
+	# def done(self, form_list, **kwargs):
+	#     fd = [form.cleaned_data for form in form_list]
+	#     msg = " Bill to : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n{}{}\n{}\n{}\n{}".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
+	#     email = EmailMessage(
+	#     'Hello from Quotepad', msg, 'gordon@quotepad.com', ['email@to.com'])
+	#     email.attach_file('pdfs/Invoice_123456.pdf')
+	#     email.send()
+	#     return render(self.request, 'home.html')
 
-        # Generate the email, attach the pdf and send out
-        fd = [form.cleaned_data for form in form_list]
-        msg = " Quote prepared for : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n {} {}\n {}\n {}\n {}\n\n".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
-        msg = msg + " Hi {}. Thank you for your enquiry. The quote that you requested is on the attached PDF file.".format(fd[0]['customer_first_name'])
-        email = EmailMessage(
-        'Your boiler installation quote from {}'.format(id.company_name), msg, id.email, [fd[0]['customer_email']])
-        email.attach_file(outputFilename)
-        email.send()
+	# Below code does the whole damn thang!
+	def done(self, form_list, **kwargs):
+		# Initial check to see if user specific PDF template file exists
+		# If it does then use that template, if not use the generic template
+		usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(self.request.user.username))
+		print(usr_pdf_template_file)
+		if os.path.isfile(usr_pdf_template_file):
+			#print("Using the user specific PDF template file - {}".format(usr_pdf_template_file))
+			sourceHtml = "pdf/user_{}/quote_for_pdf.html".format(self.request.user.username)      # Under templates folder
+		else:
+			#print("{} The user specific PDF template file does not exist".format(usr_pdf_template_file))
+			#print("Using the generic PDF template file.")
+			sourceHtml = "pdf/quote_for_pdf.html"      # Under templates folder
 
-        # Increment the Profile.cur_quote_no by 1
-        id.cur_quote_no = id.cur_quote_no + 1
-        id.save()
-        return HttpResponseRedirect('/quotesuccess/')
+		# Get the data for the Installer from Installer table to populate email(id) and pdf(idx)
+		#id = Profile.objects.get(user = self.request.user)
+		idx = Profile.objects.get(user = self.request.user)
 
-def quote_success(request):
-    return render(request,'quote_success.html')
+		#print([form.cleaned_data for form in form_list])
+		#print("-------------------------------")
+		#print([form.cleaned_data for form in form_list][8].get('product_choice').id)
+		product_id = ([form.cleaned_data for form in form_list][8].get('product_choice').id)
+		#print("Product id:" + str(product_id))
 
-# Views associated with user authentication
+		# Get the record of the product that was selected
+		product_record = ProductPrice.objects.get(pk = product_id)
+		#print(product_record)
+
+		# Get the record of the Product Image that was selected and handle exception
+		# if no image exists.
+		try:
+			img_record = Document.objects.get(id = product_record.product_image.id)
+		except Exception as e:
+			img_record = None
+			print(type(e)) 
+			print("Error: No Image exists for the Product")
+
+		#img_record = Document.objects.get(id = product_record.product_image.id)
+
+		# Get the records of the images file for the current user
+		frecords = Document.objects.filter(user=self.request.user.username).order_by('uploaded_at')
+
+		# Get customer lastname
+		customer_last_name = ([form.cleaned_data for form in form_list][0].get('customer_last_name'))
+
+		# Assign file name to store generated PDF
+		#outputFilename = "pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(self.request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.cur_quote_no:05}") # pad with leading zeros (5 positions)
+		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(self.request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.cur_quote_no:05}")) # pad with leading zeros (5 positions)
+
+		# Write the form data input to a file in the folder pdf_quote_archive/user_xxxx/current_quote.txt
+		current_quote_form_filename =  Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/current_quote.txt".format(self.request.user.username))
+		file = open(current_quote_form_filename, 'w') #write to file
+		for index, line in enumerate([form.cleaned_data for form in form_list]):
+			if index == 8:
+				# This code replaces the <object reference> in the form array[8] with the product_id
+				string = str(line)
+				firstDelPos=string.find("<") # get the position of <
+				secondDelPos=string.find(">") # get the position of >
+				stringAfterReplace = string.replace(string[firstDelPos:secondDelPos+1], "'" + str(product_id) + "'")
+				#print(stringAfterReplace)
+				file.write(str(stringAfterReplace) + "\n")
+			else:	
+				file.write(str(line) + "\n")
+		file.close() #close file
+
+
+		# Generate the PDF and write to disk
+		convertHtmlToPdf2(sourceHtml, outputFilename, {
+			'form_data': [form.cleaned_data for form in form_list],
+			'idx':idx,
+			'frecords': frecords,
+			'product_record': product_record,
+			'img_record': img_record})
+
+		# Generate the email, attach the pdf and send out ( now handled elsewhere )
+		# fd = [form.cleaned_data for form in form_list]
+		# msg = " Quote prepared for : {} {} \n Home Phone: {} \n Status: {} \n\n Address: \n {} {}\n {}\n {}\n {}\n\n".format(fd[0]['customer_first_name'], fd[0]['customer_last_name'], fd[0]['customer_home_phone'], fd[0]['owner_or_tenant'], fd[1]['installation_address'], fd[1]['street_address'], fd[1]['city'], fd[1]['county'], fd[1]['postcode'])
+		# msg = msg + " Hi {}. Thank you for your enquiry. The quote that you requested is on the attached PDF file.".format(fd[0]['customer_first_name'])
+		# email = EmailMessage(
+		# 'Your boiler installation quote from {}'.format(idx.company_name), msg, idx.email, [fd[0]['customer_email']])
+		# email.attach_file(outputFilename)
+		# email.send()
+
+		# Increment the Profile.cur_quote_no by 1
+		idx.cur_quote_no = idx.cur_quote_no + 1
+		idx.save()
+		return HttpResponseRedirect('/quotegenerated/')
+
+
+def quote_generated(request):
+	request.session['created_quote'] = True
+	created_quote_group = Group.objects.get(name = 'created_quote')
+	request.user.groups.add(created_quote_group)
+	return render(request,'quote_generated.html')
+
+def quote_emailed(request):
+	return render(request,'quote_emailed.html')
+
+def landing(request):
+    return render(request, 'landing.html')    
+
+#def quotepad_template_help(request):
+#	return render(request,'quotepad_template_help.html')
+
+def quotepad_template_help(request):
+	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
+	return render(request,'quotepad_template_help.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
+
+# Functions associated with user authentication
 def home(request):
-    return render(request, 'home.html')
-
-def dashboard(request):
-    return render(request, 'dashboard.html')
+	usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/{}/boilerform_pdf.html".format(request.user.username))
+	print(usr_pdf_template_file)
+	if os.path.isfile(usr_pdf_template_file):
+		print("Using the user specific PDF template file - {}".format(usr_pdf_template_file))
+	else:
+		print("{} The user specific PDF template file does not exist".format(usr_pdf_template_file))
+		print("Using the generic PDF template file.")
+	return render(request, 'home.html')
 
 def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        user_profile_form = UserProfileForm(request.POST)
-        if form.is_valid() and user_profile_form.is_valid():
+	if request.method == 'POST':
+		form = UserRegistrationForm(request.POST)
+		user_profile_form = UserProfileForm(request.POST)
+		if form.is_valid() and user_profile_form.is_valid():
 
-            userObj = form.cleaned_data
-            username = userObj['username']
-            email =  userObj['email']
-            password =  userObj['password']
-            if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
-               User.objects.create_user(username, email, password)
-               user = authenticate(username = username, password = password)
-               login(request, user)
-               profile = user_profile_form.save(commit=False)
-               profile.user = user
-               profile.save()
-               # currently redirection is to the quotepad form wizard but next version will require redirect to set up profile details
-               return HttpResponseRedirect('/loginredirect/')
-            else:
-               raise forms.ValidationError('A profile with that username or email already exists.')
-    else:
-        form = UserRegistrationForm()
-        user_profile_form = UserProfileForm()
-    return render(request, 'register.html', {'form' : form, 'user_profile_form': user_profile_form})
+			userObj = form.cleaned_data
+			username = userObj['username']
+			email =  userObj['email']
+			password =  userObj['password']
+			if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
+				User.objects.create_user(username, email, password)
+				user = authenticate(username = username, password = password)
+				login(request, user)
+				profile = user_profile_form.save(commit=False)
+				profile.user = user
+				profile.email = email
+				profile.save()
+
+				# Create strorge folders for the registered user 
+				pdf_quote_archive_folder = os.path.join(settings.BASE_DIR, "pdf_quote_archive")
+				TEMPLATE_DIRS = os.path.join(settings.BASE_DIR, 'templates')
+				#print(TEMPLATE_DIRS)
+				user_pdf_quote_archive_folder = os.path.join(pdf_quote_archive_folder,"user_{}".format(request.user.username))
+				pdf_templates_folder = os.path.join(TEMPLATE_DIRS,"pdf")
+				user_pdf_templates_folder = os.path.join(pdf_templates_folder,"user_{}".format(request.user.username))
+
+				# Create the user specific folder for archiving quotes
+				try:
+					os.mkdir(user_pdf_quote_archive_folder)
+				except OSError as e:
+					if e.errno != errno.EEXIST:
+						# Directory already exists
+						pass
+					else:
+						print(e)   
+	
+				# Create the user specific folder for storing the quote template
+				try:
+					os.mkdir(user_pdf_templates_folder)
+				except OSError as e:
+					if e.errno != errno.EEXIST:
+						# Directory already exists
+						pass
+					else:
+						print(e)
+
+				# Copy the template pdf-html file to the newly created user folder
+				source = os.path.join(pdf_templates_folder, 'quote_for_pdf.html')
+				print(source)
+				target = user_pdf_templates_folder
+				print(target)
+				# exception handling
+				try:
+					shutil.copy(source, target)
+				except IOError as e:
+					print("Unable to copy file. %s" % e)
+				
+				messages.success(request, 'You are now registered on the site.')
+				return HttpResponseRedirect('/loginredirect/')
+			else:
+				raise forms.ValidationError('A profile with that username or email already exists.')
+	else:
+		form = UserRegistrationForm()
+		user_profile_form = UserProfileForm()
+	return render(request, 'register.html', {'form' : form, 'user_profile_form': user_profile_form})
 
 def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
-            #return redirect('change_password') .. commented out by GL 14-07-19
-            return render(request, 'change_password_success.html', {})
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {'form': form})
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)  # Important!
+			messages.success(request, 'Your password was successfully updated!')
+			#return redirect('change_password') .. commented out by GL 14-07-19
+			return render(request, 'change_password_success.html', {})
+		else:
+			messages.error(request, 'Please correct the error below.')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'change_password.html', {'form': form})
 
 def model_form_upload(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        print(request.user)
-        if form.is_valid():
-            document = form.save(commit=False)
-            document.user = request.user
-            document.save()
-            return redirect('/showuploadedfiles/')
-    else:
-        form = DocumentForm()
-    return render(request, 'file_upload.html', {
-        'form': form
-    })
+	if request.method == 'POST':
+		form = DocumentForm(request.POST, request.FILES)
+		print(request.user)
+		if form.is_valid():
+			document = form.save(commit=False)
+			document.user = request.user
+			document.save()
+			request.session['Image_loaded'] = True
+			messages.success(request, 'The image file was successfully added.')
+			return redirect('/showuploadedfiles/')
+	else:
+		form = DocumentForm()
+	return render(request, 'file_upload.html', {
+		'form': form
+	})
 
 def show_uploaded_files(request):
-    frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
-    return render(request, 'show_uploaded_files.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
-    
+	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
+	return render(request, 'show_uploaded_files.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
+	
 
 def edit_Profile_details(request):
-    print(request.user.username)
-    profile = get_object_or_404(Profile, user = request.user )
-    if request.method=="POST":
-        form = ProfileForm(request.POST, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('/home/')
-    else:
-        form = ProfileForm(instance=profile)
-        
-    return render(request,"edit_Profile_details.html",{'form': form})
+	print(request.user.username)
+	profile = get_object_or_404(Profile, user = request.user )
+	if request.method=="POST":
+		form = ProfileForm(request.POST, instance=profile)
+		if form.is_valid():
+			form.save()
+			request.session['Profile_updated'] = True
+			messages.success(request, 'Your profile details have been updated.')
+			return redirect('/home/')
+	else:
+		form = ProfileForm(instance=profile)
+		
+	return render(request,"edit_Profile_details.html",{'form': form}) 
 
 # Views to perform CRUD operations on the ProductPrice model
 
@@ -257,6 +446,7 @@ def ProductPriceCreate(request):
 			product.user = request.user
 			product.save()
 			messages.success(request, 'The product details were successfully updated.')
+			request.session['ProductPrice_record'] = True
 			return redirect('/productpricelist/')
 	else:
 		form = ProductPriceForm(user = request.user)
@@ -274,6 +464,7 @@ def ProductPriceUpdate(request, product_id):
 		if form.is_valid():
 			product = form.save()
 			messages.success(request, 'The product details were successfully updated.')
+			request.session['ProductPrice_record'] = True
 			return redirect('/productpricelist/')
 	else:
 		form = ProductPriceForm(instance=product, user = request.user)
@@ -287,47 +478,134 @@ def ProductPriceUpdate(request, product_id):
 class ProductPriceDelete(DeleteView):
 	model = ProductPrice
 	success_url='/productpricelist/'
+	  
+def generate_quote_from_file(request, outputformat, quotesource):
 
+	# Initial check to see if user specific PDF template file exists
+	# If it does then use that template, if not then use the generic template
+	usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(request.user.username))
+	print(usr_pdf_template_file)
+	if os.path.isfile(usr_pdf_template_file):
+		sourceHtml = "pdf/user_{}/quote_for_pdf.html".format(request.user.username)      # Under templates folder
+	else:
+		sourceHtml = "pdf/quote_for_pdf.html"      # Under templates folder
 
-def testpdflayout(request, testmode):
+	# Determine where to source the quote data from - test_data.txt or the current quote for the user
+	if quotesource == "testdata":
+		quote_form_filename =  Path(settings.BASE_DIR + "/pdf_quote_archive/test_data.txt")
+	else: # use the current quote data file	
+		quote_form_filename =  Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/current_quote.txt".format(request.user.username))
+		# if a current quote data file does not exist then revery back to using the test data file
+		if not os.path.isfile(quote_form_filename):
+			quote_form_filename =  Path(settings.BASE_DIR + "/pdf_quote_archive/test_data.txt")
 
-    # Initial check to see if user specific PDF template file exists
-    # If it does then use that template, if not use the generic template
-    usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(request.user.username))
-    print(usr_pdf_template_file)
-    if os.path.isfile(usr_pdf_template_file):
-        sourceHtml = "pdf/user_{}/quote_for_pdf.html".format(request.user.username)      # Under templates folder
-    else:
-        sourceHtml = "pdf/quote_for_pdf.html"      # Under templates folder
+	with open(quote_form_filename) as file:
+		file_form_datax = []
+		for line in file:
+			file_form_datax.append(eval(line))
+			#print(line)
+			#print("----------")
+		
+	file_form_data = file_form_datax
+	product_id = file_form_data[8].get('product_choice')	
 
-    test_form_data = [{'customer_first_name': 'Alan', 'customer_last_name': 'Green', 'customer_home_phone': '01202 123456', 'customer_mobile_phone': '07768 150701', 'customer_email': 'gordonlindsay@virginmedia.com', 'owner_or_tenant': 'Owner'},
-    {'installation_address': '12', 'street_address': 'Stourvale Avenue', 'city': 'Bournemouth', 'county': 'Dorset', 'postcode': 'BH6 3PT', 'property_type': 'Detached'},
-    {'current_fuel_type': 'Gas', 'current_boiler_type': 'Floor Standing - Conventional', 'current_boiler_location': 'Kitchen', 'current_flue_system': 'Vertical - Open Flue', 'current_flue_location': 'Ground Floor', 'current_controls': 'Wired - Programmer'},
-    {'removals': ['Hot Water Cylinder', 'Feed and Expansion Tank']},
-    {'new_fuel_type': 'Gas', 'new_boiler_type': 'Floor Standing - Conventional', 'new_boiler_location': 'Kitchen', 'new_flue_system': 'Vertical - Open Flue', 'new_flue_location': 'Ground Floor', 'new_flue_diameter': '100mm', 'plume_management_kit': 'Required', 'condensate_termination': 'Drain', 'new_controls': 'Wired - Programmer', 'cws_flow_rate': '4', 'new_flue_metres': '1'},
-    {'system_treatment': 'Chemical Flush & Inhibitor', 'gas_supply': 'Use esxisting supply', 'gas_supply_length': '9-15m', 'asbestos_containing_materials_identified': 'No Asbestos Identified', 'electrical_work_required': 'Connect to existing wiring'},
-    {'boiler_manufacturer': 'Worcester Bosch', 'boiler_model': '7733600074 Worcester Bosch Greenstar 12Ri', 'manufacturer_guarentee': '5 Years', 'flue_components': 'Horizontal Flue Kit', 'programmer_thermostat': 'Drayton Twin Channel Programmer', 'central_heating_system_filter': 'Worcester Bosch 22mm System Filter', 'scale_reducer': '15mm in line scale reducer'},
-    {'radiator_requirements': 'Thermostatic Radiator Valves Only', 'thermostatic_radiator_valves_size': '22', 'thermostatic_radiator_valves_type': 'Stainless Steel', 'thermostatic_radiator_valves_quantity': '5'},
-    {'estimated_duration': '1 Day', 'description_of_works': 'Full installation of new boiler and removal of existing one.'}]
+	idx = Profile.objects.get(user = request.user)
 
-    idx = Profile.objects.filter(user = request.user)
+	# Get the ProductPrice record selection 
+	if quotesource == "testdata":	# ProductPrice will come from the first user record or from the demo record	
+		if ProductPrice.objects.filter(user = request.user).count() > 0 :	# Check if the user has created a product/price record
+			product_record = ProductPrice.objects.filter(user = request.user).first()	# A product price record exists - use the first one
+			print(product_record)
+			print("Does exist")
+		else:	# Product Price record does not exist - select the Demo record
+			print("Does not exist")
+			product_record = ProductPrice.objects.first()			
+	else:	# retrieve the user selected product record from the quote form
+		product_record = ProductPrice.objects.get(pk = int(product_id))
 
-    frecords = Document.objects.filter(user=request.user.username).order_by('uploaded_at')
+	frecords = Document.objects.filter(user=request.user.username).order_by('uploaded_at')
 
-    # Determine whether to output to screen as PDF or HTML
-    if testmode == "PDFOutput":
-        pdf = render_to_pdf(sourceHtml, {
-            'form_data': test_form_data,
-            'idx': idx,
-            'frecords': frecords})
-        return HttpResponse(pdf, content_type='application/pdf')
-    else:   # HTMLOutput
-        return render(request, sourceHtml, {
-            'form_data': test_form_data,
-            'idx': idx,
-            'frecords': frecords},
-            )
+	try:	# test to see if image is associated with product
+		img_record = Document.objects.get(id = product_record.product_image.id )
+	except: # if not then continue with empty object
+		img_record = ""
 
+	# Determine whether to output to screen as PDF or HTML
+	if outputformat == "PDFOutput":
+		pdf = render_to_pdf(sourceHtml, {
+			'form_data': file_form_data,
+			'idx': idx,
+			'frecords': frecords,
+			'product_record': product_record,
+			'img_record': img_record})
+		return HttpResponse(pdf, content_type='application/pdf')
 
+	elif outputformat == "EmailOutput":
+		# Get customer lastname
+		customer_last_name = (file_form_data[0].get('customer_last_name'))
+		# Assign file name to store generated PDF
+		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.cur_quote_no:05}")) # pad with leading zeros (5 positions)
+		# Generate the PDF and write to disk
+		convertHtmlToPdf2(sourceHtml, outputFilename, {
+			'form_data': file_form_data,
+			'idx':idx,
+			'frecords': frecords,
+			'product_record': product_record,
+			'img_record': img_record})
+		# Generate the email, attach the pdf and send out
+		fd = file_form_data
+		msg=""
+		msg = msg + " Hi {}.\n Thank you for your enquiry to {}. The quote that you requested is on the attached PDF file.\n\n".format(fd[0]['customer_first_name'], idx.company_name)
+		msg = msg + " Should you have any further questions please feel free to contact me on {}.\n\n".format(idx.telephone)
+		msg = msg + " Kind regards,\n"
+		msg = msg + " " + idx.first_name
+		email = EmailMessage(
+		'Your boiler installation quote from {}'.format(idx.company_name), msg, idx.email, [fd[0]['customer_email']])
+		email.attach_file(outputFilename)
+		email.send()
+		return HttpResponseRedirect('/quoteemailed/')
 
+	else:   # HTMLOutput
+		return render(request, sourceHtml, {
+			'form_data': file_form_data,
+			'idx': idx,
+			'frecords': frecords,
+			'product_record': product_record,
+			'img_record': img_record},
+			)
+
+def edit_quote_template(request):
+	
+	if request.method=="POST":
+		form = EditQuoteTemplateForm(request.user)
+		
+		pdf_template_code = request.POST['pdf_template_code']
+	
+		usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(request.user.username))	
+		#usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_test/quote_for_pdfx.html")
+		template_file = open(usr_pdf_template_file,'w', newline='')
+		template_file.write(pdf_template_code)
+		template_file.close()
+		request.session['created_quote_template'] = True
+		created_quote_template_group = Group.objects.get(name = 'created_quote_template')
+		request.user.groups.add(created_quote_template_group)
+		messages.success(request, 'Your quote template has been updated.')
+	else:
+		form = EditQuoteTemplateForm(request.user)
+		return render(request,"edit_quote_template.html",{'form': form}) 
+
+	return redirect('/home/')	
+
+def list_quote_archive(request):
+	folder = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username))
+	#path="C:\\somedirectory"  # insert the path to your directory   
+	pdf_files =os.listdir(folder)   
+	return render(request, 'list_quote_archive.html', {'pdf_files': pdf_files})
+
+def pdf_view(request, pdf_file):
+	file_to_render = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username), pdf_file)
+	try:
+		return FileResponse(open(file_to_render, 'rb'), content_type='application/pdf')
+	except FileNotFoundError:
+		raise Http404()
 
