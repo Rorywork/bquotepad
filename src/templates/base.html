@@ -9,7 +9,7 @@
     <meta name="google" content="notranslate">
     <meta http-equiv="Content-Language" content="en">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cerulean/bootstrap.min.css" integrity="sha256-bC7V4L6y6xc8L9FYibK5tl3hERQASyd45F09myTwofs=" crossorigin="anonymous" />
-    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
 </head>
 
@@ -63,7 +63,16 @@
                 <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
                 <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
                 <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
-                <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
+                <!-- <a class="nav-item nav-link" href="/boilerform">Create Quote</a> -->
+                {% ifequal user.groups.all.0.name "Subscribed" %}
+                  {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
+                    <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
+                  {% else %}
+                    <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
+                  {% endif %}    
+                {% else %}
+                  <a class="nav-item nav-link" href="/stripecheckout">Create Quote (requires subscription)</a>
+                {% endifequal %}
                 <a class="nav-item nav-link" href="/generatequotefromfile/HTMLOutput/testdata">View Quote Layout as HTML</a>
                 <a class="nav-item nav-link" href="/generatequotefromfile/PDFOutput/testdata">View Quote Layout as PDF</a>
                 <a class="nav-item nav-link" href="/productpricelist">Edit Product Details</a>
@@ -77,31 +86,25 @@
 
           
         </div>
-      </nav>
-
-
-
-
-
-
-
-
-     
-
-        {% block content %}
-        <h1>Welcome!</h1>
-        <p>This is the site template</p>
-        {% endblock content %}
-
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-
+      </nav>      
+      
+      
+      
+      
+      {% block content %}
+      <h1>Welcome!</h1>
+      <p>This is the site template</p>
+      {% endblock content %}
+      
+      
+      {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+                  <li class="{{ message.tags }}">{{ message }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+      
 
 
 
