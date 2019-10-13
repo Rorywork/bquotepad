@@ -1,8 +1,12 @@
 from django import forms
-# Added by GL 19/07/19 - File upload capability
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from quotepad.models import Document, Profile, ProductPrice
+
+# For Editing the template
+from django.conf import settings
+from pathlib import Path
 
 OWNER_OR_TENANT_DROPDOWN = (
 	('Owner','Owner'),
@@ -192,7 +196,7 @@ SYSTEM_TREATMENT_DROPDOWN = (
 )
 
 GAS_SUPPLY_DROPDOWN = (
-	('Use esxisting supply','Use existing supply'),
+	('Use existing supply','Use existing supply'),
 	('New internal supply required','New internal supply required'),
 	('New external supply required','New external supply required'),
 )
@@ -225,14 +229,14 @@ ELECTRICAL_WORK_REQUIRED_DROPDOWN = (
 BOILER_MANUFACTURER_DROPDOWN = (
 	('Worcester Bosch','Worcester Bosch'),
 	('Viessmann','Viessmann'),
-	('Valliant','Valliant'),
+	('Vaillant','Vaillant'),
 	('Glowworm','Glowworm'),
 	('Ideal','Ideal'),
 	('Baxi','Baxi'),
 	('Potterton','Potterton'),
 )
 
-MANUFACTURER_GUARENTEE_DROPDOWN = (
+MANUFACTURER_GUARANTEE_DROPDOWN = (
 	('5 Years','5 Years'),
 	('6 Years','6 Years'),
 	('7 Years','7 Years'),
@@ -301,79 +305,88 @@ class FormStepOne(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.0.field_name e.g. form_data.0.customer_first_name
-    customer_first_name = forms.CharField(max_length=100)
-    customer_last_name = forms.CharField(max_length=100)
-    customer_home_phone = forms.CharField(max_length=100)
-    customer_mobile_phone = forms.CharField(max_length=100)
-    customer_email = forms.EmailField()
-    owner_or_tenant = forms.ChoiceField(choices=OWNER_OR_TENANT_DROPDOWN)
-    
+	customer_first_name = forms.CharField(max_length=100)
+	customer_last_name = forms.CharField(max_length=100)
+	customer_home_phone = forms.CharField(max_length=100)
+	customer_mobile_phone = forms.CharField(max_length=100)
+	customer_email = forms.EmailField()
+	owner_or_tenant = forms.ChoiceField(choices=OWNER_OR_TENANT_DROPDOWN)
+	#choice = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = 'Worcester Bosch'), empty_label = 'Select Product for quote')
+	
+
 class FormStepTwo(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.1.field_name e.g. form_data.1.installation_address
-    installation_address = forms.CharField(max_length=100)
-    street_address = forms.CharField(max_length=100)
-    city = forms.CharField(max_length=100)
-    county = forms.CharField(max_length=100)
-    postcode = forms.CharField(max_length=100)
-    property_type = forms.ChoiceField(choices=PROPERTY_TYPE_DROPDOWN)
+	installation_address = forms.CharField(max_length=100)
+	street_address = forms.CharField(max_length=100)
+	city = forms.CharField(max_length=100)
+	county = forms.CharField(max_length=100)
+	postcode = forms.CharField(max_length=100)
+	property_type = forms.ChoiceField(choices=PROPERTY_TYPE_DROPDOWN)
 
 class FormStepThree(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.2.field_name e.g. form_data.2.current_fuel_type
-    current_fuel_type = forms.ChoiceField(choices=CURRENT_FUEL_TYPE_DROPDOWN)
-    current_boiler_type = forms.ChoiceField(choices=CURRENT_BOILER_TYPE_DROPDOWN)
-    current_boiler_location = forms.ChoiceField(choices=CURRENT_BOILER_LOCATION_DROPDOWN)
-    current_flue_system = forms.ChoiceField(choices=CURRENT_FLUE_SYSTEM_DROPDOWN)
-    current_flue_location = forms.ChoiceField(choices=CURRENT_FLUE_LOCATION_DROPDOWN)
-    current_controls = forms.ChoiceField(choices=CURRENT_CONTROLS_DROPDOWN)
-    
+	current_fuel_type = forms.ChoiceField(choices=CURRENT_FUEL_TYPE_DROPDOWN)
+	current_boiler_type = forms.ChoiceField(choices=CURRENT_BOILER_TYPE_DROPDOWN)
+	current_boiler_location = forms.ChoiceField(choices=CURRENT_BOILER_LOCATION_DROPDOWN)
+	current_flue_system = forms.ChoiceField(choices=CURRENT_FLUE_SYSTEM_DROPDOWN)
+	current_flue_location = forms.ChoiceField(choices=CURRENT_FLUE_LOCATION_DROPDOWN)
+	current_controls = forms.ChoiceField(choices=CURRENT_CONTROLS_DROPDOWN)
+	
 class FormStepFour(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.3.field_name e.g. form_data.3.removals
-    removals = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                             choices=REMOVALS_CHOICES)
+	removals = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+											 choices=REMOVALS_CHOICES)
 
 class FormStepFive(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.4.field_name e.g. form_data.4.new_fuel_type
-    new_fuel_type = forms.ChoiceField(choices=NEW_FUEL_TYPE_DROPDOWN)
-    new_boiler_type = forms.ChoiceField(choices=NEW_BOILER_TYPE_DROPDOWN)
-    new_boiler_location = forms.ChoiceField(choices=NEW_BOILER_LOCATION_DROPDOWN)
-    new_flue_system = forms.ChoiceField(choices=NEW_FLUE_SYSTEM_DROPDOWN)
-    new_flue_location = forms.ChoiceField(choices=NEW_FLUE_LOCATION_DROPDOWN)
-    new_flue_diameter = forms.ChoiceField(choices=NEW_FLUE_DIAMETER_DROPDOWN)
-    plume_management_kit = forms.ChoiceField(choices=PLUME_MANAGEMENT_KIT_DROPDOWN)
-    condensate_termination = forms.ChoiceField(choices=CONDENSATE_TERMINATION_DROPDOWN)
-    new_controls = forms.ChoiceField(choices=NEW_CONTROLS_DROPDOWN)
-    cws_flow_rate = forms.ChoiceField(choices=CWS_FLOW_RATE_DROPDOWN)
-    new_flue_metres = forms.ChoiceField(choices=NEW_FLUE_METRES_DROPDOWN)
-    
+	new_fuel_type = forms.ChoiceField(choices=NEW_FUEL_TYPE_DROPDOWN)
+	new_boiler_type = forms.ChoiceField(choices=NEW_BOILER_TYPE_DROPDOWN)
+	new_boiler_location = forms.ChoiceField(choices=NEW_BOILER_LOCATION_DROPDOWN)
+	new_flue_system = forms.ChoiceField(choices=NEW_FLUE_SYSTEM_DROPDOWN)
+	new_flue_location = forms.ChoiceField(choices=NEW_FLUE_LOCATION_DROPDOWN)
+	new_flue_diameter = forms.ChoiceField(choices=NEW_FLUE_DIAMETER_DROPDOWN)
+	plume_management_kit = forms.ChoiceField(choices=PLUME_MANAGEMENT_KIT_DROPDOWN)
+	condensate_termination = forms.ChoiceField(choices=CONDENSATE_TERMINATION_DROPDOWN)
+	new_controls = forms.ChoiceField(choices=NEW_CONTROLS_DROPDOWN)
+	cws_flow_rate = forms.ChoiceField(choices=CWS_FLOW_RATE_DROPDOWN)
+	new_flue_metres = forms.ChoiceField(choices=NEW_FLUE_METRES_DROPDOWN)
+	
 class FormStepSix(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.5.field_name e.g. form_data.5.new_fuel_type
-    system_treatment = forms.ChoiceField(choices=SYSTEM_TREATMENT_DROPDOWN)
-    gas_supply = forms.ChoiceField(choices=GAS_SUPPLY_DROPDOWN)
-    gas_supply_length = forms.ChoiceField(choices=GAS_SUPPLY_LENGTH_DROPDOWN)
-    asbestos_containing_materials_identified = forms.ChoiceField(choices=ASBESTOS_CONTAINING_MATERIALS_IDENTIFIED_DROPDOWN)
-    electrical_work_required = forms.ChoiceField(choices=ELECTRICAL_WORK_REQUIRED_DROPDOWN)
+	system_treatment = forms.ChoiceField(choices=SYSTEM_TREATMENT_DROPDOWN)
+	gas_supply = forms.ChoiceField(choices=GAS_SUPPLY_DROPDOWN)
+	gas_supply_length = forms.ChoiceField(choices=GAS_SUPPLY_LENGTH_DROPDOWN)
+	asbestos_containing_materials_identified = forms.ChoiceField(choices=ASBESTOS_CONTAINING_MATERIALS_IDENTIFIED_DROPDOWN)
+	electrical_work_required = forms.ChoiceField(choices=ELECTRICAL_WORK_REQUIRED_DROPDOWN)
 
 class FormStepSeven(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.6.field_name e.g. form_data.6.boiler_manufactureruel_type
-	boiler_manufacturer = forms.ChoiceField(choices=BOILER_MANUFACTURER_DROPDOWN)
-	boiler_model = forms.CharField(max_length=100)
-	manufacturer_guarentee = forms.ChoiceField(choices=MANUFACTURER_GUARENTEE_DROPDOWN)
+
+	#boiler_manufacturer = forms.ChoiceField(choices=BOILER_MANUFACTURER_DROPDOWN)
+	def __init__(self, *args, **kwargs):
+		# Get the user to seed the filter on the boiler_manufacturer drop down.
+		self.user = kwargs.pop('user')
+		super(FormStepSeven, self).__init__(*args, **kwargs)
+		self.fields['boiler_manufacturer'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user).order_by('brand').values_list('brand', flat=True).distinct(), to_field_name='brand',empty_label = 'Select Boiler Brand for quote')
+	manufacturer_guarantee = forms.ChoiceField(choices=MANUFACTURER_GUARANTEE_DROPDOWN)
 	flue_components = forms.ChoiceField(choices=FLUE_COMPONENTS_DROPDOWN)
 	programmer_thermostat = forms.ChoiceField(choices=PROGRAMMER_THERMOSTAT_DROPDOWN)
 	central_heating_system_filter = forms.ChoiceField(choices=CENTRAL_HEATING_SYSTEM_FILTER_DROPDOWN)
 	scale_reducer = forms.ChoiceField(choices=SCALE_REDUCER_DROPDOWN)
+
+	#field_order = ['boiler_manufacturer','flue_components','programmer_thermostat','central_heating_system_filter','scale_reducer', 'manufacturer_guarantee']
 	
 class FormStepEight(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
@@ -388,20 +401,26 @@ class FormStepNine(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.8.field_name e.g. form_data.8.estimated_duration
+	def __init__(self, *args, **kwargs):
+		# Get the user to seed the filter on the drop down.
+		self.user = kwargs.pop('user')
+		self.manuf = kwargs.pop('manufacturer')
+		super(FormStepNine, self).__init__(*args, **kwargs)
+		self.fields['product_choice'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = self.manuf), empty_label = 'Select Product for quote')
 	estimated_duration = forms.ChoiceField(choices=ESTIMATED_DURATION_DROPDOWN)
 	description_of_works = forms.CharField(max_length=2000)
-    
-    
+	
+	
 class UserRegistrationForm(forms.Form):
 	username = forms.CharField(
 			required = True,
 			label = 'Username',
 			max_length = 32
 		)
-	email = forms.CharField(
+	email = forms.EmailField(
 			required = True,
 			label = 'Email',
-			max_length = 32,
+			max_length = 64,
 		)
 	password = forms.CharField(
 			required = True,
@@ -416,12 +435,12 @@ class DocumentForm(forms.ModelForm):
 	class Meta:
 		model = Document
 		fields = ('document', 'description')
-		
+
 # Installer details
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ('first_name','last_name','company_name','email','telephone','cur_quote_no')
+		fields = ('first_name','last_name','email','company_name','telephone', 'quote_prefix', 'cur_quote_no')
 		
 class UserProfileForm(forms.ModelForm):
 	class Meta:
@@ -439,4 +458,22 @@ class ProductPriceForm(forms.ModelForm):
 		self.user = kwargs.pop('user')
 		super(ProductPriceForm, self).__init__(*args, **kwargs)
 		self.fields['product_image'].queryset=Document.objects.filter(user = self.user)
+
+
+class EditQuoteTemplateForm(forms.Form):
+
+	pdf_template_code = forms.CharField(widget=forms.Textarea(attrs={'rows':24, 'cols':60}))
+
+	def __init__(self, user, *args, **kwargs):
+
+		self.user = user
+		super(EditQuoteTemplateForm, self).__init__(*args, **kwargs)
+		usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(self.user.username))
+		template_file = open(usr_pdf_template_file,'r')
+		self.fields['pdf_template_code'].initial = template_file.read
+
+
+
+
+
 
