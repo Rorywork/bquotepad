@@ -14,7 +14,7 @@
         <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium delectus deserunt
           fuga nostrum aliquam. Eius iste quaerat doloremque culpa, aliquam laudantium. Libero id cumque blanditiis
           incidunt animi ea sit.</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+        <a class="stretched-link" href="/edit_Profile_details">Go Somewhere</a>
       </div>
       {% if request.session.Profile_updated %}
       <div class="card-footer bg-success">
@@ -33,7 +33,7 @@
         <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nesciunt cum, maxime
           aliquam similique debitis deleniti beatae eligendi, eius quibusdam optio quisquam recusandae blanditiis
           incidunt sint veritatis nulla sequi. Non!</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+        <a class="stretched-link" href="/fileupload">Go Somewhere</a>
       </div>
       {% if request.session.Image_loaded %}
       <div class="card-footer bg-success">
@@ -52,7 +52,7 @@
         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, incidunt! Minima ipsam, eos,
           similique accusamus suscipit veritatis ipsa voluptates voluptatibus quo deleniti animi cum. Doloremque
           blanditiis ipsum laudantium fugit recusandae!</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+        <a class="stretched-link" href="/productpricelist">Go Somewhere</a>
       </div>
       {% if request.session.ProductPrice_record %}
       <div class="card-footer bg-success">
@@ -75,7 +75,7 @@
         <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus inventore nulla
           nam aut voluptatibus, voluptatem quidem facilis nesciunt aliquam sint adipisci dolor quisquam provident
           placeat amet et obcaecati tempora.</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+        <a class="stretched-link" href="/editquotetemplate">Go Somewhere</a>
       </div>
       {% if request.session.created_quote_template %}
       <div class="card-footer bg-success">
@@ -94,7 +94,7 @@
         <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium, mollitia rem! Neque,
           earum dolore ullam itaque exercitationem eum porro consectetur voluptate. Voluptates deleniti animi corrupti
           esse qui asperiores molestiae repudiandae!</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+        <a class="stretched-link" href="/stripecheckout">Go Somewhere</a>
       </div>
       {% if request.session.User_subscribed %}
       <div class="card-footer bg-success">
@@ -113,7 +113,18 @@
         <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius incidunt voluptatum tempore
           fugiat pariatur nesciunt amet quas illum cumque optio. Ea nostrum explicabo suscipit error dignissimos
           accusantium fugiat rem voluptatibus.</p>
-        <a class="stretched-link" href="">Go Somewhere</a>
+
+
+          {% ifequal user.groups.all.0.name "Subscribed" %}
+          {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
+            <a class="stretched-link" href="/quotenotpossible">Create Quote</a>
+          {% else %}
+            <a class="stretched-link" href="/boilerform">Create Quote</a>
+          {% endif %}    
+        {% else %}
+          <a class="stretched-link" href="/stripecheckout">Create Quote (requires subscription)</a>
+        {% endifequal %}
+
       </div>
       {% if request.session.created_quote %}
       <div class="card-footer bg-success">
