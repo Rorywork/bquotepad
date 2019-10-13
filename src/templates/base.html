@@ -15,38 +15,9 @@
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
-
-<!-- 
-    Old Navbar -->
-    <!-- <div id="wrapper">
-        <header id="header">
-            <div id='topper'>
-                <span style="float: right;">
-                <p><a href="/home">Home</a></p>
-                {% if user.is_authenticated %}
-                    <p>Welcome {{ user.username }}</p>
-                    <p><a href="/logout">Logout</a></p>
-                    <p><a href="/changepassword">Change Password</a></p>
-                    <p><a href="/edit_Profile_details">Edit Your Profile</a></p>
-                    <p><a href="/fileupload">Upload Image Files</a></p>
-                    <p><a href="/showuploadedfiles">Show Uploaded Images</a></p>
-                    <p><a href="/boilerform">Create Quote</a></p>
-                {% else %}
-                    <p><a href="/login">Login</a></p>
-                    <p><a href="/register">Sign up</a></p>
-                {% endif %}
-                </span>
-            </div>
-            <div id="logo"><img src="{% static 'Quotepad.PNG' %}" alt="" /></div>
-            <div id="topbanner"><img src="{% static 'top_banner.png' %}" width="800" height="200" alt="" /></div>
-        </header>
-    </div>  -->
-    
-
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Boiler Quotepad</a>
@@ -63,7 +34,6 @@
                 <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
                 <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
                 <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
-                <!-- <a class="nav-item nav-link" href="/boilerform">Create Quote</a> -->
                 {% ifequal user.groups.all.0.name "Subscribed" %}
                   {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
                     <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
