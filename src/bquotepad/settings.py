@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'formtools',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ WSGI_APPLICATION = 'bquotepad.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -122,26 +124,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# Added by GL.... 13-07-2019
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Added by GL.... 13-07-2019
 LOGIN_REDIRECT_URL = '/loginredirect/'
 
-#Added by GL.... 14-07-2019
-# Removed by GL .... 18-08-2019 ( now using mailtrap.io) see below
-#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-#EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
-#Added by GL... 19-07-2019 - Location setting for the files being uploaded
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Added by GL 18-08-2019 - Settings for send emails to mailtrap.io
+
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '81fe8f4f745013'
 EMAIL_HOST_PASSWORD = '42e4ef999c2411'
 EMAIL_PORT = '2525'
+
+# Stripe key settings
+STRIPE_SECRET_KEY = 'sk_test_4YVK8BcxtDC2f0F7DVau0JWG00TJj1bFLs'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_34Pl9iMCAFEIfxCGX84ZrP6G0047uZg93B'
