@@ -26,29 +26,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             {% if user.is_authenticated %}
-                <p>Welcome {{ user.username }}</p>
-                <a class="nav-item nav-link" href="/logout">Logout</a>
-                <a class="nav-item nav-link" href="/changepassword">Change Password</a>
-                <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
-                <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
-                <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
-                {% ifequal user.groups.all.0.name "Subscribed" %}
-                  {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
-                    <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
-                  {% else %}
-                    <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
-                  {% endif %}    
-                {% else %}
-                  <a class="nav-item nav-link" href="/stripecheckout">Create Quote (requires subscription)</a>
-                {% endifequal %}
-                <a class="nav-item nav-link" href="/generatequotefromfile/HTMLOutput/testdata">View Quote Layout as HTML</a>
-                <a class="nav-item nav-link" href="/generatequotefromfile/PDFOutput/testdata">View Quote Layout as PDF</a>
-                <a class="nav-item nav-link" href="/productpricelist">Edit Product Details</a>
-                <a class="nav-item nav-link" href="/editquotetemplate">Edit Quote Template</a>
-                <a class="nav-item nav-link" href="/stripecheckout">Subscribe</a>
+            <p>Welcome {{ user.username }}</p>
+            <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+            <a class="nav-item nav-link" href="/changepassword">Change Password</a>
+            <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
+            <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
+            <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
+            {% ifequal user.groups.all.0.name "Subscribed" %}
+            {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
+            <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
             {% else %}
+            <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
+            {% endif %}    
+            {% else %}
+            <a class="nav-item nav-link" href="/stripecheckout">Create Quote (requires subscription)</a>
+            {% endifequal %}
+            <a class="nav-item nav-link" href="/generatequotefromfile/HTMLOutput/testdata">View Quote Layout as HTML</a>
+            <a class="nav-item nav-link" href="/generatequotefromfile/PDFOutput/testdata">View Quote Layout as PDF</a>
+            <a class="nav-item nav-link" href="/productpricelist">Edit Product Details</a>
+            <a class="nav-item nav-link" href="/editquotetemplate">Edit Quote Template</a>
+            <a class="nav-item nav-link" href="/stripecheckout">Subscribe</a>
+            {% else %}
+                <a class="nav-item nav-link" href="/landing">About<span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/login">Login</a>
                 <a class="nav-item nav-link" href="/register">Register</a>
             {% endif %}
