@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+<h4>Purchase subscription for £15.00</h4>
+<form action="{% url 'charge' %}" method="post">
+  {% csrf_token %}
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ key }}"
+          data-description="Quotepad Subscription Charge"
+          data-amount="1500"
+          data-locale="auto"
+          data-currency=gbp></script>
+
+          <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>        
+</form>
+
+</div>
+
+{% endblock %}
