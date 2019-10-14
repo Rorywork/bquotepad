@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Quote creation not yet possible</h4>
+
+<p>Before you can create a quote you must first complete the following:</p>
+<ul>
+    {% if not request.session.Profile_updated %}   
+        <li>Provide your personal details (<a href="{% url 'edit_Profile_details' %}">Update your profile</a>)</li>
+    {% endif %}
+    {% if not request.session.Image_loaded %}
+        <li>Provide images that will be used in the quote (<a href="{% url 'file_upload' %}">Upload Image Files</a>)</li>
+    {% endif %}
+    {% if not request.session.ProductPrice_record %}
+        <li>Create at least one product for your quote (<a href="{% url 'productpricelist' %}">Edit Product Details</a>)</li>
+    {% endif %}
+    {% if not request.session.created_quote_template %}
+        <li>Design the layout of your quote (<a href="{% url 'editquotetemplate' %}">Edit Quote Template</a>)</li>
+    {% endif %}    
+</ul>
+
+<a href="{% url 'home' %}">Click here to review your progress</a>
+
+{% endblock %}
