@@ -258,7 +258,8 @@ def register(request):
 				messages.success(request, 'You are now registered on the site.')
 				return HttpResponseRedirect('/loginredirect/')
 			else:
-				raise forms.ValidationError('A profile with that username or email already exists.')
+				#raise forms.ValidationError('A profile with that username or email already exists.')
+				messages.warning(request, 'A profile with that username or email already exists.')
 	else:
 		form = UserRegistrationForm()
 		user_profile_form = UserProfileForm()
@@ -413,12 +414,15 @@ def generate_quote_from_file(request, outputformat, quotesource):
 
 	# Determine whether to output to screen as PDF or HTML
 	if outputformat == "PDFOutput":
+		request.session['created_quote_template'] = True
+		created_quote_template_group = Group.objects.get(name = 'created_quote_template')
+		request.user.groups.add(created_quote_template_group)
 		pdf = render_to_pdf(sourceHtml, {
 			'form_data': file_form_data,
 			'idx': idx,
 			'frecords': frecords,
 			'product_record': product_record,
-			'img_record': img_record})
+			'img_record': img_record}) 
 		return HttpResponse(pdf, content_type='application/pdf')
 
 	elif outputformat == "EmailOutput":
