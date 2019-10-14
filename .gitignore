@@ -2,3 +2,8 @@ Include/
 Lib/
 Scripts/
 tcl/
+pdf_quote_archive/
+
+
+*.sqlite3
+
