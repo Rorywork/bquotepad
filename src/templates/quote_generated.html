@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Quote Generation</h4>
+
+<p>Your quote has been generated and is available to view and email to the customer.</p>
+
+<a href="{% url 'generate_quote_from_file' 'PDFOutput' 'currentquote' %}" target="_blank">View Current Quote</a><br>
+<a href="{% url 'generate_quote_from_file' 'EmailOutput' 'currentquote' %}">Email Current Quote to customer</a><br>
+
+{% endblock %}
