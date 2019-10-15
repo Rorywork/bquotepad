@@ -24,10 +24,11 @@ h1 {
 }
 
 
+
 /* Landing Page */
 .heading-section-landing {
   font-size: 20px;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   text-align: center;
   padding-top: 50px;
 }
@@ -125,6 +126,7 @@ h1 {
 
 #dashboard-heading {
   margin-top: 50px;
+  color: black;;
 }
 
 .product-details-container {
