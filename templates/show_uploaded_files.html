@@ -17,5 +17,11 @@
     <p>You have no images saved on the website.</p>
 
 {% endfor %}
+
+{% if frecords|length == 2 %}
+<script>
+    Swal.fire("Great news", "You now have the minimum number of images to create a quote.", "success")
+</script>
+{% endif %}
  
 {% endblock %}
