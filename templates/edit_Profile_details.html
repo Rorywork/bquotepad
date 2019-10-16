@@ -7,7 +7,7 @@
 
             <h2>Edit Your Information</h2>
     
-            <form method="POST">
+            <form method="POST" name="ProfileForm">
             {% csrf_token %}    
     
             <div class="form-group">
@@ -45,6 +45,8 @@
                     <label for="editQuoteNumber">Current Quote Number:</label>
                     <input name="cur_quote_no" type="number" class="form-control" id="editQuoteNumber" required value = "{{form.cur_quote_no.value}}">
             </div>
+
+            <input type="hidden" name="alert" value="{{alert}}" readonly>
 
             <button type="submit" class="btn btn-primary" value="Login">Submit</button>
 
