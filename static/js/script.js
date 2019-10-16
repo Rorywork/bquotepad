@@ -14,3 +14,12 @@ function profile_form_validation_response() {
         not_all_good("Oops!", "There was a problem with your profile update.")
     }
 }
+
+function edit_template_form_validation_response() {
+    if (document.EditQuoteTemplateForm.alert.value==1){       
+        all_good("All Good", "Your template update has been saved")
+    }
+    if (document.EditQuoteTemplateForm.alert.value==0){
+        not_all_good("Oops!", "There was a problem with your template update.")
+    }
+}
