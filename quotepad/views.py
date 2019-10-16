@@ -307,14 +307,16 @@ def edit_Profile_details(request):
 	if request.method=="POST":
 		form = ProfileForm(request.POST, instance=profile)
 		if form.is_valid():
+			alert = 1
 			form.save()
 			request.session['Profile_updated'] = True
-			messages.success(request, 'Your profile details have been updated.')
-			return redirect('/home/')
+			# messages.success(request, 'Your profile details have been updated.')
+			# return redirect('/home/')
 	else:
+		alert = None
 		form = ProfileForm(instance=profile)
 		
-	return render(request,"edit_Profile_details.html",{'form': form}) 
+	return render(request,"edit_Profile_details.html",{'form': form, 'alert': alert}) 
 
 # Views to perform CRUD operations on the ProductPrice model
 
