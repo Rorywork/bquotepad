@@ -1,110 +1,137 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" xml:lang="en" xmlns= "http://www.w3.org/1999/xhtml">
-   
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 
 <head>
-    <title>Boiler Survey</title>
-    <meta charset="UTF-8">
-    <meta name="google" content="notranslate">
-    <meta http-equiv="Content-Language" content="en">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/flatly/bootstrap.min.css" integrity="sha256-0mhswpc4tUm8b+EHmWyk817AlGI+X5NmVsKbJkQ342c=" crossorigin="anonymous" />
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+  <title>Boiler Survey</title>
+  <meta charset="UTF-8">
+  <meta name="google" content="notranslate">
+  <meta http-equiv="Content-Language" content="en">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/flatly/bootstrap.min.css"
+    integrity="sha256-0mhswpc4tUm8b+EHmWyk817AlGI+X5NmVsKbJkQ342c=" crossorigin="anonymous" />
+  <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="{% static 'js/script.js' %}"></script>
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+  </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Boiler Quotepad</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            {% if user.is_authenticated %}
-            <p>Welcome {{ user.username }}</p>
-            <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="/logout">Logout</a>
-            <a class="nav-item nav-link" href="/changepassword">Change Password</a>
-            <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a>
-            <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
-            <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
-            {% ifequal user.groups.all.0.name "Subscribed" %}
-            {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
-            <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
-            {% else %}
-            <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
-            {% endif %}    
-            {% else %}
-            <a class="nav-item nav-link" href="/stripecheckout">Create Quote (requires subscription)</a>
-            {% endifequal %}
-            <a class="nav-item nav-link" href="/generatequotefromfile/HTMLOutput/testdata">View Quote Layout as HTML</a>
-            <a class="nav-item nav-link" href="/generatequotefromfile/PDFOutput/testdata">View Quote Layout as PDF</a>
-            <a class="nav-item nav-link" href="/productpricelist">Edit Product Details</a>
-            <a class="nav-item nav-link" href="/stripecheckout">Subscribe</a>
-            {% else %}
-                <a class="nav-item nav-link" href="/landing">About<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="/login">Login</a>
-                <a class="nav-item nav-link" href="/register">Register</a>
-            {% endif %}
-          </div>
+<ul class="bg-primary">
+  <li><a href="/home">Quotepad</a></li>
+  <li><a href="/changepassword">Change Password</a></li>
+  <li><a href="/edit_Profile_details">Edit Profile</a></li>
+</ul>
 
-          
+
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        {% if user.is_authenticated %}
+        <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        <!-- <a class="nav-item nav-link" href="/logout">Logout</a>
+        <a class="nav-item nav-link" href="/changepassword">Change Password</a>
+        <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a> -->
+        <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
+        <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
+        {% ifequal user.groups.all.0.name "Subscribed" %}
+        {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
+        <a class="nav-item nav-link" href="/quotenotpossible">Create Quote</a>
+        {% else %}
+        <a class="nav-item nav-link" href="/boilerform">Create Quote</a>
+        {% endif %}
+        {% else %}
+        <a class="nav-item nav-link" href="/stripecheckout">Create Quote (requires subscription)</a>
+        {% endifequal %}
+
+
+
+        <a class="nav-item nav-link" href="/productpricelist">Edit Products</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle bg-primary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            View Quote Layout
+          </a>
+          <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
+            <a class="nav-item nav-link nav-dropdown bg-primary" href="/generatequotefromfile/HTMLOutput/testdata">HTML</a>
+            <a class="nav-item nav-link nav-dropdown bg-primary" href="/generatequotefromfile/PDFOutput/testdata">PDF</a>
+        </li>
+
+
+
+
+        {% else %}
+        <a class="nav-item nav-link" href="/landing">About<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="/login">Login</a>
+        <a class="nav-item nav-link" href="/register">Register</a>
+        {% endif %}
+      </div>
+
+
+    </div>
+  </nav>
+
+
+
+
+  {% block content %}
+  <h1>Welcome!</h1>
+  <p>This is the site template</p>
+  {% endblock content %}
+
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+
+
+
+
+  <footer class="bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class=" col-12 col-lg-6">
+          <h5>Boiler Quotepad</h5>
+          <p class="">Designed by heating engineers for use in the trade.</p>
         </div>
-      </nav>      
-      
-      
-      
-      
-      {% block content %}
-      <h1>Welcome!</h1>
-      <p>This is the site template</p>
-      {% endblock content %}
-      
-      
-      {% if messages %}
-          <ul class="messages">
-              {% for message in messages %}
-                  <li class="{{ message.tags }}">{{ message }}</li>
-              {% endfor %}
+        <div class="col-12 col-lg-4 offset-lg-2">
+          <h5>Follow Us</h5>
+          <ul>
+            <li class="social-list"><a href="https://www.instagram.com" target="_blank"><i
+                  class="fab fa-instagram"></i></a></li>
+            <li class="social-list"><a href="https://www.facebook.com" target="_blank"><i
+                  class="fab fa-facebook-f"></i></a></li>
           </ul>
-      {% endif %}
-      
-
-
-
-    
-    <footer class="bg-primary">
-        <div class="container">
-          <div class="row">
-            <div class=" col-12 col-lg-6">
-              <h5>Boiler Quotepad</h5>
-              <p class="">Designed by heating engineers for use in the trade.</p>
-            </div>
-            <div class="col-12 col-lg-4 offset-lg-2">
-              <h5>Follow Us</h5>
-              <ul>
-                <li class="social-list"><a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                <li class="social-list"><a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-              </ul>
-            </div>
-          </div>
         </div>
-        <div class="footer-copyright">
-          <div class="container">
-            © 2019 Copyright
-            <a class="grey-text text-lighten-4 right" href="https://github.com/Rorywork" target="_blank">Designed by Rorywork</a>
-          </div>
-        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2019 Copyright
+        <a class="grey-text text-lighten-4 right" href="https://github.com/Rorywork" target="_blank">Designed by
+          Rorywork</a>
+      </div>
+    </div>
 
-      </footer>
+  </footer>
 
 
 </body>

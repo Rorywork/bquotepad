@@ -20,8 +20,14 @@
 
 {% if frecords|length == 2 %}
 <script>
-    Swal.fire("Great news", "You now have the minimum number of images to create a quote.", "success")
+    all_good("Great news", "You now have the minimum number of images to create a quote.")
 </script>
+
+{% elif frecords|length < 2 %}
+<script>
+    not_all_good("Please Note", "You will need to upload a minimum of one logo and a product image to create your quote. Upload the logo first.")
+</script>
+
 {% endif %}
  
 {% endblock %}
