@@ -293,11 +293,11 @@ RADIATOR_REQUIREMENTS_DROPDOWN = (
 )
 
 ESTIMATED_DURATION_DROPDOWN = (
-	('1 Day','1 Day'),
-	('2 Day','2 Day'),
-	('3 Day','3 Day'),
-	('4 Day','4 Day'),
-	('5 Day','5 Day'),
+	('1 Day','1 Days'),
+	('2 Days','2 Days'),
+	('3 Days','3 Days'),
+	('4 Days','4 Days'),
+	('5 Days','5 Days'),
 )
 
 
@@ -440,7 +440,7 @@ class DocumentForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ('first_name','last_name','email','company_name','telephone', 'quote_prefix', 'cur_quote_no')
+		fields = ('first_name','last_name','email','company_name','telephone', 'daily_work_rate', 'quote_prefix', 'cur_quote_no')
 		
 class UserProfileForm(forms.ModelForm):
 	class Meta:

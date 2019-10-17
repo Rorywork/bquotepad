@@ -131,6 +131,9 @@ class FormWizardView(SessionWizardView):
 			print(type(e)) 
 			print("Error: No Image exists for the Product")
 
+		# Calculate the daily_work_rate multiplied by the estimated_duration
+		workload_cost = idx.daily_work_rate * int([form.cleaned_data for form in form_list][8].get('estimated_duration')[0])	
+
 		# Get the records of the images file for the current user
 		frecords = Document.objects.filter(user=self.request.user.username).order_by('uploaded_at')
 
@@ -162,7 +165,8 @@ class FormWizardView(SessionWizardView):
 			'idx':idx,
 			'frecords': frecords,
 			'product_record': product_record,
-			'img_record': img_record})
+			'img_record': img_record,
+			'workload_cost': workload_cost})
 
 		# Increment the Profile.cur_quote_no by 1
 		idx.cur_quote_no = idx.cur_quote_no + 1
@@ -414,6 +418,9 @@ def generate_quote_from_file(request, outputformat, quotesource):
 	except: # if not then continue with empty object
 		img_record = ""
 
+	# Calculate the daily_work_rate multiplied by the estimated_duration
+	workload_cost = idx.daily_work_rate * int(file_form_data[8].get('estimated_duration')[0])	
+
 	# Determine whether to output to screen as PDF or HTML
 	if outputformat == "PDFOutput":
 		request.session['created_quote_template'] = True
@@ -424,7 +431,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'idx': idx,
 			'frecords': frecords,
 			'product_record': product_record,
-			'img_record': img_record}) 
+			'img_record': img_record,
+			'workload_cost': workload_cost}) 
 		return HttpResponse(pdf, content_type='application/pdf')
 
 	elif outputformat == "EmailOutput":
@@ -438,7 +446,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'idx':idx,
 			'frecords': frecords,
 			'product_record': product_record,
-			'img_record': img_record})
+			'img_record': img_record,
+			'workload_cost': workload_cost})
 		# Generate the email, attach the pdf and send out
 		fd = file_form_data
 		msg=""
@@ -458,8 +467,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'idx': idx,
 			'frecords': frecords,
 			'product_record': product_record,
-			'img_record': img_record},
-			)
+			'img_record': img_record,
+			'workload_cost': workload_cost})
 
 def edit_quote_template(request):
 	

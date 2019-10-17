@@ -24,6 +24,7 @@ class Profile(models.Model):
     company_name    =   models.CharField(max_length=60)
     email           =   models.CharField(max_length=60)
     telephone       =   models.CharField(max_length=20)
+    daily_work_rate	=	models.DecimalField(max_digits=10, decimal_places=2, default=0)
     quote_prefix	=	models.CharField(max_length=3, default="XXX")
     cur_quote_no    =   models.PositiveIntegerField(default=1)
 
