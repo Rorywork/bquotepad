@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Historical Quotes for {{request.user}}</h4>
+
+
+{% for pdf_file in pdf_files %}
+
+    {% if pdf_file == "current_quote.txt" %}
+    <a href="{% url 'generate_quote_from_file' 'PDFOutput' 'currentquote' %}" target="_blank">Current Quote</a><br>
+    {% else %}
+        <a href="{% url 'pdfview' pdf_file %}" target="_blank">{{ pdf_file }}</a><br>
+    {% endif %}
+   
+    {% empty %}
+    <p>No quotes found.</p>
+
+{% endfor %}
+ 
+{% endblock %}
