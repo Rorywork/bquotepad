@@ -132,7 +132,9 @@ class FormWizardView(SessionWizardView):
 			print("Error: No Image exists for the Product")
 
 		# Calculate the daily_work_rate multiplied by the estimated_duration
-		workload_cost = idx.daily_work_rate * int([form.cleaned_data for form in form_list][8].get('estimated_duration')[0])	
+		workload_cost = idx.daily_work_rate * int([form.cleaned_data for form in form_list][8].get('estimated_duration')[0])
+		# Calculate the total quote price for the quote
+		total_quote_price = workload_cost + product_record.price
 
 		# Get the records of the images file for the current user
 		frecords = Document.objects.filter(user=self.request.user.username).order_by('uploaded_at')
@@ -166,7 +168,8 @@ class FormWizardView(SessionWizardView):
 			'frecords': frecords,
 			'product_record': product_record,
 			'img_record': img_record,
-			'workload_cost': workload_cost})
+			'workload_cost': workload_cost,
+			'total_quote_price': total_quote_price})
 
 		# Increment the Profile.cur_quote_no by 1
 		idx.cur_quote_no = idx.cur_quote_no + 1
@@ -419,7 +422,9 @@ def generate_quote_from_file(request, outputformat, quotesource):
 		img_record = ""
 
 	# Calculate the daily_work_rate multiplied by the estimated_duration
-	workload_cost = idx.daily_work_rate * int(file_form_data[8].get('estimated_duration')[0])	
+	workload_cost = idx.daily_work_rate * int(file_form_data[8].get('estimated_duration')[0])
+	# Calculate the total quote price for the quote
+	total_quote_price = workload_cost + product_record.price	
 
 	# Determine whether to output to screen as PDF or HTML
 	if outputformat == "PDFOutput":
@@ -432,7 +437,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'frecords': frecords,
 			'product_record': product_record,
 			'img_record': img_record,
-			'workload_cost': workload_cost}) 
+			'workload_cost': workload_cost,
+			'total_quote_price': total_quote_price}) 
 		return HttpResponse(pdf, content_type='application/pdf')
 
 	elif outputformat == "EmailOutput":
@@ -447,7 +453,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'frecords': frecords,
 			'product_record': product_record,
 			'img_record': img_record,
-			'workload_cost': workload_cost})
+			'workload_cost': workload_cost,
+			'total_quote_price': total_quote_price})
 		# Generate the email, attach the pdf and send out
 		fd = file_form_data
 		msg=""
@@ -468,7 +475,8 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'frecords': frecords,
 			'product_record': product_record,
 			'img_record': img_record,
-			'workload_cost': workload_cost})
+			'workload_cost': workload_cost,
+			'total_quote_price': total_quote_price})
 
 def edit_quote_template(request):
 	
