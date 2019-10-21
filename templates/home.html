@@ -13,10 +13,8 @@
       <img src="{% static 'icons/001-man.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Edit Your Profile</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam laudantium delectus deserunt
-          fuga nostrum aliquam. Eius iste quaerat doloremque culpa, aliquam laudantium. Libero id cumque blanditiis
-          incidunt animi ea sit.</p>
-        <a class="stretched-link" href="/edit_Profile_details">Go Somewhere</a>
+        <p class="card-text">The first step to success, let us know key information about you and your business which will be used in the quotation. We advise you to complete this stage first. </p>
+        <a class="stretched-link" href="/edit_Profile_details">View</a>
       </div>
       {% if request.session.Profile_updated %}
       <div class="card-footer bg-success">
@@ -32,10 +30,8 @@
       <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Upload Company Logo And Product Images</h5>
-        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nesciunt cum, maxime
-          aliquam similique debitis deleniti beatae eligendi, eius quibusdam optio quisquam recusandae blanditiis
-          incidunt sint veritatis nulla sequi. Non!</p>
-        <a class="stretched-link" href="/fileupload">Go Somewhere</a>
+        <p class="card-text">Use this page to upload the logo which will go on your quote, please upload this first. Then you can upload an image of the products you sell later on you will be able to select which image to put on your quotes. </p>
+        <a class="stretched-link" href="/fileupload">View</a>
       </div>
       {% if request.session.Image_loaded %}
       <div class="card-footer bg-success">
@@ -51,10 +47,8 @@
       <img src="{% static 'icons/003-boiler.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Add Your Products</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, incidunt! Minima ipsam, eos,
-          similique accusamus suscipit veritatis ipsa voluptates voluptatibus quo deleniti animi cum. Doloremque
-          blanditiis ipsum laudantium fugit recusandae!</p>
-        <a class="stretched-link" href="/productpricelist">Go Somewhere</a>
+        <p class="card-text">On this page, you can use the uploaded images to create products. Products have a price, a brand, a product code, and an associated image. Once you have products you will be able to generate quotations for these products. </p>
+        <a class="stretched-link" href="/productpricelist">View</a>
       </div>
       {% if request.session.ProductPrice_record %}
       <div class="card-footer bg-success">
@@ -74,10 +68,8 @@
       <img src="{% static 'icons/004-theme.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">View Your Quote Layout</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus inventore nulla
-          nam aut voluptatibus, voluptatem quidem facilis nesciunt aliquam sint adipisci dolor quisquam provident
-          placeat amet et obcaecati tempora.</p>
-        <a class="stretched-link" href="/testquotegenerated">Go Somewhere</a>
+        <p class="card-text">This template will show you qhat your current quotes look like. Use it to see what the uploaded images will look like in the quotation and to view the design. It opens as a PDF which can be saved.</p>
+        <a class="stretched-link" href="/testquotegenerated">View</a>
       </div>
       {% if request.session.created_quote_template %}
       <div class="card-footer bg-success">
@@ -93,10 +85,8 @@
       <img src="{% static 'icons/006-card.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Subscribe to Quotepad</h5>
-        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium, mollitia rem! Neque,
-          earum dolore ullam itaque exercitationem eum porro consectetur voluptate. Voluptates deleniti animi corrupti
-          esse qui asperiores molestiae repudiandae!</p>
-        <a class="stretched-link" href="/stripecheckout">Go Somewhere</a>
+        <p class="card-text">In order to create bespoke quotations for your customers, Quotepad has a £15.00 subscription fee. Please pay this here to get full access to Quotepad.</p>
+        <a class="stretched-link" href="/stripecheckout">View</a>
       </div>
       {% if request.session.User_subscribed %}
       <div class="card-footer bg-success">
@@ -112,9 +102,7 @@
       <img src="{% static 'icons/005-survey.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Complete A Quote</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius incidunt voluptatum tempore
-          fugiat pariatur nesciunt amet quas illum cumque optio. Ea nostrum explicabo suscipit error dignissimos
-          accusantium fugiat rem voluptatibus.</p>
+        <p class="card-text">You are now ready to complete a survey, follow the easy to use form to create a bespoke quotation, delivered to your customer's email. Get ready to win more business!</p>
 
 
           {% ifequal user.groups.all.0.name "Subscribed" %}
