@@ -24,6 +24,7 @@ The project was deployed to PythonAnywhere as opposed to Heroku for the primary 
 * `pip install stripe` Payment processing library
 * `pip install mysqlclient` Python library for MySQL database
 * `pip install django-mailgun` Email service library
+* `pip install coverage` For testing results 
 
 9. Open another window (keep the bash terminal open) - go to the web tab and click on  Add a new web app button, then click next.
 10. Select Manual Configuration, then select Python 3.6, then click next.
