@@ -6,6 +6,9 @@
     all_good("Many Thanks", "Your payment has been processed. This provides access to create your own quotes.")
 </script>
 
+
+
+<div class="container">
 {% ifequal user.groups.all.0.name "Subscribed" %}
 {% if not request.session.Profile_updated or not request.session.Image_loaded or not request.session.ProductPrice_record or not request.session.created_quote_template %}
     <p><a href="/quotenotpossible">Create Quote</a></p>
@@ -16,4 +19,5 @@
 <p><a href="/stripecheckout">Create Quote (requires subscription)</a></p>
 {% endifequal %}
 
+</div>
 {% endblock %}

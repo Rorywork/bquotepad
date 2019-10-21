@@ -4,27 +4,19 @@ body {
   font-size: 16px;
 }
 
-.container-subscribe {
-  margin: 20px 0px 20px 0px;
+.container{
+  margin-top: 25px;
+  margin-bottom: 25px; 
+}
+
+.container-fluid{
+  margin-top: 25px;
+  margin-bottom: 25px; 
 }
 
 footer {
-  color: white;
+  color: rgb(255, 255, 255);
   padding-top: 20px;
-}
-
-.quotepad-branding{
-  height: 70px;
-}
-
-#quotepad-brand-logo{
-  padding-top: 10px;
-  color: white;;
-}
-
-.user-text{
-  color: white;
-
 }
 
 h1 {
@@ -32,45 +24,29 @@ h1 {
   font-size: 2rem;
 }
 
-.subtext {
-  color: rgb(0, 0, 0);
+.social-list{
+  list-style: none;
 }
-
-.top-nav{
-  color: black;
-}
-
 
 
 /* Landing Page */
 .heading-section-landing {
-  font-size: 20px;
-  color: rgb(0, 0, 0);
+  font-size: 1.4rem;
   text-align: center;
-  padding-top: 50px;
-}
-
-
-.landing-info {
-  margin-top: 100px;
-}
-
-.landing-info-titles {
-  font-size: 1.5rem;
+  margin-bottom: 80px;
 }
 
 .landing-info-col {
   text-align: center;
-  color: rgb(0, 0, 0);
 }
 
-.landing-info-icons {
-  font-size: 2rem;
+.landing-info-titles{
+  font-size: 1.4rem;
 }
+
 
 .process-section {
   background-color: rgb(0, 0, 0);
-  margin-top: 100px;
 }
 
 .process-list-col {
@@ -108,28 +84,22 @@ h1 {
   margin-top: 50px;
 }
 
-
-.social-list{
-  list-style: none;
-}
-
-
-
 /* forms */
 
 .quote-form-container {
-  margin-top: 50px;
-  margin-bottom: 50px;
   background-color: rgb(246, 245, 242);
   border: 1px solid lightblue;
+  margin: 0 auto;
 }
 
 
 .boiler-form {
   margin-top: 30px;
   margin-bottom: 30px;
-
 }
+
+/* dashboard */
+
 
 .dashboard-container {
   margin-top: 50px;
@@ -152,7 +122,7 @@ h1 {
 
 #dashboard-heading {
   margin-top: 50px;
-  color: black;;
+  color: black;
 }
 
 .product-details-container {
@@ -175,14 +145,7 @@ h1 {
 }
 
 
-.dropdown{
-  background-color: blue;
-}
 
-
-h1 {
-  font-size: 2rem;
-}
 
 .edit-product-container {
   margin-top: 20px;
