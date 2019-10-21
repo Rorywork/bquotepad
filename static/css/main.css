@@ -59,10 +59,9 @@ h1 {
 }
 
 .process-list {
-  position: relative;
   list-style: none;
-  margin-top: 10%;
   color: white;
+  margin-top: 50px;
 }
 
 .process-list-item-heading {
@@ -143,8 +142,6 @@ h1 {
 .price-list-headings {
   margin-top: 30px;
 }
-
-
 
 
 .edit-product-container {
