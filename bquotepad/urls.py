@@ -24,7 +24,7 @@ from quotepad.views import home, register, change_password, landing
 from quotepad.forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
 from quotepad.views import FormWizardView, model_form_upload
 
-from quotepad.views import edit_Profile_details, show_uploaded_files, quote_generated, quote_emailed, quote_not_possible, quotepad_template_help
+from quotepad.views import edit_Profile_details, show_uploaded_files, quote_generated, test_quote_generated, quote_emailed, quote_not_possible, quotepad_template_help
 from quotepad.views import ProductPriceList, ProductPriceCreate, ProductPriceUpdate, ProductPriceDelete
 from quotepad.views import generate_quote_from_file, edit_quote_template, list_quote_archive, pdf_view
 
@@ -47,6 +47,7 @@ urlpatterns = [
 	path('quoteemailed/', quote_emailed, name = 'quote_emailed'),
     path('quotenotpossible/', quote_not_possible, name = 'quote_not_possible'),
 	path('quotepadtemplatehelp/', quotepad_template_help, name = 'quotepad_template_help'),
+    path('testquotegenerated/', test_quote_generated, name = 'test_quote_generated'),
 
     path('loginredirect/', home, name = 'home'),
     path('changepassword/', change_password, name = 'change_password'),

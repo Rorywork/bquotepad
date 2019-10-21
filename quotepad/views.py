@@ -185,6 +185,9 @@ def quote_generated(request):
 	request.user.groups.add(created_quote_group)
 	return render(request,'quote_generated.html')
 
+def test_quote_generated(request):
+	return render(request,'test_quote_generated.html')
+
 def quote_emailed(request):
 	return render(request,'quote_emailed.html')
 

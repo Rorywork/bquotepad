@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Test PDF</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .section_header {
+                font-size: 18px;
+                font-weight: 100;    
+            }
+            .section_italics {
+                font-size: 14px;
+                font-style: italic;    
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            .logo {
+                height:100px;
+                width:auto;
+            }
+
+            .footer {
+            border: 2px solid #73AD21;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+            font-size: 14px;
+            font-weight: 100;
+            text-align: center;
+            padding: 10px 0px 2px 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+            </div>
+            <!-- Header Images -->
+            <table>
+                <tr>
+                    <td><img src="{{frecords.0.document.url}}" height="180px"></td><td align="right"> </td>
+                </tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td width="70%">
+                        <b><u>Summary</u></b><br>
+                        <b>Quotation Date: </b>{% now "jS F Y " %}<br>
+                        <b>Your reference: </b>{{ idx.quote_prefix }}-{{ idx.cur_quote_no }}<br>
+                        <b>Your boiler and parts: </b>{{product_record.brand}}&nbsp;{{product_record.model_name}}&nbsp;&nbsp;<b>Price: </b>&#163;{{product_record.price}}<br>
+                        <b>Warranty: </b>10 Years<br>
+                        <b>Estimated Work Duration: </b>{{form_data.8.estimated_duration}} @ &#163;{{ idx.daily_work_rate }}/day.  <b>Total:</b> &#163;{{ workload_cost }}<br>
+                        <b>Total Price: </b>&#163;{{ total_quote_price }}
+                        <br><br>
+                        <b><u>Fixed Price Promise</u></b><br>
+                        Our quotations are produced at a fixed price. If the works we've quoted below take longer to
+                        complete than we anticipated, you will not be charged additionally.<br>
+                        If you want to discuss your quotation with one of the team, please give us a call on
+                        	{{ idx.telephone }}, alternatively email info@demo.plumbers
+                    </td>
+                    <td width="30%">
+                        <img src="{{img_record.document.url}}" height="250" />
+
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <hr class='hrItem' />
+            <div class='section_header'>
+                <b>CUSTOMER DETAILS</b>
+            </div>
+            <div class='section_italics'>
+                Your personal information - we'll keep this secure.
+            </div>
+            <table>
+                <tr>
+                    <td width="33%">
+                    <b>NAME</b><br>
+                    {{form_data.0.customer_first_name }} {{form_data.0.customer_last_name }}
+                    </td>
+                    <td width="33%">
+
+                    </td>
+                    <td width="33%">
+                    <b>MOBILE PHONE</b><br>
+                    {{form_data.0.customer_mobile_phone }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <b>EMAIL</b><br>
+                    {{form_data.0.customer_email }}
+                    </td>
+                    <td>
+                        <b>OWNER OR TENANT?</b><br>
+                        {{form_data.0.owner_or_tenant }}
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+            <hr class='hrItem' />
+            <div class='section_header'>
+                <b>PROPERTY DETAILS</b>
+            </div>
+            <table>
+                    <tr>
+                        <td width="33%">
+                        <b>INSTALLATION ADDRESS</b><br>
+                        {{form_data.1.installation_address }} {{form_data.1.street_address }}<br>
+                        {{form_data.1.city }} {{form_data.1.county }} {{form_data.1.postcode }}
+                        </td>
+                        <td width="33%">
+                        <b>PROPERTY TYPE</b><br>
+                        {{form_data.1.property_type }}
+                        </td>
+                        <td width="33%">
+                        </td>
+                    </tr>
+                </table>
+                <hr class='hrItem' />
+                <div class='section_header'>
+                    <b>CURRENT SYSTEM CONFIGURATION</b>
+                </div>
+                <div class='section_italics'>
+                    Details on your current setup
+                </div>
+                <table>
+                        <tr>
+                            <td width="33%">
+                            <b>CURRENT FUEL TYPE</b><br>
+                            {{form_data.2.current_fuel_type }}<br>
+                            </td>
+                            <td width="33%">
+                            <b>CURRENT BOILER TYPE</b><br>
+                            {{form_data.2.current_boiler_type }}
+                            </td>
+                            <td width="33%">
+                            <b>CURRENT BOILER LOCATION</b><br>
+                            {{form_data.2.current_boiler_location }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="33%">
+                            <b>CURRENT FLUE</b><br>
+                            {{form_data.2.current_flue_system }}<br>
+                            </td>
+                            <td width="33%">
+                            <b>CURRENT FLUE LOCATION</b><br>
+                            {{form_data.2.current_flue_location }}
+                            </td>
+                            <td width="33%">
+                            <b>CURRENT CONTROL SYSTEM</b><br>
+                            {{form_data.2.current_controls }}
+                            </td>
+                        </tr>
+                </table>
+                <hr class='hrItem' />
+
+
+            <div class='footer'>
+            t: 	{{ idx.telephone }} &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp; w: www.demo.plumbing &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp; e: info@demo.plumbing
+            </div>
+            <p align="right"><sub>Estimate completed by: {{idx.first_name}} {{idx.last_name}} from {{idx.company_name}}</sub></p>
+
+          ...... and continue for the rest of the quote.....
+            
+        </body>
+</html>

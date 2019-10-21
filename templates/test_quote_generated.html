@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>See your quote layout</h4>
+
+<a href="{% url 'generate_quote_from_file' 'PDFOutput' 'currentquote' %}" target="_blank">View Quote Layout</a><br>
+
+
+{% endblock %}
