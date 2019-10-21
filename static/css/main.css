@@ -86,11 +86,13 @@ h1 {
   position: relative;
   list-style: none;
   margin-top: 10%;
+  color: white;
 }
 
 .process-list-item-heading {
   font-size: 2rem;
 }
+
 
 .btn-col {
   text-align: center;
@@ -107,7 +109,9 @@ h1 {
 }
 
 
-
+.social-list{
+  list-style: none;
+}
 
 
 
@@ -194,14 +198,13 @@ h1 {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: yellow;;
 }
 
 .above-nav-list-items{
   float: right;
 }
 
-ul {
+.above-nav-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -209,11 +212,11 @@ ul {
   background-color: #333333;
 }
 
-li {
+.above-nav {
   float: left;
 }
 
-li a {
+.above-nav a {
   display: block;
   color: white;
   text-align: center;
@@ -221,10 +224,14 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+.above-nav a:hover {
   background-color: #111111;
 }
 
 .nav-dropdown:hover{
   color: rgb(24, 188, 156) !important;
+}
+
+.blockquote{
+  color: rgb(255, 255, 255);
 }

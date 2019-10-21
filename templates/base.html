@@ -26,16 +26,16 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
   </script>
 
-<ul class="bg-primary">
+<ul class="bg-primary above-nav-list">
   {% if user.is_authenticated %}
-  <li><a href="/home">Quotepad</a></li>
+  <li class="above-nav"><a href="/home">Quotepad</a></li>
   {% else %}
-  <li><a href="/landing">Quotepad</a></li>
+  <li class="above-nav"><a href="/landing">Quotepad</a></li>
   {% endif %}
-  <li><a href="/changepassword">Change Password</a></li>
-  <li><a href="/edit_Profile_details">Edit Profile</a></li>
+  <li class="above-nav"><a href="/changepassword">Change Password</a></li>
+  <li class="above-nav"><a href="/edit_Profile_details">Edit Profile</a></li>
   {% if user.is_authenticated %}
-  <li><a href="/logout">Logout</a></li>
+  <li class="above-nav"><a href="/logout">Logout</a></li>
   {% endif %}
 </ul>
 
@@ -50,9 +50,6 @@
       <div class="navbar-nav">
         {% if user.is_authenticated %}
         <a class="nav-item nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-        <!-- <a class="nav-item nav-link" href="/logout">Logout</a> -->
-        <!-- <a class="nav-item nav-link" href="/changepassword">Change Password</a>
-        <a class="nav-item nav-link" href="/edit_Profile_details">Edit Your Profile</a> -->
         <a class="nav-item nav-link" href="/fileupload">Upload Image Files</a>
         <a class="nav-item nav-link" href="/showuploadedfiles">Show Uploaded Images</a>
         {% ifequal user.groups.all.0.name "Subscribed" %}
