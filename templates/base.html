@@ -34,7 +34,9 @@
   {% endif %}
   <li><a href="/changepassword">Change Password</a></li>
   <li><a href="/edit_Profile_details">Edit Profile</a></li>
+  {% if user.is_authenticated %}
   <li><a href="/logout">Logout</a></li>
+  {% endif %}
 </ul>
 
 
