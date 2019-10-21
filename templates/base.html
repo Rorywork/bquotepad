@@ -27,7 +27,11 @@
   </script>
 
 <ul class="bg-primary">
+  {% if user.is_authenticated %}
   <li><a href="/home">Quotepad</a></li>
+  {% else %}
+  <li><a href="/landing">Quotepad</a></li>
+  {% endif %}
   <li><a href="/changepassword">Change Password</a></li>
   <li><a href="/edit_Profile_details">Edit Profile</a></li>
   <li><a href="/logout">Logout</a></li>

@@ -13,6 +13,19 @@ footer {
   padding-top: 20px;
 }
 
+.quotepad-branding{
+  height: 70px;
+}
+
+#quotepad-brand-logo{
+  padding-top: 10px;
+  color: white;;
+}
+
+.user-text{
+  color: white;
+
+}
 
 h1 {
   text-align: center;
@@ -21,6 +34,10 @@ h1 {
 
 .subtext {
   color: rgb(0, 0, 0);
+}
+
+.top-nav{
+  color: black;
 }
 
 
@@ -124,6 +141,11 @@ h1 {
   margin-bottom: 30px;
 }
 
+.card:hover {
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+
 #dashboard-heading {
   margin-top: 50px;
   color: black;;
@@ -149,6 +171,10 @@ h1 {
 }
 
 
+.dropdown{
+  background-color: blue;
+}
+
 
 h1 {
   font-size: 2rem;
@@ -161,4 +187,44 @@ h1 {
 
 .status-text {
   color: white;
+}
+
+.above-nav{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: yellow;;
+}
+
+.above-nav-list-items{
+  float: right;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+}
+
+.nav-dropdown:hover{
+  color: rgb(24, 188, 156) !important;
 }
