@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 from quotepad.views import home, register, change_password, landing
 from quotepad.forms import FormStepOne, FormStepTwo, FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine
 from quotepad.views import FormWizardView, model_form_upload
+from django.contrib.auth.decorators import login_required
 
 from quotepad.views import edit_Profile_details, show_uploaded_files, quote_generated, test_quote_generated, quote_emailed, quote_not_possible, quotepad_template_help
 from quotepad.views import ProductPriceList, ProductPriceCreate, ProductPriceUpdate, ProductPriceDelete
