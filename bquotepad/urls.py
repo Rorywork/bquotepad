@@ -38,10 +38,10 @@ urlpatterns = [
 
     path('boilerinfo/', include('django.contrib.auth.urls')),
 
-    path('productpricelist/', ProductPriceList.as_view(), name = 'productpricelist'),
+    path('productpricelist/', login_required(ProductPriceList.as_view()), name = 'productpricelist'),
     path('productpricecreate/', ProductPriceCreate, name = 'productpricecreate'),
 	path('productpriceupdate/<int:product_id>/', ProductPriceUpdate, name = 'productpriceupdate'),
-	path('productpricedelete/<int:pk>/', ProductPriceDelete.as_view(), name = 'productpricedelete'),
+	path('productpricedelete/<int:pk>/', login_required(ProductPriceDelete.as_view()), name = 'productpricedelete'),
 
     path('quotegenerated/', quote_generated, name = 'quote_generated'),
 	path('quoteemailed/', quote_emailed, name = 'quote_emailed'),
@@ -54,7 +54,7 @@ urlpatterns = [
     path('home/', home, name = 'home'),
 
     path('landing/', landing, name = 'landing'),
-    path('boilerform/', FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine]), name = 'boilerform'),
+    path('boilerform/', login_required(FormWizardView.as_view([FormStepOne,FormStepTwo,FormStepThree, FormStepFour, FormStepFive, FormStepSix, FormStepSeven, FormStepEight, FormStepNine])), name = 'boilerform'),
     path('generatequotefromfile/<str:outputformat>/<str:quotesource>', generate_quote_from_file, name = 'generate_quote_from_file'),
 
     path('fileupload/', model_form_upload, name = 'file_upload'),
