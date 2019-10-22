@@ -203,3 +203,9 @@ h1 {
 .navbar{
   color: white;
 }
+
+.dropdown{
+  list-style: none;
+  border: none;
+  margin-right: 30px;
+}
