@@ -6,7 +6,9 @@ body {
 
 main{
   background-color: rgb(255, 255, 255);
-  min-height: 75vh;
+  min-height: 70vh;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 .container-fluid{
@@ -14,7 +16,7 @@ main{
   margin-bottom: 25px; 
 }
 
-footer {
+.base-footer {
   color: rgb(255, 255, 255);
   padding-top: 20px;
   min-height: 25vh
@@ -105,24 +107,18 @@ h1 {
 /* dashboard */
 
 
+
 .dashboard-container {
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-.card-img-top {
-  height: 100px;
-  width: 100px;
-}
 
-.card-deck {
-  margin-bottom: 30px;
-}
 
-.card:hover {
+/* .card:hover {
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-}
+} */
 
 #dashboard-heading {
   margin-top: 50px;
@@ -136,7 +132,6 @@ h1 {
 
 .fa-image {
   font-size: 30px;
-
 }
 
 .fa-times {
@@ -199,6 +194,7 @@ h1 {
 
 .blockquote{
   color: rgb(255, 255, 255);
+  padding-bottom: 50px;
 }
 
 .navbar{
@@ -210,3 +206,15 @@ h1 {
   border: none;
   margin-right: 30px;
 }
+
+.card-img-overlay{
+  color: rgb(255, 255, 255);
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(202, 198, 198, 0.465)), to(rgba(180, 169, 169, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient( rgba(202, 198, 198, 0.465), rgba(180, 169, 169, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center;
+  background-size: cover;
+}
+
+
+
+

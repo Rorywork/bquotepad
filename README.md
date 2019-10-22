@@ -18,7 +18,7 @@ The project was deployed to PythonAnywhere as opposed to Heroku for the primary 
 6. If in another session you need to reactivate the virtual environment then type: `workon django2`
 7. You now need to install django type`pip install django`
 8. Install all the Python/Django libraries that are required by my project (using pip install like above) see below:
-* `pip install Django-formtools` Multi page form management tool
+* `pip install django-formtools` Multi page form management tool
 * `pip install Pillow` Managing image uploads
 * `pip install Xhtml2pdf` HTML to PDF rendering library
 * `pip install stripe` Payment processing library
@@ -39,7 +39,7 @@ The project was deployed to PythonAnywhere as opposed to Heroku for the primary 
 17. Click the green save button.
 18. Go to the web tab (inside the burger button) and find the *Static files:* section.
 * Click *Enter URL*  and type `/static/`, then click the blue tick.
-* Click *Enter Path* and type `[/home/Rorywork/bquotepad/static]`, then click the blue tick.
+* Click *Enter Path* and type `[/home/rorytesting/bquotepad/static]`, then click the blue tick.
 
 ### Initialising MySQL
 

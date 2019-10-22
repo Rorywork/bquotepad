@@ -10,11 +10,10 @@
 
   <div class="card-deck">
     <div class="card card-1">
-      <img src="{% static 'icons/001-man.png' %}" class="card-img-top img-fluid" alt="...">
-      <div class="card-body">
+      <div class="card-img-overlay">
         <h5 class="card-title">Edit Your Profile</h5>
         <p class="card-text">The first step to success, let us know key information about you and your business which will be used in the quotation. We advise you to complete this stage first. </p>
-        <a class="stretched-link" href="/edit_Profile_details">View</a>
+        <a class="stretched-link" href="/edit_Profile_details"></a>
       </div>
       {% if request.session.Profile_updated %}
       <div class="card-footer bg-success">
@@ -23,9 +22,15 @@
       {% else %}
       <div class="card-footer bg-danger">
         <small class="status-text">Incomplete</small>
-      </div>
+      </div>      
       {% endif %}
     </div>
+
+
+
+
+
+
     <div class="card">
       <!-- <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="..."> -->
       <div class="card-body">
