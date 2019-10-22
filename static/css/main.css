@@ -4,9 +4,9 @@ body {
   font-size: 16px;
 }
 
-.container{
-  margin-top: 25px;
-  margin-bottom: 25px; 
+main{
+  background-color: rgb(255, 255, 255);
+  min-height: 75vh;
 }
 
 .container-fluid{
@@ -17,6 +17,7 @@ body {
 footer {
   color: rgb(255, 255, 255);
   padding-top: 20px;
+  min-height: 25vh
 }
 
 h1 {
