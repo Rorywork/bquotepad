@@ -44,6 +44,10 @@ h1 {
   font-size: 1.4rem;
 }
 
+.landing-info-icons{
+  font-size: 3rem;
+}
+
 
 .process-section {
   background-color: rgb(0, 0, 0);
@@ -194,4 +198,8 @@ h1 {
 
 .blockquote{
   color: rgb(255, 255, 255);
+}
+
+.navbar{
+  color: white;
 }
