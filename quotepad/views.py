@@ -176,29 +176,35 @@ class FormWizardView(SessionWizardView):
 		idx.save()
 		return HttpResponseRedirect('/quotegenerated/')
 
+@login_required
 def quote_not_possible(request):
 	return render(request,'quote_not_possible.html')
 
+@login_required
 def quote_generated(request):
 	request.session['created_quote'] = True
 	created_quote_group = Group.objects.get(name = 'created_quote')
 	request.user.groups.add(created_quote_group)
 	return render(request,'quote_generated.html')
 
+@login_required
 def test_quote_generated(request):
 	return render(request,'test_quote_generated.html')
 
+@login_required
 def quote_emailed(request):
 	return render(request,'quote_emailed.html')
 
 def landing(request):
     return render(request, 'landing.html')    
 
+@login_required
 def quotepad_template_help(request):
 	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
 	return render(request,'quotepad_template_help.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
 
 # Functions associated with user authentication
+@login_required
 def home(request):
 	usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/{}/boilerform_pdf.html".format(request.user.username))
 	print(usr_pdf_template_file)
@@ -275,6 +281,7 @@ def register(request):
 		user_profile_form = UserProfileForm()
 	return render(request, 'register.html', {'form' : form, 'user_profile_form': user_profile_form})
 
+@login_required
 def change_password(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
@@ -289,6 +296,7 @@ def change_password(request):
 		form = PasswordChangeForm(request.user)
 	return render(request, 'change_password.html', {'form': form})
 
+@login_required
 def model_form_upload(request):
 	if request.method == 'POST':
 		form = DocumentForm(request.POST, request.FILES)
@@ -306,11 +314,12 @@ def model_form_upload(request):
 		'form': form
 	})
 
+@login_required
 def show_uploaded_files(request):
 	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
 	return render(request, 'show_uploaded_files.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
 	
-
+@login_required
 def edit_Profile_details(request):
 	print(request.user.username)
 	profile = get_object_or_404(Profile, user = request.user )
@@ -336,7 +345,7 @@ class ProductPriceList(ListView):
 	def get_queryset(self):
 		return ProductPrice.objects.filter(user=self.request.user).order_by('brand','model_name')
 
-
+@login_required
 def ProductPriceCreate(request):
 	if request.method == "POST":
 		form = ProductPriceForm(request.POST,  user = request.user)
@@ -355,7 +364,7 @@ def ProductPriceCreate(request):
 	}
 	return render(request,'quotepad/productprice_form.html',context)
 
-
+@login_required
 def ProductPriceUpdate(request, product_id):
 	product = ProductPrice.objects.get(pk = product_id)
 	if request.method == "POST":
@@ -377,7 +386,8 @@ def ProductPriceUpdate(request, product_id):
 class ProductPriceDelete(DeleteView):
 	model = ProductPrice
 	success_url='/productpricelist/'
-	  
+
+@login_required	  
 def generate_quote_from_file(request, outputformat, quotesource):
 
 	# Initial check to see if user specific PDF template file exists
@@ -481,6 +491,7 @@ def generate_quote_from_file(request, outputformat, quotesource):
 			'workload_cost': workload_cost,
 			'total_quote_price': total_quote_price})
 
+@login_required
 def edit_quote_template(request):
 	
 	if request.method=="POST":
@@ -502,12 +513,14 @@ def edit_quote_template(request):
 
 	return redirect('/home/')	
 
+@login_required
 def list_quote_archive(request):
 	folder = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username))
 	#path="C:\\somedirectory"  # insert the path to your directory   
 	pdf_files =os.listdir(folder)   
 	return render(request, 'list_quote_archive.html', {'pdf_files': pdf_files})
 
+@login_required
 def pdf_view(request, pdf_file):
 	file_to_render = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username), pdf_file)
 	try:
