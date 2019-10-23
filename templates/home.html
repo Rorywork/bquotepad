@@ -8,22 +8,119 @@
 
 <div class="container dashboard-container">
 
-  <div class="card-deck">
+
+  <div class="row">
+
+
+
+
+
+    <div class="col-sm-12 col-md-4">
+
+
+    <div class="overlay-dash">
+      <div class="card card-1">
+        <h3 class="card-headings">1) Edit Your Profile</h3>
+        <p>The first step to success, let us know key information about you and your business which will be used within your quotations. We advise you to complete this stage first and ensure all the information is up to date.</p>
+        <a class="stretched-link" href="/edit_Profile_details"></a>
+      </div>
+    </div>
+
+    </div>
+
+
+
+
+    <div class="col-sm-12 col-md-4">
+        <div class="card card-2">
+            <h3 class="card-headings">2) Upload Company Logo And Product Images</h3>
+            <p>Use this page to upload the logo which will go on your quote, please upload this first. Then you can upload an image of the products you sell later on you will be able to select which image to put on your quotes.</p>
+            <a class="stretched-link" href="/edit_Profile_details"></a>
+          </div>
+      
+    </div>
+
+
+
+
+
+    <div class=" col-sm-12 col-md-4">
+        <div class="card card-3">
+            <h3 class="card-headings">3) Add Your Products</h3>
+            <p>On this page, you can use the uploaded images to create products. Products have a price, a brand, a product code, and an associated image. Once you have products you will be able to generate quotations for these products. </p>
+            <a class="stretched-link" href="/edit_Profile_details"></a>
+          </div>
+    </div>
+
+
+
+
+
+
+  </div>
+
+  <div class="row">
+
+
+
+
+
+      <div class="col-sm-12 col-md-4">
+  
+  
+        <div class="card card-4">
+          <h3 class="card-headings">4) View Your Quote Layout</h3>
+          <p>This template will show you what your current quotes look like. Use it to see what the uploaded images will look like in the quotation and to view the design. It opens as a PDF which can be saved.</p>
+          <a class="stretched-link" href="/edit_Profile_details"></a>
+        </div>
+  
+      </div>
+  
+  
+  
+  
+      <div class="col-sm-12 col-md-4">
+          <div class="card card-5">
+              <h3 class="card-headings">5) Subscribe to Quotepad</h3>
+              <p>In order to create bespoke quotations for your customers, Quotepad has a £15.00 subscription fee. Please pay this here to get full access to Quotepad.</p>
+              <a class="stretched-link" href="/edit_Profile_details"></a>
+            </div>
+        
+      </div>
+  
+  
+  
+  
+  
+      <div class=" col-sm-12 col-md-4">
+          <div class="card card-6">
+              <h3 class="card-headings">6) Complete A Quote</h3>
+              <p>You are now ready to complete a survey, follow the easy to use form to create a bespoke quotation, delivered to your customer's email. Get ready to win more business!</p>
+              <a class="stretched-link" href="/edit_Profile_details"></a>
+            </div>
+      </div>
+  
+  
+  
+  
+  
+  
+    </div>
+</div>
+
+
+
+
+
+  
+
+  <!-- <div class="card-deck">
     <div class="card card-1">
-      <div class="card-img-overlay">
-        <h5 class="card-title">Edit Your Profile</h5>
+      <div class=" card-body card-img-overlay">
+        <h5 class="card-title">1) Edit Your Profile</h5>
         <p class="card-text">The first step to success, let us know key information about you and your business which will be used in the quotation. We advise you to complete this stage first. </p>
         <a class="stretched-link" href="/edit_Profile_details"></a>
       </div>
-      {% if request.session.Profile_updated %}
-      <div class="card-footer bg-success">
-        <small class="status-text">Complete</small>
-      </div>
-      {% else %}
-      <div class="card-footer bg-danger">
-        <small class="status-text">Incomplete</small>
-      </div>      
-      {% endif %}
     </div>
 
 
@@ -32,7 +129,7 @@
 
 
     <div class="card">
-      <!-- <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="..."> -->
+      <img src="{% static 'icons/002-upload.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Upload Company Logo And Product Images</h5>
         <p class="card-text">Use this page to upload the logo which will go on your quote, please upload this first. Then you can upload an image of the products you sell later on you will be able to select which image to put on your quotes. </p>
@@ -49,7 +146,7 @@
       {% endif %}
     </div>
     <div class="card">
-      <!-- <img src="{% static 'icons/003-boiler.png' %}" class="card-img-top" alt="..."> -->
+      <img src="{% static 'icons/003-boiler.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Add Your Products</h5>
         <p class="card-text">On this page, you can use the uploaded images to create products. Products have a price, a brand, a product code, and an associated image. Once you have products you will be able to generate quotations for these products. </p>
@@ -70,10 +167,10 @@
 
   <div class="card-deck">
     <div class="card">
-      <!-- <img src="{% static 'icons/004-theme.png' %}" class="card-img-top" alt="..."> -->
+      <img src="{% static 'icons/004-theme.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">View Your Quote Layout</h5>
-        <p class="card-text">This template will show you qhat your current quotes look like. Use it to see what the uploaded images will look like in the quotation and to view the design. It opens as a PDF which can be saved.</p>
+        <p class="card-text">This template will show you what your current quotes look like. Use it to see what the uploaded images will look like in the quotation and to view the design. It opens as a PDF which can be saved.</p>
         <a class="stretched-link" href="/testquotegenerated">View</a>
       </div>
       {% if request.session.created_quote_template %}
@@ -87,7 +184,7 @@
       {% endif %}
     </div>
     <div class="card">
-      <!-- <img src="{% static 'icons/006-card.png' %}" class="card-img-top" alt="..."> -->
+      <img src="{% static 'icons/006-card.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Subscribe to Quotepad</h5>
         <p class="card-text">In order to create bespoke quotations for your customers, Quotepad has a £15.00 subscription fee. Please pay this here to get full access to Quotepad.</p>
@@ -104,7 +201,7 @@
       {% endif %}
     </div>
     <div class="card">
-      <!-- <img src="{% static 'icons/005-survey.png' %}" class="card-img-top" alt="..."> -->
+      <img src="{% static 'icons/005-survey.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Complete A Quote</h5>
         <p class="card-text">You are now ready to complete a survey, follow the easy to use form to create a bespoke quotation, delivered to your customer's email. Get ready to win more business!</p>
@@ -131,8 +228,8 @@
       </div>
       {% endif %}
     </div>
-  </div>
+  </div> -->
 
-</div>
+
 
 {% endblock %}
