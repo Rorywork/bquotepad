@@ -408,7 +408,7 @@ class FormStepNine(forms.Form):
 		super(FormStepNine, self).__init__(*args, **kwargs)
 		self.fields['product_choice'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = self.manuf), empty_label = 'Select Product for quote')
 	estimated_duration = forms.ChoiceField(choices=ESTIMATED_DURATION_DROPDOWN)
-	description_of_works = forms.CharField(max_length=2000)
+	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':3,'cols':20}))
 	
 	
 class UserRegistrationForm(forms.Form):
