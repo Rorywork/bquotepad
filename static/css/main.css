@@ -275,6 +275,54 @@ h1 {
   border: 1px solid red;
 }
 
+.card-1-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
+.card-2-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(15, 144, 43, 0.671)), to(rgba(112, 95, 95, 0.911))), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-image: linear-gradient( rgba(15, 144, 43, 0.671), rgba(112, 95, 95, 0.911)), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
+.card-3-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
+.card-4-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(15, 144, 43, 0.671)), to(rgba(112, 95, 95, 0.911))), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-image: linear-gradient( rgba(15, 144, 43, 0.671), rgba(112, 95, 95, 0.911)), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
+.card-5-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
+.card-6-complete{
+  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(15, 144, 43, 0.671)), to(rgba(112, 95, 95, 0.911))), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-image: linear-gradient( rgba(15, 144, 43, 0.671), rgba(112, 95, 95, 0.911)), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-position: center; 
+  background-size: cover;
+  border: 1px solid rgb(38, 255, 0);
+}
+
 .card:hover{
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
@@ -286,3 +334,4 @@ h1 {
 }
 
 
+}}

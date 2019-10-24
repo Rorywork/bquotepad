@@ -18,13 +18,16 @@
     <div class="col-sm-12 col-md-4">
 
 
-    <div class="overlay-dash">
+      {% if request.session.Profile_updated %}
+      <div class="card card-1-complete">
+      {% else %}
       <div class="card card-1">
+      {% endif %}
         <h3 class="card-headings">1) Edit Your Profile</h3>
         <p>The first step to success, let us know key information about you and your business which will be used within your quotations. We advise you to complete this stage first and ensure all the information is up to date.</p>
         <a class="stretched-link" href="/edit_Profile_details"></a>
       </div>
-    </div>
+
 
     </div>
 
@@ -32,10 +35,14 @@
 
 
     <div class="col-sm-12 col-md-4">
+        {% if request.session.Image_loaded %}
+        <div class="card card-2-complete">
+            {% else %}
         <div class="card card-2">
+            {% endif %}
             <h3 class="card-headings">2) Upload Company Logo And Product Images</h3>
             <p>Use this page to upload the logo which will go on your quote, please upload this first. Then you can upload an image of the products you sell later on you will be able to select which image to put on your quotes.</p>
-            <a class="stretched-link" href="/edit_Profile_details"></a>
+            <a class="stretched-link" href="/fileupload"></a>
           </div>
       
     </div>
