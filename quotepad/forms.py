@@ -1,8 +1,8 @@
 from django import forms
-
+# Added by GL 19/07/19 - File upload capability
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from quotepad.models import Document, Profile, ProductPrice
+from boilerinfo.models import Document, Profile, ProductPrice
 
 # For Editing the template
 from django.conf import settings
@@ -70,8 +70,8 @@ CURRENT_CONTROLS_DROPDOWN = (
 	('Wired - Programmer','Wired - Programmer'),
 	('Wired - Room Thermostat','Wired - Room Thermostat'),
 	('Wired - Cylinder Thermostat','Wired - Cylinder Thermostat'),
-	('Wireless - Room Thermostat','Wireless - Room Thermostat'),
-	('Wireless - Programmable Room Thermostat','Wireless - Programmable Room Thermostat'),
+	('Wireless-Room Thermostat','Wireless-Room Thermostat'),
+	('Wireless-Programmable Thermostat','Wireless-Programmable Thermostat'),
 	('Smart Thermostat','Smart Thermostat'),
 	('None','None'),
 )
@@ -150,9 +150,9 @@ NEW_CONTROLS_DROPDOWN = (
 	('Wired - Room Thermostat','Wired - Room Thermostat'),
 	('Wired - Cylinder Thermostat','Wired - Cylinder Thermostat'),
 	('Wireless - Room Thermostat','Wireless - Room Thermostat'),
-	('Wireless - Programmable Room Thermostat','Wireless - Programmable Room Thermostat'),
-	('Smart Controls - Nest','Smart Controls - Nest'),
-	('Smart Controls - ESI','Smart Controls - ESI'),
+	('Wireless-Programmable Thermostat','Wireless-Programmable Thermostat'),
+	('Smart Controls-Nest','Smart Controls - Nest'),
+	('Smart Controls-ESI','Smart Controls - ESI'),
 	('Use Existing','Use Existing'),
 )
 
@@ -293,7 +293,7 @@ RADIATOR_REQUIREMENTS_DROPDOWN = (
 )
 
 ESTIMATED_DURATION_DROPDOWN = (
-	('1 Day','1 Days'),
+	('1 Day','1 Day'),
 	('2 Days','2 Days'),
 	('3 Days','3 Days'),
 	('4 Days','4 Days'),
@@ -408,7 +408,7 @@ class FormStepNine(forms.Form):
 		super(FormStepNine, self).__init__(*args, **kwargs)
 		self.fields['product_choice'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = self.manuf), empty_label = 'Select Product for quote')
 	estimated_duration = forms.ChoiceField(choices=ESTIMATED_DURATION_DROPDOWN)
-	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':3,'cols':20}))
+	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':3, 'cols':20}))
 	
 	
 class UserRegistrationForm(forms.Form):
@@ -436,6 +436,12 @@ class DocumentForm(forms.ModelForm):
 		model = Document
 		fields = ('document', 'description')
 
+# Pricing File Form
+#class PricingFileForm(forms.ModelForm):
+#	class Meta:
+#		model = PricingFile
+#		fields = ('document', 'description')		
+		
 # Installer details
 class ProfileForm(forms.ModelForm):
 	class Meta:
@@ -465,13 +471,15 @@ class EditQuoteTemplateForm(forms.Form):
 	pdf_template_code = forms.CharField(widget=forms.Textarea(attrs={'rows':24, 'cols':60}))
 
 	def __init__(self, user, *args, **kwargs):
-
+		#self.user = kwargs.pop('user')
 		self.user = user
 		super(EditQuoteTemplateForm, self).__init__(*args, **kwargs)
 		usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_{}/quote_for_pdf.html".format(self.user.username))
+		#usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/user_test/quote_for_pdf.html")
+		#print(usr_pdf_template_file)
 		template_file = open(usr_pdf_template_file,'r')
 		self.fields['pdf_template_code'].initial = template_file.read
-
+		alert = None
 
 
 
