@@ -11,51 +11,49 @@
             {% csrf_token %}    
     
             <div class="form-group">
-                <label for="editFirstName">First Name</label>
-                <input name="first_name" type="text" class="form-control" id="editFirstName" placeholder="First Name" required value = "{{form.first_name.value}}">
+               {{ form.first_name.label}} *<br>
+               {{ form.first_name }}
             </div>
     
             <div class="form-group">
-                    <label for="editLastName">Last Name</label>
-                    <input name="last_name" type="text" class="form-control" id="editLastName" placeholder="Last Name" required value = "{{form.last_name.value}}">
+                {{ form.last_name.label}} *<br>
+                {{ form.last_name }}
             </div>
 
             <div class="form-group">
-                    <label for="editCompanyName">Company Name</label>
-                    <input name="company_name" type="text" class="form-control" id="editCompanyName" placeholder="Company Name" required value = "{{form.company_name.value}}">
+                {{ form.email.label}} *<br>
+                {{ form.email }}
             </div>
 
             <div class="form-group">
-                    <label for="editEmail">Email</label>
-                    <input name="email" type="email" class="form-control" id="editEmail" placeholder="Email" required value = "{{form.email.value}}">
+                {{ form.company_name.label}} *<br>
+                {{ form.company_name }}
             </div>
 
             <div class="form-group">
-                    <label for="editPhone">Phone Number</label>
-                    <input name="telephone" type="tel" class="form-control" id="editPhone" placeholder="Phone Number" required value = "{{form.telephone.value}}">
+                {{ form.telephone.label}} *<br>
+                {{ form.telephone }}
             </div>
 
             <div class="form-group">
-                <label for="editDailyWorkRate">Daily Work Rate</label>
-                <input name="daily_work_rate" type="tel" class="form-control" id="editDailyWorkRate" placeholder="Daily Work Rate" required value = "{{form.daily_work_rate.value}}">
+                {{ form.daily_work_rate.label}}<br>
+                {{ form.daily_work_rate }}
             </div>
 
             <div class="form-group">
-                <label for="editQuotePrefix">Quote Prefix</label>
-                <input name="quote_prefix" type="tel" class="form-control" id="editQuotePrefix" placeholder="Quote Prefix (3 characters)" required value = "{{form.quote_prefix.value}}">
+                {{ form.quote_prefix.label}}<br>
+                {{ form.quote_prefix }}
             </div>            
 
 
             <div class="form-group">
-                    <label for="editQuoteNumber">Current Quote Number:</label>
-                    <input name="cur_quote_no" type="number" class="form-control" id="editQuoteNumber" required value = "{{form.cur_quote_no.value}}">
+                {{ form.current_quote_number.label}} *<br>
+                {{ form.current_quote_number }}
             </div>
 
             <input type="hidden" name="alert" value="{{alert}}" readonly>
 
             <button type="submit" class="btn btn-primary" value="Login">Submit</button>
-
-            <button type="reset" class="btn btn-secondary">Undo</button>
 
             <a class="btn btn-secondary" href="{% url 'home'%}">Cancel</a>
 

@@ -2,12 +2,17 @@
 
 {% block content %}
 
-<!-- <h4>Quote Email</h4>
+<div class="container">
 
-<p>Your quote has been emailed to the customer and a copy has been sent to you.</p> -->
+<h4>Quote Email</h4>
+
+<a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
+
+</div>
 
 <script>
-    all_good("Email processing", "Your quote has been sent to the customer's email address.")
+    all_good("Email processing", "Your quote has been sent to the customer's email address.", "home/")
 </script>
+
 
 {% endblock %}

@@ -2,9 +2,13 @@
 
 {% block content %}
 
-<h4>See your quote layout</h4>
+<div class="container">
 
-<a href="{% url 'generate_quote_from_file' 'PDFOutput' 'currentquote' %}" target="_blank">View Quote Layout</a><br>
+<h4>Your quote layout has been generated as a PDF file</h4>
 
+<a href="{% url 'generate_quote_from_file' 'PDFOutput' 'currentquote' %}" target="_blank">View Quote Layout (Opens in a separate window)</a><br><br>
+<a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
+
+</div>
 
 {% endblock %}

@@ -143,7 +143,7 @@ class FormWizardView(SessionWizardView):
 		customer_last_name = ([form.cleaned_data for form in form_list][0].get('customer_last_name'))
 
 		# Assign file name to store generated PDF
-		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(self.request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.cur_quote_no:05}")) # pad with leading zeros (5 positions)
+		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(self.request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.current_quote_number:05}")) # pad with leading zeros (5 positions)
 
 		# Write the form data input to a file in the folder pdf_quote_archive/user_xxxx/current_quote.txt
 		current_quote_form_filename =  Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/current_quote.txt".format(self.request.user.username))
@@ -171,8 +171,8 @@ class FormWizardView(SessionWizardView):
 			'workload_cost': workload_cost,
 			'total_quote_price': total_quote_price})
 
-		# Increment the Profile.cur_quote_no by 1
-		idx.cur_quote_no = idx.cur_quote_no + 1
+		# Increment the Profile.current_quote_number by 1
+		idx.current_quote_number = idx.current_quote_number + 1
 		idx.save()
 		return HttpResponseRedirect('/quotegenerated/')
 
@@ -298,6 +298,14 @@ def change_password(request):
 
 @login_required
 def model_form_upload(request):
+	# Check to see the status of the number of images uploaded and assign an appropriate instruction
+	if Document.objects.filter(user = request.user).count() == 0 :
+		form_instructions = "Upload A Logo For Your Company"
+	elif Document.objects.filter(user = request.user).count() == 1 :
+		form_instructions = "Upload A Product Image To Be Used On Your Quotes"
+	else:
+		form_instructions = "Upload Images To Be Used On Your Quotes"
+
 	if request.method == 'POST':
 		form = DocumentForm(request.POST, request.FILES)
 		print(request.user)
@@ -311,7 +319,8 @@ def model_form_upload(request):
 	else:
 		form = DocumentForm()
 	return render(request, 'file_upload.html', {
-		'form': form
+		'form': form,
+		'form_instructions': form_instructions
 	})
 
 @login_required
@@ -458,7 +467,7 @@ def generate_quote_from_file(request, outputformat, quotesource):
 		# Get customer lastname
 		customer_last_name = (file_form_data[0].get('customer_last_name'))
 		# Assign file name to store generated PDF
-		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.cur_quote_no:05}")) # pad with leading zeros (5 positions)
+		outputFilename = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/Quote_{}_{}{}.pdf".format(request.user.username,idx.quote_prefix,customer_last_name.replace(" ","_"),f"{idx.current_quote_number:05}")) # pad with leading zeros (5 positions)
 		# Generate the PDF and write to disk
 		convertHtmlToPdf2(sourceHtml, outputFilename, {
 			'form_data': file_form_data,

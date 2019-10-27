@@ -1,8 +1,7 @@
 from django import forms
-# Added by GL 19/07/19 - File upload capability
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from boilerinfo.models import Document, Profile, ProductPrice
+from quotepad.models import Document, Profile, ProductPrice
 
 # For Editing the template
 from django.conf import settings
@@ -82,6 +81,7 @@ REMOVALS_CHOICES = (
 	('Cold Water Storage Tank','Cold Water Storage Tank'),
 	('Feed and Expansion Tank','Feed and Expansion Tank'),
 	('Rubbish','Rubbish'),
+	('Nothing To Remove','Nothing To Remove'),
 )
 
 NEW_FUEL_TYPE_DROPDOWN = (
@@ -305,10 +305,14 @@ class FormStepOne(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.0.field_name e.g. form_data.0.customer_first_name
+	def __init__(self, *args, **kwargs):
+		super(FormStepOne, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	customer_first_name = forms.CharField(max_length=100)
 	customer_last_name = forms.CharField(max_length=100)
-	customer_home_phone = forms.CharField(max_length=100)
-	customer_mobile_phone = forms.CharField(max_length=100)
+	customer_home_phone = forms.CharField(max_length=100, required = False)
+	customer_mobile_phone = forms.CharField(max_length=100, required = False)
 	customer_email = forms.EmailField()
 	owner_or_tenant = forms.ChoiceField(choices=OWNER_OR_TENANT_DROPDOWN)
 	#choice = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = 'Worcester Bosch'), empty_label = 'Select Product for quote')
@@ -318,6 +322,10 @@ class FormStepTwo(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.1.field_name e.g. form_data.1.installation_address
+	def __init__(self, *args, **kwargs):
+		super(FormStepTwo, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	installation_address = forms.CharField(max_length=100)
 	street_address = forms.CharField(max_length=100)
 	city = forms.CharField(max_length=100)
@@ -329,6 +337,10 @@ class FormStepThree(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.2.field_name e.g. form_data.2.current_fuel_type
+	def __init__(self, *args, **kwargs):
+		super(FormStepThree, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	current_fuel_type = forms.ChoiceField(choices=CURRENT_FUEL_TYPE_DROPDOWN)
 	current_boiler_type = forms.ChoiceField(choices=CURRENT_BOILER_TYPE_DROPDOWN)
 	current_boiler_location = forms.ChoiceField(choices=CURRENT_BOILER_LOCATION_DROPDOWN)
@@ -347,6 +359,10 @@ class FormStepFive(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.4.field_name e.g. form_data.4.new_fuel_type
+	def __init__(self, *args, **kwargs):
+		super(FormStepFive, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	new_fuel_type = forms.ChoiceField(choices=NEW_FUEL_TYPE_DROPDOWN)
 	new_boiler_type = forms.ChoiceField(choices=NEW_BOILER_TYPE_DROPDOWN)
 	new_boiler_location = forms.ChoiceField(choices=NEW_BOILER_LOCATION_DROPDOWN)
@@ -363,6 +379,10 @@ class FormStepSix(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.5.field_name e.g. form_data.5.new_fuel_type
+	def __init__(self, *args, **kwargs):
+		super(FormStepSix, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	system_treatment = forms.ChoiceField(choices=SYSTEM_TREATMENT_DROPDOWN)
 	gas_supply = forms.ChoiceField(choices=GAS_SUPPLY_DROPDOWN)
 	gas_supply_length = forms.ChoiceField(choices=GAS_SUPPLY_LENGTH_DROPDOWN)
@@ -380,6 +400,8 @@ class FormStepSeven(forms.Form):
 		self.user = kwargs.pop('user')
 		super(FormStepSeven, self).__init__(*args, **kwargs)
 		self.fields['boiler_manufacturer'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user).order_by('brand').values_list('brand', flat=True).distinct(), to_field_name='brand',empty_label = 'Select Boiler Brand for quote')
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	manufacturer_guarantee = forms.ChoiceField(choices=MANUFACTURER_GUARANTEE_DROPDOWN)
 	flue_components = forms.ChoiceField(choices=FLUE_COMPONENTS_DROPDOWN)
 	programmer_thermostat = forms.ChoiceField(choices=PROGRAMMER_THERMOSTAT_DROPDOWN)
@@ -392,10 +414,14 @@ class FormStepEight(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
 	# form_data.7.field_name e.g. form_data.7.radiator_requirements
+	def __init__(self, *args, **kwargs):
+		super(FormStepEight, self).__init__(*args, **kwargs)
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	radiator_requirements = forms.ChoiceField(choices=RADIATOR_REQUIREMENTS_DROPDOWN)
-	thermostatic_radiator_valves_size = forms.CharField(max_length=100)
-	thermostatic_radiator_valves_type = forms.CharField(max_length=100)
-	thermostatic_radiator_valves_quantity = forms.CharField(max_length=100)
+	thermostatic_radiator_valves_size = forms.CharField(max_length=100, required = False)
+	thermostatic_radiator_valves_type = forms.CharField(max_length=100, required = False)
+	thermostatic_radiator_valves_quantity = forms.CharField(max_length=100, required = False)
 	
 class FormStepNine(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
@@ -407,8 +433,10 @@ class FormStepNine(forms.Form):
 		self.manuf = kwargs.pop('manufacturer')
 		super(FormStepNine, self).__init__(*args, **kwargs)
 		self.fields['product_choice'] = forms.ModelChoiceField(queryset=ProductPrice.objects.filter(user = self.user, brand = self.manuf), empty_label = 'Select Product for quote')
+		for field in self: 
+			field.field.widget.attrs['class'] = 'form-control'
 	estimated_duration = forms.ChoiceField(choices=ESTIMATED_DURATION_DROPDOWN)
-	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':3, 'cols':20}))
+	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':5, 'cols':30}))
 	
 	
 class UserRegistrationForm(forms.Form):
@@ -436,17 +464,29 @@ class DocumentForm(forms.ModelForm):
 		model = Document
 		fields = ('document', 'description')
 
-# Pricing File Form
-#class PricingFileForm(forms.ModelForm):
-#	class Meta:
-#		model = PricingFile
-#		fields = ('document', 'description')		
+		widgets = {
+			'document': forms.FileInput(attrs={'class': 'form-control'}),
+			'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a description for the Image'}),
+		}
+
 		
-# Installer details
+		
+# Estimator's details
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ('first_name','last_name','email','company_name','telephone', 'daily_work_rate', 'quote_prefix', 'cur_quote_no')
+		fields = ('first_name','last_name','email','company_name','telephone', 'daily_work_rate', 'quote_prefix', 'current_quote_number')
+
+		widgets = {
+			'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your First Name', 'autofocus': ''}),
+			'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Last Name'}),
+			'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
+			'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Company Name'}),
+			'telephone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Telephone Number'}),
+			'daily_work_rate': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter your daily work rate'}),
+			'quote_prefix': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a three character prefix for your quote numbers'}),
+			'current_quote_number': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Current Quote Number'}),
+		}
 		
 class UserProfileForm(forms.ModelForm):
 	class Meta:
@@ -458,6 +498,14 @@ class ProductPriceForm(forms.ModelForm):
 	class Meta:
 		model = ProductPrice
 		fields = ['brand', 'model_name', 'product_code','price','product_image']
+
+		widgets = {
+			'brand': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter the Manufacturer's Brand Name",  'autofocus': ''}),
+            'model_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the Model Name'}),
+			'product_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the Product Code'}),
+			'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter the Price of the product'}),
+			'product_image': forms.Select(attrs={'class': 'form-control'}),
+		}
 
 
 	def __init__(self, *args, **kwargs):

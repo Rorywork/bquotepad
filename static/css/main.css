@@ -2,15 +2,22 @@
 
 body {
   font-size: 16px;
+  min-height:70vh;
 }
 
 main{
-  background-color: rgb(255, 255, 255);
-  min-height: 70vh;
+  background-color: rgb(243, 241, 241);
   margin-top: 5vh;
   margin-bottom: 5vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+.white-space{
+  min-height: 70vh;
+}
 .container-fluid{
   margin-top: 25px;
   margin-bottom: 25px; 
@@ -345,4 +352,6 @@ h1 {
   text-align: center;
 }
 
-}}
+.btn-info{
+  
+}

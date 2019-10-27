@@ -17,13 +17,16 @@
     {% endif %}
     {% if not request.session.created_quote_template %}
         <li>Design the layout of your quote (<a href="{% url 'editquotetemplate' %}">Edit Quote Template</a>)</li>
-    {% endif %}    
+    {% endif %}
+    {% ifnotequal user.groups.all.0.name "Subscribed" %}
+        <li>Provide your Subscription details (<a href="{% url 'stripe_checkout' %}">Subscribe to Quotepad</a>)</li>
+    {% endifnotequal %}    
 </ul>
 
-<a href="{% url 'home' %}">Click here to review your progress</a>
+<a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
 
 <script>
-    not_all_good("Quote Processing", "It is not possible to create your quote right now.")
+    not_all_good_no_redirect("Quote Processing", "It is not possible to create your quote yet as you need to provide more information.")
 </script>
 
 {% endblock %}

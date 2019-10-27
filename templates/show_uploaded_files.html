@@ -2,30 +2,36 @@
 
 {% block content %}
 
+<div class="container">
+
 <h4>Uploaded Images</h4>
 
 {% for frecord in frecords %}
 
     <hr>
-    <img src="{{frecord.document.url}}"  height="50" style="border:1px solid grey" >
-    <p>Image Description: {{frecord.description}}</p>
-    <p>Image Url: {{frecord.document}}</p>
-    <p>Uploaded on: {{frecord.uploaded_at}}</p>
-    <p>PDF unique ID: <b>frecords.{{forloop.revcounter0}}.document.url</b></p>
+    <img src="{{frecord.document.url}}"  height="100" style="border:1px solid grey" >
+    <p>Description: {{frecord.description}}   | uploaded on: {{frecord.uploaded_at}}</p>
+    <!-- <p>Image Url: {{frecord.document}}</p> -->
+    <!-- <p>PDF unique ID: <b>frecords.{{forloop.revcounter0}}.document.url</b></p> -->
 
     {% empty %}
     <p>You have no images saved on the website.</p>
 
 {% endfor %}
 
-{% if frecords|length == 2 %}
+<a class="btn btn-primary" href="/fileupload/">Upload an image</a>
+<a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
+
+</div>
+
+{% if frecords|length == 1 %}
 <script>
-    all_good("Great news", "You now have the minimum number of images to create a quote.")
+    Swal.fire("Good Progress", "You have a logo for your quote. Now upload a Product Image.", "info")
 </script>
 
-{% elif frecords|length < 2 %}
+{% elif frecords|length == 2 %}
 <script>
-    not_all_good("Please Note", "You will need to upload a minimum of one logo and a product image to create your quote. Upload the logo first.")
+    Swal.fire("Great news", "You now have the minimum number of images to create a quote.", "success")
 </script>
 
 {% endif %}

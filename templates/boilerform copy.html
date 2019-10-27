@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<div class = "container quote-form-container">
+
+<div class = "row quotepad-row">
+
+
+    <div class="col-12">
+        <div class="quotepad-form">
+    <form action="" method="post" class="boiler-form">
+    {% csrf_token %}
+    <!--This section requires an if block for every step in the process-->
+    {% if wizard.steps.step1 == 1 %}
+        <h3>CUSTOMER DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 2 %}
+        <h3>PROPERTY DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 3 %}
+        <h3>CURRENT INSTALLATION DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 4 %}
+        <h3>ITEMS TO BE REMOVED</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 5 %}
+        <h3>NEW EQUIPMENT DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 6 %}
+        <h3>COMMISSIONING DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 7 %}
+        <h3>NEW INSTALLATION DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 8 %}
+        <h3>RADIATOR DETAILS</h3>
+    {% endif %}
+    {% if wizard.steps.step1 == 9 %}
+        <h3>WORKLOAD DETAILS</h3>
+    {% endif %}
+    
+    <h5>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h5>
+
+    </div>  <!-- col-12-->
+</div>  <!-- row quotepad-row-->
+
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+          {{ form }}
+        {% endfor %}
+    {% else %}
+    <!-- <div class = "container"> -->
+        {% for field in wizard.form %} 
+            {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 or forloop.counter == 7 or forloop.counter == 9  or forloop.counter == 11 or forloop.counter == 13 %}
+            <div class = "row">
+            {% endif %}
+                <div class = "col-6">
+                {% if field.field.widget.input_type == "text" or field.field.widget.input_type == "email" %}           
+                    <div class="form-group">
+                        <label>{{ field.label_tag }}</label>{% if field.field.required %}*{% endif %}
+                        {{ field }}
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                            <label>{{ field.label_tag }}</label>{% if field.field.required %}*{% endif %}<br>
+                            {{ field }}
+                            {% if field.label == "Product choice" %}
+                            <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" data-trigger="focus" title="Product Choice" data-content="This is where you select the product that has to be included on the quote">i</button>
+                            {% endif %}
+                            {% if field.label == "Boiler manufacturer" %}
+                            <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" data-trigger="focus" title="Boiler manufacturer" data-content="Filter the list of products by selecting the appropriate manufacturer">i</button>
+                            {% endif %}
+                            {% if field.label == "Estimated duration" %}
+                            <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" data-trigger="focus" title="Estimated duration" data-content="The numbers of days entered here will be multiplied by the Daily Work Rate specified in your profile to calculate the Labour cost of the work.">i</button>
+                            {% endif %}
+                        </div>
+                {% endif %}
+                </div>  <!-- col-6-->
+            <!-- <span class="message">{{ field.errors }}</span> -->
+            {% if forloop.counter == 2 or forloop.counter == 4 or forloop.counter == 6 or forloop.counter == 8 or forloop.counter == 10 or forloop.counter == 12 or forloop.counter == 14 %}
+            </div>  <!-- row-->
+            {% endif %}    
+        {% endfor %}
+    <!-- </div> container -->
+    {% endif %}
+  
+
+  {% if wizard.steps.prev %}
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="boilerbtn">First step</button>
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="boilerbtn">Previous step</button>
+  {% endif %}
+  {% if wizard.steps.step1 != 9 %}
+    <input type="submit" value="Next Step" class="boilerbtn"/>
+  {% else %}
+    <input type="submit" value="Final Step" class="boilerbtn"/>
+  {% endif %}
+
+</form>
+</div>
+</div>
+
+<div class="col-sm-4">
+    
+</div>
+
+</div>
+</div>
+
+{% endif %}
+
+<script type="text/javascript">
+
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    
+    $('.popover-dismiss').popover({
+      trigger: 'focus'
+    })
+    
+</script>
+
+{% endblock %}

@@ -18,15 +18,15 @@ class Document(models.Model):
 
 
 class Profile(models.Model):
-    user            =   models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name      =   models.CharField(max_length=40)
-    last_name       =   models.CharField(max_length=60)
-    company_name    =   models.CharField(max_length=60)
-    email           =   models.CharField(max_length=60)
-    telephone       =   models.CharField(max_length=20)
-    daily_work_rate	=	models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    quote_prefix	=	models.CharField(max_length=3, default="XXX")
-    cur_quote_no    =   models.PositiveIntegerField(default=1)
+    user                    =   models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name              =   models.CharField(max_length=40)
+    last_name               =   models.CharField(max_length=60)
+    company_name            =   models.CharField(max_length=60)
+    email                   =   models.CharField(max_length=60)
+    telephone               =   models.CharField(max_length=20)
+    daily_work_rate	        =	models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    quote_prefix	        =	models.CharField(max_length=3, default="XXX")
+    current_quote_number    =   models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.user.username

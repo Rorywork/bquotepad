@@ -51,9 +51,13 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="/edit_Profile_details">Edit Profile</a>
-        <a class="dropdown-item" href="/edit_Profile_details">Show Uploaded Images</a>
+        <a class="dropdown-item" href="/showuploadedfiles">Show Uploaded Images</a>
         <a class="dropdown-item" href="/changepassword">Change Password</a>
         <a class="dropdown-item" href="/stripecheckout">Subscribe</a>
+        {% if request.session.created_quote %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/listquotearchive">Previous Quotes</a>
+        {% endif %}  
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/logout">Logout</a>
       </div>
@@ -73,21 +77,15 @@
 {% endif %}
 
 
-
+<div class="white-space">
 <main>
   {% block content %}
 
   {% endblock content %}
 </main>
+</div>
 
 
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
 
 
 

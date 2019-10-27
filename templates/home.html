@@ -23,7 +23,7 @@
       {% else %}
       <div class="card card-1">
       {% endif %}
-        <h3 class="card-headings">1) Edit Your Profile</h3>
+        <h3 class="card-headings">1. Edit Your Profile</h3>
         <p class="card-text">The first step to success, let us know key information about you and your business which will be used within your quotations. We advise you to complete this stage first and ensure all the information is up to date.</p>
         <a class="stretched-link" href="/edit_Profile_details"></a>
       </div>
@@ -40,7 +40,7 @@
             {% else %}
         <div class="card card-2">
             {% endif %}
-            <h3 class="card-headings">2) Upload Images</h3>
+            <h3 class="card-headings">2. Upload Images</h3>
             <p class="card-text">Use this page to upload the logo which will go on your quote, please upload this first. Then you can upload an image of the products you sell later on you will be able to select which image to put on your quotes.</p>
             <a class="stretched-link" href="/fileupload"></a>
           </div>
@@ -57,7 +57,7 @@
             {% else %}
         <div class="card card-3">
             {% endif %}
-            <h3 class="card-headings">3) Add Your Products</h3>
+            <h3 class="card-headings">3. Add Your Products</h3>
             <p class="card-text">On this page, you can use the uploaded images to create products. Products have a price, a brand, a product code, and an associated image. Once you have products you will be able to generate quotations for these products. </p>
             <a class="stretched-link" href="/productpricelist"></a>
           </div>
@@ -82,7 +82,7 @@
             {% else %}
           <div class="card card-4">
               {% endif %}
-          <h3 class="card-headings">4) View Your Quote Layout</h3>
+          <h3 class="card-headings">4. View Your Quote Layout</h3>
           <p class="card-text">This template will show you what your current quotes look like. Use it to see what the uploaded images will look like in the quotation and to view the design. It opens as a PDF which can be saved.</p>
           <a class="stretched-link" href="/testquotegenerated"></a>
         </div>
@@ -96,9 +96,9 @@
           {% if request.session.User_subscribed %}
           <div class="card card-5-complete">
               {% else %}
-              <div class="card card-4">
+              <div class="card card-5">
               {% endif %}
-              <h3 class="card-headings">5) Subscribe to Quotepad</h3>
+              <h3 class="card-headings">5. Subscribe to Quotepad</h3>
               <p class="card-text">In order to create bespoke quotations for your customers, Quotepad has a £15.00 subscription fee. Please pay this here to get full access to Quotepad.</p>
               <a class="stretched-link" href="/stripecheckout"></a>
             </div>
@@ -110,10 +110,18 @@
   
   
       <div class=" col-sm-12 col-md-4">
-          <div class="card card-6">
-              <h3 class="card-headings">6) Complete A Quote</h3>
-              <p class="card-text">You are now ready to complete a survey, follow the easy to use form to create a bespoke quotation, delivered to your customer's email. Get ready to win more business!</p>
-              <a class="stretched-link" href="/edit_Profile_details"></a>
+          {% if request.session.created_quote %}
+            <div class="card card-6-complete">
+          {% else %}    
+            <div class="card card-6">
+          {% endif %}
+              <h3 class="card-headings">6. Complete A Quote</h3>
+              <p class="card-text">You are now ready to complete a quote, follow the easy to use form to create a bespoke quotation, delivered to your customer's email. Get ready to win more business!</p>
+              {% ifequal user.groups.all.0.name "Subscribed" %}
+                <a class="stretched-link" href="/boilerform"></a>
+              {% else %}
+              <a class="stretched-link" href="/quotenotpossible"></a>
+              {% endifequal %}
             </div>
       </div>
   

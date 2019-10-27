@@ -9,7 +9,7 @@
     <div class="row">
 
 
-        <div class="col-12">
+        <div class="col-12 product-col-heading">
             <h1>List of Products</h1>
         </div>
 
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-4">
-            <a href="{% url 'productpricecreate' %}" class="btn btn-secondary" role="button">Add</a>
+
         </div>
 
     </div>
@@ -83,11 +83,12 @@
 
     <div class="row">
         {% empty %}
-        <p>You have no products on the website.</p>
+        <p>You have no products registered.</p>
 
         {% endfor %}
 
-        <a href="{% url 'home' %}" class="btn btn-secondary btn-cancel">Cancel</a>
     </div>
+
+    <a href="{% url 'productpricecreate' %}" class="btn btn-primary" role="button">Add</a>
 </div>
 {% endblock content %}
