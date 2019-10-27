@@ -326,7 +326,7 @@ class FormStepTwo(forms.Form):
 		super(FormStepTwo, self).__init__(*args, **kwargs)
 		for field in self: 
 			field.field.widget.attrs['class'] = 'form-control'
-	installation_address = forms.CharField(max_length=100)
+	house_name_or_number = forms.CharField(max_length=100)
 	street_address = forms.CharField(max_length=100)
 	city = forms.CharField(max_length=100)
 	county = forms.CharField(max_length=100)
