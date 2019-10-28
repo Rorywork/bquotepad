@@ -20,9 +20,9 @@
     {% if not request.session.created_quote_template %}
         <li>View quote layout (<a href="{% url 'test_quote_generated' %}">View Quote Design</a>)</li>
     {% endif %}
-    {% ifnotequal user.groups.all.0.name "Subscribed" %}
+    {% if not request.session.User_subscribed %}
         <li>Provide your Subscription details (<a href="{% url 'stripe_checkout' %}">Subscribe to Quotepad</a>)</li>
-    {% endifnotequal %}    
+    {% endif %}    
 </ul>
 
 <a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
