@@ -1,10 +1,10 @@
 /* These classes are used throughout the application in order to make the look of the site consistent. */
 body {
   font-size: 16px;
-  min-height:70vh;
+  min-height: 70vh;
 }
 
-main{
+main {
   background-color: rgb(243, 241, 241);
   margin-top: 5vh;
   margin-bottom: 5vh;
@@ -14,23 +14,24 @@ main{
   padding-bottom: 10px;
 }
 
-.white-space{
+.white-space {
   min-height: 70vh;
 }
 
-.navbar{
+.navbar {
   color: white;
 }
+
 /* The dropdown class is utilised by the navbar to give options when clicking on the settings glyph. */
-.dropdown{
+.dropdown {
   list-style: none;
   border: none;
   margin-right: 30px;
 }
 
-.container-fluid{
+.container-fluid {
   margin-top: 25px;
-  margin-bottom: 25px; 
+  margin-bottom: 25px;
 }
 
 .base-footer {
@@ -44,7 +45,7 @@ h1 {
   font-size: 2rem;
 }
 
-.social-list{
+.social-list {
   list-style: none;
 }
 
@@ -59,11 +60,11 @@ h1 {
   text-align: center;
 }
 
-.landing-info-titles{
+.landing-info-titles {
   font-size: 1.4rem;
 }
 
-.landing-info-icons{
+.landing-info-icons {
   font-size: 3rem;
 }
 
@@ -93,7 +94,8 @@ h1 {
 .btn-col {
   text-align: center;
   padding-bottom: 20px;
-  background-color: rgb(243, 241, 241); ;
+  background-color: rgb(243, 241, 241);
+  ;
 }
 
 .trustpilot-logo {
@@ -131,7 +133,7 @@ h1 {
   margin-top: 30px;
 }
 
-.product-list-sub-text{
+.product-list-sub-text {
   margin-left: 15px;
 }
 
@@ -140,16 +142,16 @@ h1 {
   margin-bottom: 20px;
 }
 
-.blockquote{
+.blockquote {
   color: rgb(255, 255, 255);
   padding-bottom: 50px;
 }
 
 /* 
 The responsive effects on the dashboard page are built using these cards, they are all utilised depending on the status of the user as they complete sections of Quotepad. */
-.card{
+.card {
   color: rgb(255, 255, 255);
-  background-position: center; 
+  background-position: center;
   background-size: cover;
   padding: 20px;
   text-align: center;
@@ -157,124 +159,124 @@ The responsive effects on the dashboard page are built using these cards, they a
 }
 
 
-.card-1{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
-  background-position: center; 
+.card-1 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 
 }
 
-.card-2{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
-  background-position: center; 
+.card-2 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn.pixabay.com/photo/2017/02/22/14/18/business-2089532_960_720.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 }
 
-.card-3{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
-  background-position: center; 
+.card-3 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 }
 
-.card-4{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://image.flaticon.com/icons/png/512/18/18227.png);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://image.flaticon.com/icons/png/512/18/18227.png);
-  background-position: center; 
+.card-4 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://image.flaticon.com/icons/png/512/18/18227.png);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://image.flaticon.com/icons/png/512/18/18227.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 }
 
-.card-5{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
-  background-position: center; 
+.card-5 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 }
 
-.card-6{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
-  background-image: linear-gradient( rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
-  background-position: center; 
+.card-6 {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 94, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
+  background-image: linear-gradient(rgba(216, 94, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid red;
 }
 
-.card-1-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
-  background-position: center; 
+.card-1-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/88296-200.png);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/88296-200.png);
+  background-position: center;
   border: 1px solid rgb(38, 255, 0);
   background-size: cover;
 
 }
 
-.card-2-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/3927-200.png);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/3927-200.png);
-  background-position: center; 
+.card-2-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://static.thenounproject.com/png/3927-200.png);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://static.thenounproject.com/png/3927-200.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid rgb(38, 255, 0);
 }
 
-.card-3-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
-  background-position: center; 
+.card-3-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://images.assetsdelivery.com/compings_v2/anartelman/anartelman1802/anartelman180200862.jpg);
+  background-position: center;
   background-size: cover;
   border: 1px solid rgb(38, 255, 0);
 }
 
-.card-4-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://image.flaticon.com/icons/png/512/18/18227.png);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://image.flaticon.com/icons/png/512/18/18227.png);
-  background-position: center; 
+.card-4-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://image.flaticon.com/icons/png/512/18/18227.png);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://image.flaticon.com/icons/png/512/18/18227.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid rgb(38, 255, 0);
 }
 
-.card-5-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
-  background-position: center; 
+.card-5-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn0.iconfinder.com/data/icons/miscellaneous-1-2/128/subscribe_subscription_button_online-512.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid rgb(38, 255, 0);
 }
 
-.card-6-complete{
-  background-image: -webkit-gradient( linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
-  background-image: linear-gradient( rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
-  background-position: center; 
+.card-6-complete {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(104, 216, 94, 0.671)), to(rgba(230, 212, 212, 0.911))), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
+  background-image: linear-gradient(rgba(104, 216, 94, 0.671), rgba(230, 212, 212, 0.911)), url(https://cdn1.iconfinder.com/data/icons/feedback-review-1/64/x-21-512.png);
+  background-position: center;
   background-size: cover;
   border: 1px solid rgb(38, 255, 0);
 }
 
-.card:hover{
+.card:hover {
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
 }
 
-.card-headings{
+.card-heardings {
   font-size: 1.4rem;
   background-color: rgba(0, 0, 0, 0.452);
   margin-bottom: 50px;
 }
 
-.card-text{
+.card-text {
   background-color: rgba(0, 0, 0, 0.541);
   height: 150px;
 }
 
-.lead{
+.lead {
   text-align: center;
 }
 
-#next-step-btn{
+#next-step-btn {
   float: right;
 }
