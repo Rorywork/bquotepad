@@ -51,7 +51,7 @@ import shutil
 
 @receiver(user_logged_in)
 def sig_user_logged_in(sender, user, request, **kwargs):
-''' Function execution on logon to check on the current progress status of the user ''' 
+	''' Function execution on logon to check on the current progress status of the user ''' 
 
 	if Profile.objects.filter(user = request.user, first_name=''):
 		request.session['Profile_updated'] = False
@@ -85,8 +85,8 @@ def sig_user_logged_in(sender, user, request, **kwargs):
 	return 
 
 class FormWizardView(SessionWizardView):
-''' Main Quotepad form functionaility to capture the details for the quote using the Formwizard functionaility in the formtools library '''
-''' Outputs the data to a PDF and a json files in the pdf_quote_archive user specific folder (user_xxxxx)  '''
+	''' Main Quotepad form functionaility to capture the details for the quote using the Formwizard functionaility in the formtools library '''
+	''' Outputs the data to a PDF and a json files in the pdf_quote_archive user specific folder (user_xxxxx)  '''
 
 	template_name = "boilerform.html"
 
@@ -203,7 +203,7 @@ def quote_emailed(request):
 
 def landing(request):
 	''' Function to render the landing page used to promote the site when not logged in '''
-    return render(request, 'landing.html')    
+	return render(request, 'landing.html')    
 
 @login_required
 def quotepad_template_help(request):

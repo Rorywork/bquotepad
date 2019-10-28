@@ -11,7 +11,7 @@ def user_directory_path(instance, filename):
 ''' Model for the upload of image files '''
 class Document(models.Model):
     user = models.CharField(max_length=255, blank=True)
-    description = models.CharField(max_length=255, blank=True)
+    description = models.CharField(max_length=255)
     document = models.ImageField(upload_to=user_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 

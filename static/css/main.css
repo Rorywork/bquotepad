@@ -1,5 +1,4 @@
-/* Cross application classes */
-
+/* These classes are used throughout the application in order to make the look of the site consistent. */
 body {
   font-size: 16px;
   min-height:70vh;
@@ -18,6 +17,17 @@ main{
 .white-space{
   min-height: 70vh;
 }
+
+.navbar{
+  color: white;
+}
+/* The dropdown class is utilised by the navbar to give options when clicking on the settings glyph. */
+.dropdown{
+  list-style: none;
+  border: none;
+  margin-right: 30px;
+}
+
 .container-fluid{
   margin-top: 25px;
   margin-bottom: 25px; 
@@ -38,8 +48,7 @@ h1 {
   list-style: none;
 }
 
-
-/* Landing Page */
+/* Landing Page - These classes are used to style the landing page - designed to entice users to sign up to Quotepad */
 .heading-section-landing {
   font-size: 1.4rem;
   text-align: center;
@@ -57,7 +66,6 @@ h1 {
 .landing-info-icons{
   font-size: 3rem;
 }
-
 
 .process-section {
   background-color: rgb(0, 0, 0);
@@ -82,56 +90,32 @@ h1 {
   font-size: 2rem;
 }
 
-
 .btn-col {
   text-align: center;
-  background-color: white;
   padding-bottom: 20px;
+  background-color: rgb(243, 241, 241); ;
 }
 
 .trustpilot-logo {
-  height: 200px;
+  height: 100px;
+  margin-top: 50px;
+
 }
 
 .quote-row {
   margin-top: 50px;
 }
 
-/* forms */
+/* These classes are used by the varios forms within Quotepad  */
 
 .quote-form-container {
   background-color: rgb(246, 245, 242);
-  border: 1px solid lightblue;
   margin: 0 auto;
 }
-
-
-.boiler-form {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  background-color: lightgoldenrodyellow;
-  width: 800px
-}
-
-/* dashboard */
-
-
 
 .dashboard-container {
   margin-top: 50px;
   margin-bottom: 50px;
-}
-
-
-
-/* .card:hover {
-  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-} */
-
-#dashboard-heading {
-  margin-top: 50px;
-  color: black;
 }
 
 .product-details-container {
@@ -143,62 +127,17 @@ h1 {
   font-size: 30px;
 }
 
-.fa-times {
-  font-size: 30px;
-}
-
-
 .price-list-headings {
   margin-top: 30px;
 }
 
+.product-list-sub-text{
+  margin-left: 15px;
+}
 
 .edit-product-container {
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.status-text {
-  color: white;
-}
-
-.above-nav{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-.above-nav-list-items{
-  float: right;
-}
-
-.above-nav-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333333;
-}
-
-.above-nav {
-  float: left;
-}
-
-.above-nav a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 16px;
-  text-decoration: none;
-}
-
-.above-nav a:hover {
-  background-color: #111111;
-}
-
-.nav-dropdown:hover{
-  color: rgb(24, 188, 156) !important;
 }
 
 .blockquote{
@@ -206,30 +145,14 @@ h1 {
   padding-bottom: 50px;
 }
 
-.navbar{
-  color: white;
-}
-
-.dropdown{
-  list-style: none;
-  border: none;
-  margin-right: 30px;
-}
-
-
-
-.card-deck{
-  margin-bottom: 20px;
-}
-
-
+/* 
+The responsive effects on the dashboard page are built using these cards, they are all utilised depending on the status of the user as they complete sections of Quotepad. */
 .card{
   color: rgb(255, 255, 255);
   background-position: center; 
   background-size: cover;
   padding: 20px;
   text-align: center;
-  /* min-height: 300px; */
   margin-bottom: 20px;
 }
 
@@ -352,6 +275,6 @@ h1 {
   text-align: center;
 }
 
-.btn-info{
-  
+#next-step-btn{
+  float: right;
 }

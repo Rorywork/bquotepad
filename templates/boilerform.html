@@ -91,13 +91,13 @@
             <div class="col-12">
             <div class="boilerformbtns">
                 {% if wizard.steps.prev %}
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="boilerbtn">First step</button>
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="boilerbtn">Previous step</button>
+                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.first }}" class="boilerbtn">First step</button>
+                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.prev }}" class="boilerbtn">Previous step</button>
                 {% endif %}
                 {% if wizard.steps.step1 != 9 %}
-                <input type="submit" value="Next Step" class="boilerbtn"/>
+                <input class="btn btn-primary" id="next-step-btn" type="submit" value="Next Step" class="boilerbtn"/>
                 {% else %}
-                <input type="submit" value="Final Step" class="boilerbtn"/>
+                <input class="btn btn-primary" type="submit" value="Final Step" class="boilerbtn"/>
                 {% endif %}
             </div>  <!-- buttons-->
             </div>
