@@ -7,6 +7,7 @@ from quotepad.models import Document, Profile, ProductPrice
 from django.conf import settings
 from pathlib import Path
 
+''' Section to define the boiler quote form field dropdown values and choices '''
 OWNER_OR_TENANT_DROPDOWN = (
 	('Owner','Owner'),
 	('Tenant','Tenant'),
@@ -301,6 +302,8 @@ ESTIMATED_DURATION_DROPDOWN = (
 )
 
 
+''' Section for defining the multiple forms that will be used for the boiler quote (FormWizard library) '''
+
 class FormStepOne(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
 	# within double curly braces...
@@ -407,8 +410,6 @@ class FormStepSeven(forms.Form):
 	programmer_thermostat = forms.ChoiceField(choices=PROGRAMMER_THERMOSTAT_DROPDOWN)
 	central_heating_system_filter = forms.ChoiceField(choices=CENTRAL_HEATING_SYSTEM_FILTER_DROPDOWN)
 	scale_reducer = forms.ChoiceField(choices=SCALE_REDUCER_DROPDOWN)
-
-	#field_order = ['boiler_manufacturer','flue_components','programmer_thermostat','central_heating_system_filter','scale_reducer', 'manufacturer_guarantee']
 	
 class FormStepEight(forms.Form):
 	# Fields in this class are rendered in the quote_for_pdf.html file with the following notation
@@ -437,8 +438,8 @@ class FormStepNine(forms.Form):
 			field.field.widget.attrs['class'] = 'form-control'
 	estimated_duration = forms.ChoiceField(choices=ESTIMATED_DURATION_DROPDOWN)
 	description_of_works = forms.CharField(max_length=2000, widget=forms.Textarea(attrs={'rows':5, 'cols':30}))
-	
-	
+
+''' User Registration Form '''		
 class UserRegistrationForm(forms.Form):
 	username = forms.CharField(
 			required = True,
@@ -458,7 +459,7 @@ class UserRegistrationForm(forms.Form):
 		)
 
 
-# File upload capability
+''' File upload capability form '''
 class DocumentForm(forms.ModelForm):
 	class Meta:
 		model = Document
@@ -471,7 +472,7 @@ class DocumentForm(forms.ModelForm):
 
 		
 		
-# Estimator's details
+''' User's extended details form - has a 1:1 relationship with the django user object '''
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
@@ -487,12 +488,14 @@ class ProfileForm(forms.ModelForm):
 			'quote_prefix': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a three character prefix for your quote numbers'}),
 			'current_quote_number': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Current Quote Number'}),
 		}
-		
+
+''' Form extension used during the registration process to capture the company name '''		
 class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ('company_name',)
 
+''' Form for capturing the product and price information for the quote '''
 class ProductPriceForm(forms.ModelForm):
 	
 	class Meta:
@@ -514,6 +517,7 @@ class ProductPriceForm(forms.ModelForm):
 		self.fields['product_image'].queryset=Document.objects.filter(user = self.user)
 
 
+''' Form for creating the capability for users to edit their own pdf layout for quote (not implemented in this release) '''
 class EditQuoteTemplateForm(forms.Form):
 
 	pdf_template_code = forms.CharField(widget=forms.Textarea(attrs={'rows':24, 'cols':60}))
@@ -528,8 +532,5 @@ class EditQuoteTemplateForm(forms.Form):
 		template_file = open(usr_pdf_template_file,'r')
 		self.fields['pdf_template_code'].initial = template_file.read
 		alert = None
-
-
-
 
 

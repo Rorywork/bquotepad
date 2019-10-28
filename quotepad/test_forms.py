@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from .models import Document
 from .forms import ProductPriceForm, ProfileForm
 
+''' Testing functions for forms used on the site ''''
+
 class TestProductPriceForm(TestCase):
 
     def test_can_create_a_product_without_an_image(self):

@@ -7,6 +7,9 @@ from xhtml2pdf import pisa
 
 import os, os.path, errno
 
+''' Various functions used by the XHtml2pdf library '''
+
+''' Function to ensure that the correct path is returned for images used in the quote pdf output '''
 def link_callback(uri, rel):
         # use short variable names
         sUrl = settings.STATIC_URL      # Typically /static/
@@ -27,6 +30,7 @@ def link_callback(uri, rel):
                         (sUrl, mUrl))
         return path
 
+''' Function to render an html layout page to the screen '''
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
@@ -36,7 +40,7 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
-# Utility function
+''' Function to render an HTML file to a pdf file '''
 def convertHtmlToPdf(sourceHtml, outputFilename):
     # open output file for writing (truncated binary)
     resultFile = open(outputFilename, "w+b")
@@ -53,7 +57,7 @@ def convertHtmlToPdf(sourceHtml, outputFilename):
     return pisaStatus.err
 
 
-# Utility function
+''' Extended function to render an HTML file to a pdf file '''
 def convertHtmlToPdf2(template_src, outputFilename, context_dict={} ):
     template = get_template(template_src)
     html  = template.render(context_dict)

@@ -9,6 +9,7 @@ from django.contrib.auth.models import User, Group
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class HomePageView(TemplateView):
+    ''' Class to invoke the page that prompts the user to subscribe - code sourced from standard stripe documentation '''
     template_name = 'payments/stripe_checkout.html'
 
     def get_context_data(self, **kwargs):
@@ -16,7 +17,8 @@ class HomePageView(TemplateView):
         context['key'] = settings.STRIPE_PUBLISHABLE_KEY
         return context
 
-def charge(request): 
+def charge(request):
+    ''' Function popup that captures the user's payment details - code sourced from standard stripe documentation '''
     if request.method == 'POST':
         charge = stripe.Charge.create(
             amount=1500,

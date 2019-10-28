@@ -26,70 +26,66 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
   </script>
 
-{% if user.is_authenticated %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/home">Quotepad</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  {% if user.is_authenticated %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/home">Quotepad</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/home">Dashboard<span class="sr-only">(current)</span></a>
-      </li>
-      {% if request.session.created_quote %}
-      <li class="nav-item">
-        <a class="nav-item nav-link" href="/listquotearchive">Previous Quotes</a>
-      </li>
-      {% endif %}
-    </ul>
-
-    <span class="nav-item dropdown">
-      <a class="nav-link dropdown dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-cogs"></i>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/edit_Profile_details">Edit Profile</a>
-        <a class="dropdown-item" href="/showuploadedfiles">Show Uploaded Images</a>
-        <a class="dropdown-item" href="/changepassword">Change Password</a>
-        <a class="dropdown-item" href="/stripecheckout">Subscribe</a>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/home">Dashboard<span class="sr-only">(current)</span></a>
+        </li>
         {% if request.session.created_quote %}
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/listquotearchive">Previous Quotes</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <span class="nav-item dropdown">
+        <a class="nav-link dropdown dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-cogs"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/edit_Profile_details">Edit Profile</a>
+          <a class="dropdown-item" href="/showuploadedfiles">Show Uploaded Images</a>
+          <a class="dropdown-item" href="/changepassword">Change Password</a>
+          <a class="dropdown-item" href="/stripecheckout">Subscribe</a>
+          {% if request.session.created_quote %}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/listquotearchive">Previous Quotes</a>
-        {% endif %}  
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/logout">Logout</a>
-      </div>
-    </span>
+          {% endif %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </span>
 
+    </div>
+  </nav>
+
+
+
+  {% else %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand mr-auto" href="/landing">Quotepad</a>
+    <a class="btn btn-primary my-2 my-sm-0" type="submit" href="/register">Register</a>
+    <a class="btn btn-primary" type="submit" href="/login">Login</a>
+  </nav>
+  {% endif %}
+
+
+  <div class="white-space">
+    <main>
+      {% block content %}
+
+      {% endblock content %}
+    </main>
   </div>
-</nav>
-
-
-
-{% else %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand mr-auto" href="/landing">Quotepad</a>
-  <a class="btn btn-primary my-2 my-sm-0" type="submit" href="/register">Register</a>
-  <a class="btn btn-primary" type="submit" href="/login">Login</a>
-</nav>
-{% endif %}
-
-
-<div class="white-space">
-<main>
-  {% block content %}
-
-  {% endblock content %}
-</main>
-</div>
-
-
-
-
-
-
 
   <footer class="bg-primary base-footer">
     <div class="container">

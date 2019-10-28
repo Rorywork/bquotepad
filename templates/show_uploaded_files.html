@@ -4,23 +4,23 @@
 
 <div class="container">
 
-<h4>Uploaded Images</h4>
+    <h4>Uploaded Images</h4>
 
-{% for frecord in frecords %}
+    {% for frecord in frecords %}
 
-    <hr>
-    <img src="{{frecord.document.url}}"  height="100" style="border:1px solid grey" >
-    <p>Description: {{frecord.description}}   | uploaded on: {{frecord.uploaded_at}}</p>
-    <!-- <p>Image Url: {{frecord.document}}</p> -->
-    <!-- <p>PDF unique ID: <b>frecords.{{forloop.revcounter0}}.document.url</b></p> -->
+        <hr>
+        <img src="{{frecord.document.url}}"  height="100" style="border:1px solid grey" >
+        <p>Description: {{frecord.description}}   | uploaded on: {{frecord.uploaded_at}}</p>
+        <!-- <p>Image Url: {{frecord.document}}</p> -->
+        <!-- <p>PDF unique ID: <b>frecords.{{forloop.revcounter0}}.document.url</b></p> -->
 
-    {% empty %}
-    <p>You have no images saved on the website.</p>
+        {% empty %}
+        <p>You have no images saved on the website.</p>
 
-{% endfor %}
+    {% endfor %}
 
-<a class="btn btn-primary" href="/fileupload/">Upload an image</a>
-<a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
+    <a class="btn btn-primary" href="/fileupload/">Upload an image</a>
+    <a class="btn btn-secondary" href="/home/">Return to Dashboard</a>
 
 </div>
 

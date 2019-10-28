@@ -20,7 +20,6 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
-
 # import asscoated with file upload
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -52,6 +51,7 @@ import shutil
 
 @receiver(user_logged_in)
 def sig_user_logged_in(sender, user, request, **kwargs):
+''' Function execution on logon to check on the current progress status of the user ''' 
 
 	if Profile.objects.filter(user = request.user, first_name=''):
 		request.session['Profile_updated'] = False
@@ -82,10 +82,12 @@ def sig_user_logged_in(sender, user, request, **kwargs):
 		request.session['created_quote'] = True
 	else:
 		request.session['created_quote'] = False				
-
 	return 
 
 class FormWizardView(SessionWizardView):
+''' Main Quotepad form functionaility to capture the details for the quote using the Formwizard functionaility in the formtools library '''
+''' Outputs the data to a PDF and a json files in the pdf_quote_archive user specific folder (user_xxxxx)  '''
+
 	template_name = "boilerform.html"
 
 	# Below method is to pass the logged in user to the
@@ -178,10 +180,12 @@ class FormWizardView(SessionWizardView):
 
 @login_required
 def quote_not_possible(request):
+	''' Function to render the quote_not_possible page '''
 	return render(request,'quote_not_possible.html')
 
 @login_required
 def quote_generated(request):
+	''' Function to render the quote_generated page '''
 	request.session['created_quote'] = True
 	created_quote_group = Group.objects.get(name = 'created_quote')
 	request.user.groups.add(created_quote_group)
@@ -189,23 +193,28 @@ def quote_generated(request):
 
 @login_required
 def test_quote_generated(request):
+	''' Function to render the test_quote_generated page '''
 	return render(request,'test_quote_generated.html')
 
 @login_required
 def quote_emailed(request):
+	''' Function to render the quote_emailed page '''
 	return render(request,'quote_emailed.html')
 
 def landing(request):
+	''' Function to render the landing page used to promote the site when not logged in '''
     return render(request, 'landing.html')    
 
 @login_required
 def quotepad_template_help(request):
+	''' Function to render the quote_pad_template help screen (not yet implemented in this version) '''
 	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
 	return render(request,'quotepad_template_help.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
 
 # Functions associated with user authentication
 @login_required
 def home(request):
+	''' Function to render home page and check on whether to use a generic pdf_template file or a user specific one '''
 	usr_pdf_template_file = Path(settings.BASE_DIR + "/templates/pdf/{}/boilerform_pdf.html".format(request.user.username))
 	print(usr_pdf_template_file)
 	if os.path.isfile(usr_pdf_template_file):
@@ -216,6 +225,7 @@ def home(request):
 	return render(request, 'home.html')
 
 def register(request):
+	''' Function to register the user on the site and create user specific folders to store images and historical quotes '''
 	if request.method == 'POST':
 		form = UserRegistrationForm(request.POST)
 		user_profile_form = UserProfileForm(request.POST)
@@ -283,6 +293,7 @@ def register(request):
 
 @login_required
 def change_password(request):
+	''' Function to render the change password page '''
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
 		if form.is_valid():
@@ -298,6 +309,7 @@ def change_password(request):
 
 @login_required
 def model_form_upload(request):
+	''' Function to render file_upload capability and provide appropriate prompts to the user e.g. logo and product image '''
 	# Check to see the status of the number of images uploaded and assign an appropriate instruction
 	if Document.objects.filter(user = request.user).count() == 0 :
 		form_instructions = "Upload A Logo For Your Company"
@@ -325,11 +337,13 @@ def model_form_upload(request):
 
 @login_required
 def show_uploaded_files(request):
+	''' Function to render the uploaded image files provided by the user  '''
 	frecords = Document.objects.filter(user=request.user.username).order_by('-uploaded_at')
 	return render(request, 'show_uploaded_files.html', {'frecords': frecords, 'media_url':settings.MEDIA_URL})
 	
 @login_required
 def edit_Profile_details(request):
+	''' Function to render the page on which the user provide extended profile details used for the quote '''
 	print(request.user.username)
 	profile = get_object_or_404(Profile, user = request.user )
 	if request.method=="POST":
@@ -346,9 +360,10 @@ def edit_Profile_details(request):
 		
 	return render(request,"edit_Profile_details.html",{'form': form, 'alert': alert}) 
 
-# Views to perform CRUD operations on the ProductPrice model
+''' Views and classes to perform CRUD operations on the ProductPrice model '''
 
 class ProductPriceList(ListView):
+	''' Invoke the django Generic Model form capability to display the ProductPrice information in a list ''' 
 	context_object_name = 'products_by_user'
 
 	def get_queryset(self):
@@ -356,6 +371,7 @@ class ProductPriceList(ListView):
 
 @login_required
 def ProductPriceCreate(request):
+	''' Function to allow users to create a new product '''
 	if request.method == "POST":
 		form = ProductPriceForm(request.POST,  user = request.user)
 		if form.is_valid():
@@ -375,6 +391,7 @@ def ProductPriceCreate(request):
 
 @login_required
 def ProductPriceUpdate(request, product_id):
+	''' Function to allow users to update a new product '''
 	product = ProductPrice.objects.get(pk = product_id)
 	if request.method == "POST":
 		form = ProductPriceForm(request.POST, instance=product, user = request.user)
@@ -393,11 +410,15 @@ def ProductPriceUpdate(request, product_id):
 	return render(request,'quotepad/productprice_form.html',context)
 
 class ProductPriceDelete(DeleteView):
+	''' Invoke the django generic model form capability to delete a product  '''
 	model = ProductPrice
 	success_url='/productpricelist/'
 
 @login_required	  
 def generate_quote_from_file(request, outputformat, quotesource):
+	''' Function to generate the using either a generic template or a user specific one '''
+	''' Quote data is sourced from a test data file or from the specific current quote '''
+	''' Output can be rendered to screen or to an Email recipient as defined on the data from the form '''
 
 	# Initial check to see if user specific PDF template file exists
 	# If it does then use that template, if not then use the generic template
@@ -502,6 +523,7 @@ def generate_quote_from_file(request, outputformat, quotesource):
 
 @login_required
 def edit_quote_template(request):
+	''' Function to allow users to edit their own html page layout quote (not implemented in this version) '''
 	
 	if request.method=="POST":
 		form = EditQuoteTemplateForm(request.user)
@@ -524,6 +546,7 @@ def edit_quote_template(request):
 
 @login_required
 def list_quote_archive(request):
+	''' Function to render the page required to display previously generated quotes '''
 	folder = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username))
 	#path="C:\\somedirectory"  # insert the path to your directory   
 	pdf_files =os.listdir(folder)   
@@ -531,6 +554,7 @@ def list_quote_archive(request):
 
 @login_required
 def pdf_view(request, pdf_file):
+	''' Function to return *.pdf file in a user specific folder '''
 	file_to_render = Path(settings.BASE_DIR + "/pdf_quote_archive/user_{}/".format(request.user.username), pdf_file)
 	try:
 		return FileResponse(open(file_to_render, 'rb'), content_type='application/pdf')

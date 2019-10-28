@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+''' Models used in the quotepad application '''
 
+''' Function to save uploaded files in the specific user path location (under the Media folder)'''
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.username, filename)
 
+''' Model for the upload of image files '''
 class Document(models.Model):
     user = models.CharField(max_length=255, blank=True)
     description = models.CharField(max_length=255, blank=True)
@@ -16,7 +18,7 @@ class Document(models.Model):
     def __str__(self):
 	    return "user_%s - %s" % (self.user, self.description)    
 
-
+''' Model to hold extended user details related to the generation of a quote (has a 1:1 relationship with the django user model)''' 
 class Profile(models.Model):
     user                    =   models.OneToOneField(User, on_delete=models.CASCADE)
     first_name              =   models.CharField(max_length=40)
@@ -31,6 +33,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+''' Model for storing details on the product that will be used in the quote '''
 class ProductPrice(models.Model):
 	user            =   models.ForeignKey(User, on_delete=models.CASCADE)
 	brand           =   models.CharField(max_length=100)

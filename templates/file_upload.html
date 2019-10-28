@@ -3,32 +3,26 @@
 {% block content %}
 
 <div class="container">
-<h2>{{ form_instructions }}</h2>
- 
+  <h2>{{ form_instructions }}</h2>
+
   <form method="post" enctype="multipart/form-data" id=file-upload-form>
     {% csrf_token %}
 
+    <div class="form-group">
+      {{ form.document.label}}<br>
+      {{ form.document}}
+    </div>
 
-  <div class="form-group">
-    {{ form.document.label}}<br>
-    {{ form.document}}
-  </div>
-
-  <div class="form-group">
+    <div class="form-group">
       {{ form.description.label }}<br>
       {{ form.description }}
-  </div>
+    </div>
 
     <button class="btn btn-primary" type="submit">Upload</button>
     <a class="btn btn-secondary" href="/home/">Cancel</a>
-
-
 
   </form>
 
   <br>
 </div>
 {% endblock %}
-
-
-

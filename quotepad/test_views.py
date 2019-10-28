@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+''' Testing functions for views used on the site ''''
+
 class TestViews(TestCase):
 
     def test_get_home_page(self):
