@@ -18,7 +18,7 @@
         <li>Create at least one product for your quote (<a href="{% url 'productpricelist' %}">Edit Product Details</a>)</li>
     {% endif %}
     {% if not request.session.created_quote_template %}
-        <li>Design the layout of your quote (<a href="{% url 'editquotetemplate' %}">Edit Quote Template</a>)</li>
+        <li>View quote layout (<a href="{% url 'test_quote_generated' %}">View Quote Design</a>)</li>
     {% endif %}
     {% ifnotequal user.groups.all.0.name "Subscribed" %}
         <li>Provide your Subscription details (<a href="{% url 'stripe_checkout' %}">Subscribe to Quotepad</a>)</li>
