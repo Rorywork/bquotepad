@@ -16,16 +16,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&sit$sk0m1-&u!6ky#z00r!vz8i$1_prh-v2nckkg0l*0%cj2d'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rorytesting.pythonanywhere.com']
 
 
 # Application definition
@@ -80,8 +76,15 @@ WSGI_APPLICATION = 'bquotepad.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rorytesting$quotepad', # Username$database name
+        'USER': 'rorytesting', #Username:
+        'PASSWORD': 'Letme1nxxx',
+        'HOST': 'rorytesting.mysql.pythonanywhere-services.com', # Database host address
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        }
     }
 }
 
@@ -128,7 +131,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/home/bquotepad/static'
 
 LOGIN_REDIRECT_URL = '/loginredirect/'
 LOGOUT_REDIRECT_URL = '/landing/'
@@ -136,12 +139,12 @@ LOGOUT_REDIRECT_URL = '/landing/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Settings for Mailgun API
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+MAILGUN_ACCESS_KEY = os.getenv("MAILGUN_ACCESS_KEY")
+MAILGUN_SERVER_NAME = os.getenv("MAILGUN_SERVER_NAME")
 
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '81fe8f4f745013'
-EMAIL_HOST_PASSWORD = '42e4ef999c2411'
-EMAIL_PORT = '2525'
 
 # Stripe key settings
-STRIPE_SECRET_KEY = 'sk_test_4YVK8BcxtDC2f0F7DVau0JWG00TJj1bFLs'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_34Pl9iMCAFEIfxCGX84ZrP6G0047uZg93B'
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
