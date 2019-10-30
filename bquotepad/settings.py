@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'rorytesting$quotepad', # Username$database name
-        'USER': 'rorytesting', #Username:
-        'PASSWORD': 'Letme1nxxx',
+        'USER': 'xxxxxxxx', #Username:
+        'PASSWORD': 'xxxxxxxx',
         'HOST': 'rorytesting.mysql.pythonanywhere-services.com', # Database host address
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
