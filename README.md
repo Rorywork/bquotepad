@@ -42,6 +42,17 @@ The primary goal of Quotepad is to provide an application where heating engineer
 -   As a user, I want my customers to receive email quotations quickly.
 -  As a user, I want the tool to help me generate more sales. 
 
+#### Wireframes
+[Landing Desktop](https://github.com/Rorywork/bquotepad/blob/master/wireframes/desktop-landing.PNG)
+[Landing Tablet](https://github.com/Rorywork/bquotepad/blob/master/wireframes/tablet-landing.PNG)
+[Landing Mobile](https://github.com/Rorywork/bquotepad/blob/master/wireframes/mobile-landing.PNG)
+[Dashboard Desktop](https://github.com/Rorywork/bquotepad/blob/master/wireframes/desktop-dashboard.PNG)
+[Dashboard Tablet](https://github.com/Rorywork/bquotepad/blob/master/wireframes/tablet-dashboard.PNG)
+[Dashboard Mobile](https://github.com/Rorywork/bquotepad/blob/master/wireframes/mobile-dashboard.PNG)
+
+#### Model Entity Relationship Diagram
+[Click Here](https://github.com/Rorywork/bquotepad/blob/master/wireframes/Quotepad%20Entity%20Relationship%20Diagram.png)
+
 ## Features
 
 #### Cross Application
@@ -241,12 +252,8 @@ During my user tests and having other users test the application, there were a l
 
 ## Credits
 
-#### [](https://github.com/Rorywork/The-Shadows#media)Media
 
--   [Pexels](https://www.pexels.com/)  provided the majority of images on each page.
--   Users - users can upload there own images so credit is provided by the username within the overlay on the photo to whoever uploaded it.
-
-Code
+## Code
 
 -   [W3 Schools](https://www.w3schools.com/)  - a very useful site for finding out how to do specific fixes.
 -   [Traversy](https://www.youtube.com/user/TechGuyWeb)  provided several tutorials I followed to help me with certain features in my application.
