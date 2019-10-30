@@ -1,4 +1,4 @@
-var base_url = "http://127.0.0.1:8000/"
+const base_url = "http://127.0.0.1:8000/"
 
 function all_good_no_redirect(headertext,maintext) {
     return Swal.fire(headertext, maintext, "success")
