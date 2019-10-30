@@ -4,7 +4,7 @@ Quotepad is a full-stack web-based application that is designed to provide Softw
 
 The site is designed to entice the user to subscribe to a monthly payment fee for the use of the service, however, some functionality is available for free.
 
-Please note that when examining the site email addresses will recieve a quotation so please use with appropriate discretion. Please also note that the email service being used (Mailgun) has a delay on sending which typically means that there is a 5-10 mintue delay in recieving the email in the users inbox. 
+Please note that when examining the site email addresses will recieve a quotation so please use with appropriate discretion. Please also note that the email service being used (Mailgun) has a delay on sending which typically means that there is a 5-10 mintue delay in receiving the email in the users inbox. 
 [Check it out here!](https://rorytesting.pythonanywhere.com/)
 
 ## UX
