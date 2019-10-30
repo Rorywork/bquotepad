@@ -4,7 +4,7 @@ Quotepad is a full-stack web-based application that is designed to provide Softw
 
 The site is designed to entice the user to subscribe to a monthly payment fee for the use of the service, however, some functionality is available for free.
 
-[Check it out here!]([https://rorytesting.pythonanywhere.com/](https://rorytesting.pythonanywhere.com/))
+[Check it out here!](https://rorytesting.pythonanywhere.com/)
 
 ## UX
 
