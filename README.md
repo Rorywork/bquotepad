@@ -4,6 +4,7 @@ Quotepad is a full-stack web-based application that is designed to provide Softw
 
 The site is designed to entice the user to subscribe to a monthly payment fee for the use of the service, however, some functionality is available for free.
 
+Please note that when examining the site email addresses will recieve a quotation so please use with appropriate discretion. Please also note that the email service being used (Mailgun) has a delay on sending which typically means that there is a 5-10 mintue delay in recieving the email in the users inbox. 
 [Check it out here!](https://rorytesting.pythonanywhere.com/)
 
 ## UX
@@ -251,9 +252,6 @@ During my user tests and having other users test the application, there were a l
 - The requirement to use environment variables for the Django secret key and other secret keys proved to be challenging and took a degree of debugging and testing to resolve. This was highlighted to me by my tutor when he reviewed my code.
 
 ## Credits
-
-
-## Code
 
 -   [W3 Schools](https://www.w3schools.com/)  - a very useful site for finding out how to do specific fixes.
 -   [Traversy](https://www.youtube.com/user/TechGuyWeb)  provided several tutorials I followed to help me with certain features in my application.
